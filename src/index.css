@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.navbar  a.active {
-  color: rgb(238, 226, 226);
+.navbar a.active {
+  color: rgb(215, 216, 230);
 }
 .navbar  a {
   background-color: transparent;
