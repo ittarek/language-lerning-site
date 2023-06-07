@@ -1,11 +1,13 @@
 
+import { Helmet } from "react-helmet-async";
 import Container from "../../Componets/Container";
 
 const Home = () => {
   return (
     <Container>
-      <p>This is Home Page</p>
-      {/* <Spinner></Spinner> */}
+          <Helmet><title>Summer | Home</title></Helmet>
+
+   
     </Container>
   );
 };
