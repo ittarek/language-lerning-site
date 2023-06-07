@@ -1,6 +1,8 @@
 import React from "react";
 import Container from "../../../Componets/Container";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { FaFacebookF, FaGoogle, FaTwitter, FaYoutube } from 'react-icons/fa';
+import logo from '../../../assets/website logo.png'
 
 const Navbar = () => {
 
@@ -17,7 +19,7 @@ const Navbar = () => {
       <Container>
         <div className="navbar bg-base-100">
           <div className="flex-1">
-            <a className="btn btn-ghost normal-case text-xl">Language Center</a>
+            <Link to='/' className="btn btn-ghost  text-xl"> <img src={logo} alt="" /></Link>
           </div>
           <div className="flex-none gap-2">
             <div className="form-control">
@@ -55,7 +57,7 @@ const Navbar = () => {
         </div>
       </Container>
       {/* navbar main */}
-      <div className=" bg-slate-400">
+      <div className=" bg-[#037bc8]">
       <Container>  <div className="navbar sm:flex justify-between items-center ">
         
            
@@ -93,8 +95,12 @@ const Navbar = () => {
         </div>
       
       </div>
-        <div className="">
-      
+        <div className="text-white">
+      <Link className="">  <FaFacebookF></FaFacebookF></Link>
+   <Link className="mx-4">     <FaTwitter></FaTwitter></Link>
+  <Link className="mx-4">      <FaGoogle></FaGoogle></Link>
+     <Link>   <FaYoutube></FaYoutube></Link>
+     
         </div>
    
   </div> </Container>
