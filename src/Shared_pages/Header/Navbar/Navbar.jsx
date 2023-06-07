@@ -30,9 +30,9 @@ const Navbar = () => {
   );
 
   return (
-    <div className="head-nav   ">
+    <div className="head-nav">
       <Container>
-        <div className="navbar ">
+        <div className="navbar sticky z-50 ">
           <div className="flex-1">
             <Link to="/" className="btn btn-ghost  text-xl">
               {" "}
@@ -55,19 +55,22 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-slate-700 rounded-box w-52 text-white "
               >
                 <li>
-                  <a className="justify-between">
+                  <Link className="justify-between">
                     Profile
                     <span className="badge">New</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <Link to="dashboard">DashBoard</Link>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link to="/register">Register</Link>
                 </li>
               </ul>
             </div>
@@ -76,10 +79,10 @@ const Navbar = () => {
       </Container>
       {/* navbar main */}
 
-        <Container>
-          {" "}
-          <div className="navbar sticky z-10 bg-opacity-30  bg-black  text-white ">
-            <div className="">
+      <Container>
+        {" "}
+        <div className="navbar sticky  z-10 bg-opacity-30  bg-black  text-white ">
+          <div className="">
             <div className="dropdown">
               <label tabIndex={0} className="btn btn-ghost lg:hidden">
                 <svg
@@ -99,16 +102,18 @@ const Navbar = () => {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-red-400 rounded-box w-52 text-white"
+                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-slate-700 rounded-box w-52 text-white"
               >
                 {navItems}
               </ul>
             </div>
-            </div>
-           <div className="navbar">
-           <div className=" w-full flex justify-between items-center">
+          </div>
+          <div className="navbar">
+            <div className=" w-full flex justify-between items-center">
               <div className=" hidden  lg:flex ">
-                <ul className="menu menu-horizontal px-1 text-white">{navItems}</ul>
+                <ul className="menu menu-horizontal px-1 text-white">
+                  {navItems}
+                </ul>
               </div>
               <div className=" text-white flex  ">
                 <Link className="mx-4">
@@ -129,10 +134,9 @@ const Navbar = () => {
                 </Link>
               </div>
             </div>
-           </div>
-          </div>{" "}
-        </Container>
- 
+          </div>
+        </div>{" "}
+      </Container>
     </div>
   );
 };

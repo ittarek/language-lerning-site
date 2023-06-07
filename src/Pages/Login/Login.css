@@ -1,0 +1,11 @@
+
+/* header-form */
+.main-header .header-form {
+          position: relative;
+          background-color: var(--semi-dark);
+          border: 1px solid rgba(255,255,255,.1);
+          padding: 60px 40px 40px;
+          text-align: center;
+          border-radius: 16px;
+          max-width: 440px;
+        }
