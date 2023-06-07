@@ -3,7 +3,8 @@ import React from "react";
 import courseImg1 from "../../../assets/images/web-design.png";
 import courseImg2 from "../../../assets/images/graphics-design.png";
 import courseImg3 from "../../../assets/images/ui-ux.png";
-import "./PopulerSection.css";
+
+import  './CoursesCard.css'
 import CourseCard from "./CourseCard";
 import Container from "../../../Componets/Container";
 
@@ -41,11 +42,11 @@ const Popular_section = () => {
       <div className="my-10">
      
           <div className="course__top flex justify-between items-center">
-            <div className="course__top__left w-2/3">
+            <div className="course__top__left w-2/3 mb-20">
               <h2>Our Popular Classes</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-                consequatur libero quod voluptatibus ullam quia quas, vitae
+                consequatur libero <br /> quod voluptatibus ullam quia quas, vitae
                 voluptatem recusandae reprehenderit!
               </p>
             </div>
@@ -55,7 +56,7 @@ const Popular_section = () => {
             </div>
           </div>
        
-       <div className="lg:flex justify-between items-center">
+       <div className="lg:flex justify-between items-center gap-11">
        {coursesData.map((item) => (
           <CourseCard key={item.id} item={item} />
         ))}

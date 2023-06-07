@@ -5,6 +5,7 @@ import Slider from "./Slider/Slider";
 
 import AboutUs from "./AboutUs/AboutUs";
 import Popular_section from "./Popular_section/Popular_section";
+import Teachers from "./Teachers/Teachers";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
           <Helmet><title>Summer | Home</title></Helmet>
 <Container><Slider></Slider></Container>
 <Popular_section></Popular_section>
+<Teachers></Teachers>
 <AboutUs></AboutUs>
    
     </div>
