@@ -1,8 +1,9 @@
 import React from "react";
-import Container from "../../../Componets/Container";
+
 import { Link, NavLink } from "react-router-dom";
 import { FaFacebookF, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 import logo from "../../../assets/website logo.png";
+import Container from './../../../Componets/Container';
 
 const Navbar = () => {
   const navItems = (
@@ -32,7 +33,7 @@ const Navbar = () => {
   return (
     <div className="head-nav">
       <Container>
-        <div className="navbar sticky z-50 ">
+        <div className="navbar sticky z-50 bg-base-200">
           <div className="flex-1">
             <Link to="/" className="btn btn-ghost  text-xl">
               {" "}
@@ -81,41 +82,40 @@ const Navbar = () => {
 
       <Container>
         {" "}
-        <div className="navbar sticky  z-10 bg-opacity-30  bg-black  text-white ">
-          <div className="">
-            <div className="dropdown">
-              <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
-                  />
-                </svg>
-              </label>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-slate-700 rounded-box w-52 text-white"
+        <div className="navbar z-10 bg-opacity-30 absolute font-bold  text-white">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                {navItems}
-              </ul>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-slate-700 rounded-box w-52 text-white  "
+            >
+              {navItems}
+            </ul>
           </div>
+
           <div className="navbar">
             <div className=" w-full flex justify-between items-center">
               <div className=" hidden  lg:flex ">
-                <ul className="menu menu-horizontal px-1 text-white">
+                <ul className="menu menu-horizontal px-1 text-white  text-xl">
                   {navItems}
                 </ul>
               </div>
-              <div className=" text-white flex  ">
+              <div className="text-white flex mr-10">
                 <Link className="mx-4">
                   {" "}
                   <FaFacebookF></FaFacebookF>

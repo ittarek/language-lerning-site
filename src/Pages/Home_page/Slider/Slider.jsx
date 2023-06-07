@@ -14,7 +14,7 @@ import { Parallax } from "react-parallax";
 
 const Slider = () => {
   return (
-    <div>
+    <div className="relative">
       <>
         <Swiper
           spaceBetween={30}
@@ -47,7 +47,7 @@ const Slider = () => {
                     <h1 className=" text-white text-3xl font-bold z-10">
                       "Polyglot Playground: Embark on a Multilingual Adventure"
                     </h1>
-                    <p className="mb-5">
+                    <p className="mb-5 text-white">
                       Provident cupiditate voluptatem et in. Quaerat fugiat ut
                       assumenda excepturi exercitationem quasi. In deleniti
                       eaque aut repudiandae et a id nisi.
@@ -79,7 +79,7 @@ const Slider = () => {
                     <h1 className=" text-white text-3xl font-bold z-10">
                       "The Language Oasis: Where Words Come Alive"
                     </h1>
-                    <p className="mb-5">
+                    <p className="mb-5 text-white">
                       Provident cupiditate voluptatem et in. Quaerat fugiat ut
                       assumenda excepturi exercitationem quasi. In deleniti
                       eaque aut repudiandae et a id nisi.
@@ -112,7 +112,7 @@ const Slider = () => {
                     <h1 className=" text-white text-3xl font-bold z-10">
                       "Language Lab: Exploring the Wonders of Linguistics"
                     </h1>
-                    <p className="mb-5">
+                    <p className="mb-5 text-white">
                       Provident cupiditate voluptatem et in. Quaerat fugiat ut
                       assumenda excepturi exercitationem quasi. In deleniti
                       eaque aut repudiandae et a id nisi.
@@ -146,7 +146,7 @@ const Slider = () => {
                       "Mastering Multilingualism: Your Guide to Language
                       Learning"
                     </h1>
-                    <p className="mb-5">
+                    <p className="mb-5 text-white">
                       Provident cupiditate voluptatem et in. Quaerat fugiat ut
                       assumenda excepturi exercitationem quasi. In deleniti
                       eaque aut repudiandae et a id nisi.
