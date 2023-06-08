@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Register.css";
 
 import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "./../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 const Register = () => {
   const { registration, userUpdating } = useContext(AuthContext);
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const ref = useRef()
   // react hook form
   const {
     register,
@@ -18,13 +21,27 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    setError("");
 
-    registration(data.email, data.password, data.confirmPassword)
+    setError("");
+  
+    registration(data.email,data.password)
       .then((result) => {
         const registerUser = result.user;
-        console.log(registerUser);
-        userUpdating(result.user, data.name, data.photoURL);
+        // console.log(registerUser);
+        userUpdating(
+          result.user,
+          data.name,
+          data.photoURL,
+          data.confirmPassword
+        );
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Registration has been successFul",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error.message);
@@ -32,14 +49,6 @@ const Register = () => {
     if (data.password.length < 6) {
       setError("Password Al least 6 Character");
       return;
-    } else {
-      return Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Registration has been successFul",
-        showConfirmButton: false,
-        timer: 1500,
-      });
     }
   };
 
@@ -70,7 +79,7 @@ const Register = () => {
                   <input
                     type="text"
                     placeholder="Name"
-                    {...register("name", { required: true })}
+                     {...register("name", { required: true })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />{" "}
                   {errors.name && (
@@ -81,6 +90,7 @@ const Register = () => {
                   <input
                     type="text"
                     placeholder="Email"
+                    name="email"
                     {...register("email", { required: true })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />{" "}
@@ -93,8 +103,8 @@ const Register = () => {
                 <div className="mt-5">
                   <input
                     type="password"
-                    placeholder="Password"
-                    {...register("password", {
+                    placeholder="Password" name="password"
+                   {...register("password", {
                       required: true,
                       minLength: 6,
 
@@ -123,9 +133,9 @@ const Register = () => {
                 </div>
                 <div className="mt-5">
                   <input
-                    type="password"
+                    type="password" name="confirmPassword"
                     placeholder="Confirm Password"
-                    {...register("confirmPassword", { required: true })}
+                {...register("confirmPassword", { required: true })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />
                   {errors.confirmPassword && (
@@ -137,7 +147,7 @@ const Register = () => {
                 <div className="form-control">
                   <input
                     type="text"
-                    {...register("photoURL", { required: true })}
+              {...register("photoURL", { required: true })}
                     placeholder="Photo URL"
                     className="input input-bordered"
                   />

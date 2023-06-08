@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Link, NavLink } from "react-router-dom";
 import { FaFacebookF, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 import logo from "../../../assets/website logo.png";
-import Container from './../../../Componets/Container';
+import Container from "./../../../Componets/Container";
+import { AuthContext } from "../../../Provider/AuthProvider";
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css";
 
 const Navbar = () => {
+  const { user, loggedOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    loggedOut().then();
+  };
+
+  // tooltip
+  const handleToltip = () => {
+    tippy("#MyTool", {
+      content: user?.displayName || "NoName",
+    });
+  };
   const navItems = (
     <>
       <li>
@@ -13,7 +28,7 @@ const Navbar = () => {
       </li>
       <li>
         {" "}
-        <NavLink>Instructor</NavLink>
+        <NavLink to='/instructors'>Instructor</NavLink>
       </li>
       <li>
         {" "}
@@ -47,13 +62,28 @@ const Navbar = () => {
                 placeholder="Search"
                 className="input input-bordered w-24 md:w-auto"
               />
-            </div>
+            </div>{" "}
+            {user?.email ? (
+              ""
+            ) : (
+              <button className="btn">
+                <Link to="/login">Login</Link>
+              </button>
+            )}
             <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full">
-                  <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
-              </label>
+              {user?.email && (
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  {" "}
+                  <div
+                    className="w-10 rounded-full"
+                    id="MyTool"
+                    onMouseOver={handleToltip}
+                  >
+                    {<img src={user?.photoURL} />}
+                  </div>{" "}
+                </label>
+              )}
+
               <ul
                 tabIndex={0}
                 className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-slate-700 rounded-box w-52 text-white "
@@ -64,15 +94,26 @@ const Navbar = () => {
                     <span className="badge">New</span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="dashboard">DashBoard</Link>
-                </li>
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li>
-                  <Link to="/register">Register</Link>
-                </li>
+                {user?.email && (
+                  <li>
+                    <Link to="dashboard">DashBoard</Link>
+                  </li>
+                )}
+                {user?.email ? (
+                  <li>
+                    <button onClick={handleLogOut}>
+                      {" "}
+                      <Link>Logout</Link>
+                    </button>
+                  </li>
+                ) : (
+                  <li>
+                    {" "}
+                    <Link to="/login">Login</Link>
+                  </li>
+                )}
+
+                {/* displayName */}
               </ul>
             </div>
           </div>

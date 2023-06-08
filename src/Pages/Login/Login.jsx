@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
 import loginImg from "../../assets/login/login.jpg";
 import Container from "../../Componets/Container";
 import SocailLogin from "../../Componets/Socail/SocailLogin";
 import { useForm } from "react-hook-form";
-import './Login.css'
-import { Link } from "react-router-dom";
+import "./Login.css";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 const Login = () => {
+  const { user, login } = useContext(AuthContext);
+  // const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   // react hook form
   const {
     register,
@@ -15,7 +22,24 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    login(data.email, data.password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+
+      Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "login  has been successFul",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
   return (
     <Container>
@@ -36,9 +60,11 @@ const Login = () => {
               <label>Email</label>
               <input
                 className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-                type="text" name="email"
+                type="text"
+                name="email"
                 {...register("email", { required: true })}
-              />    {errors.email && (
+              />{" "}
+              {errors.email && (
                 <span className="text-red-600">Email field is required</span>
               )}
             </div>
@@ -46,10 +72,11 @@ const Login = () => {
               <label>Password</label>
               <input
                 className="p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-                type="password" name="password"
+                type="password"
+                name="password"
                 {...register("password", { required: true })}
               />
-               {errors.password && (
+              {errors.password && (
                 <span className="text-red-600">Password field is required</span>
               )}
             </div>
@@ -63,7 +90,12 @@ const Login = () => {
               {" "}
               <input type="submit" value="SIGNIN" />
             </button>
-            <span className="text-white">New To Language Center? Please ! <Link to='/register' className="text-green-400">SignUp</Link></span>
+            <span className="text-white">
+              New To Language Center? Please !{" "}
+              <Link to="/register" className="text-green-400">
+                SignUp
+              </Link>
+            </span>
           </form>
           <SocailLogin></SocailLogin>
 

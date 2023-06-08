@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
   };
 
   //   user login  function
-  const userLogin = (email, password) => {
+  const login = (email, password) => {
     setSpinner(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -81,7 +81,7 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     registration,
-    userLogin,
+    login,
     loggedOut,
     googleLogin,
     setSpinner,
