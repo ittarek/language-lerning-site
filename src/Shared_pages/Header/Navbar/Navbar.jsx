@@ -7,6 +7,7 @@ import Container from "./../../../Componets/Container";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
+import Mood from "./Mood";
 
 const Navbar = () => {
   const { user, loggedOut } = useContext(AuthContext);
@@ -32,15 +33,15 @@ const Navbar = () => {
       </li>
       <li>
         {" "}
-        <NavLink>Classes</NavLink>
+        <NavLink to='/classes'>Classes</NavLink>
       </li>
       <li>
         {" "}
-        <NavLink>Blog</NavLink>
+        <NavLink to='/blog'>Blog</NavLink>
       </li>
       <li>
         {" "}
-        <NavLink>Daily News</NavLink>
+        <NavLink to='/news'>Daily News</NavLink>
       </li>
     </>
   );
@@ -48,7 +49,7 @@ const Navbar = () => {
   return (
     <div className="head-nav">
       <Container>
-        <div className="navbar sticky z-50 bg-base-200">
+        <div className="navbar  sticky z-50 bg-base-200">
           <div className="flex-1">
             <Link to="/" className="btn btn-ghost  text-xl">
               {" "}
@@ -114,9 +115,10 @@ const Navbar = () => {
                 )}
 
                 {/* displayName */}
-              </ul>
+              
+              </ul>  
             </div>
-          </div>
+          </div>  <li><Mood></Mood></li>
         </div>
       </Container>
       {/* navbar main */}

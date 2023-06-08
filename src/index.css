@@ -6,19 +6,18 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Andada+Pro:wght@400;500;600;700;800&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Tinos:ital@1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Tinos:ital@1&display=swap");
 /* font-family: 'Poppins', sans-serif;
 font-family: 'Tinos', serif; */
 
 .navbar a.active {
-  color: rgb(215, 216, 230);
+  color: green;
 }
-.navbar  a {
+.navbar a {
   background-color: transparent;
 }
 
 /* about */
-
 
 /* =========== base style ========= */
 
@@ -65,4 +64,3 @@ button.btn {
 i {
   color: #17bf9e;
 }
-

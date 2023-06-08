@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet-async";
 import Container from "../../Componets/Container";
 import Slider from "./Slider/Slider";
@@ -10,12 +9,15 @@ import Teachers from "./Teachers/Teachers";
 const Home = () => {
   return (
     <div>
-          <Helmet><title>Summer | Home</title></Helmet>
-<Container><Slider></Slider></Container>
-<Popular_section></Popular_section>
-<Teachers></Teachers>
-<AboutUs></AboutUs>
-   
+      <Helmet>
+        <title>Summer | Home</title>
+      </Helmet>
+      <Container>
+        <Slider></Slider>
+      </Container>
+      <Popular_section></Popular_section>
+      <Teachers></Teachers>
+      <AboutUs></AboutUs>
     </div>
   );
 };

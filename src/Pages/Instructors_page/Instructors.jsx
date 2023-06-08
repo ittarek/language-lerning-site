@@ -8,49 +8,60 @@ import Feature2BgImg from "../../assets/features/feature2_bg.png";
 import Feature3BgImg from "../../assets/features/feature3_bg.png";
 import Feature4BgImg from "../../assets/features/feature4_bg.png";
 import { BsArrowRight } from "react-icons/bs";
+import Cover from "../../Componets/Cover";
+import { Helmet } from "react-helmet-async";
 
 const Instructors = () => {
+  const list = [
+    {
+      image: Feature1Img,
+      bgImage: Feature1BgImg,
+      title: "Md Tarek",
+      description: "Pay with a Visa or PayPal card and without much ado",
+      email: "Ittearek511@gmail.com",
+      linkText: "See Classes",
 
-          const list = [
-                    {
-                      image: Feature1Img,
-                      bgImage: Feature1BgImg,
-                      title: "Payment Done",
-                      description: "Pay with a Visa or PayPal card and without much ado",
-                      linkText: "Learn more",
-                      delay: "400",
-                    },
-                    {
-                      image: Feature2Img,
-                      bgImage: Feature2BgImg,
-                      title: "Find Your Product",
-                      description: "We offer sale of products through the Internet..",
-                      linkText: "Learn more",
-                      delay: "700",
-                    },
-                    {
-                      image: Feature3Img,
-                      bgImage: Feature3BgImg,
-                      title: "Print Out",
-                      description:
-                        "Print out service gives you convenience if someday you need print data, just edit it all and just print it.",
-                      linkText: "Learn more",
-                      delay: "1000",
-                    },
-                    {
-                      image: Feature4Img,
-                      bgImage: Feature4BgImg,
-                      title: "Product Received",
-                      description: "In our app you can see the delay time of your order...",
-                      linkText: "Learn more",
-                      delay: "1300",
-                    },
-                  ];
-          return (
-                    <Container>
-                              <div className="py-20"><h1 className="text-4xl text-purple-700">Out Popular Instructors</h1></div>
+      delay: "400",
+    },
+    {
+      image: Feature2Img,
+      bgImage: Feature2BgImg,
+      title: "Md Tarek",
+      description: "Pay with a Visa or PayPal card and without much ado",
+      email: "Ittearek511@gmail.com",
+      linkText: "See Classes",
+      delay: "700",
+    },
+    {
+      image: Feature3Img,
+      bgImage: Feature3BgImg,
+      title: "Md Tarek",
+      description: "Pay with a Visa or PayPal card and without much ado",
+      email: "Ittearek511@gmail.com",
+      linkText: "See Classes",
+      delay: "1000",
+    },
+    {
+      image: Feature4Img,
+      bgImage: Feature4BgImg,
+      title: "Md Tarek",
+      description: "Pay with a Visa or PayPal card and without much ado",
+      email: "Ittearek511@gmail.com",
+      linkText: "See Classes",
+      delay: "1300",
+    },
+  ];
+  return (
+    <Container>
+          {/* TOdo */} <Helmet>
+        <title>Summer | Instructors</title>
+      </Helmet>
+      <div className="relative"> <Cover image={Feature4BgImg} title="Our Instructors"></Cover>
+        <div className="">
+          <h1 className="text-4xl text-purple-700">Out Popular Instructors</h1>
+        </div>
 
-                              <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
           {list.map((item) => (
             <div>
               <div
@@ -75,6 +86,7 @@ const Instructors = () => {
                 {/* text */}
                 <div className="max-w-[220px]">
                   <h3 className="h3 mb-4">{item.title}</h3>
+                  <p className=" mb-4">{item.email}</p>
                   <p className="font-light italic mb-4">{item.description}</p>
                   {/* link & arrow */}
                   <div className="flex items-center gap-x-2 group">
@@ -88,8 +100,9 @@ const Instructors = () => {
             </div>
           ))}
         </div>
-                    </Container>
-          );
+      </div>
+    </Container>
+  );
 };
 
 export default Instructors;

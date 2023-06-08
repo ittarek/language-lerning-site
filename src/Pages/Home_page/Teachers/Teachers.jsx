@@ -8,6 +8,7 @@ import Feature1BgImg from "../../../assets/features/feature1_bg.png";
 import Feature2BgImg from "../../../assets/features/feature2_bg.png";
 import Feature3BgImg from "../../../assets/features/feature3_bg.png";
 import Feature4BgImg from "../../../assets/features/feature4_bg.png";
+import SectionTitle from "../../../Componets/SectionTitle";
 
 const Teachers = () => {
   const featuresData = {
@@ -53,25 +54,12 @@ const Teachers = () => {
 
   const { title, subtitle } = featuresData;
   return (
-    <section className="my-[70px] xl:my-[150px]">
+    <section className="">
+      {/* Todo */}
       <div className="container mx-auto">
         {/* text */}
-        <div className="text-center">
-          <h2
-            className="h2 mb-6 xl:mb-12"
-            data-aos="fade-down"
-            data-aos-delay="100"
-          >
-            {title}
-          </h2>
-          <p
-            className="lead max-w-[584px] mx-auto mb-16 xl:mb-24"
-            data-aos="fade-down"
-            data-aos-delay="200"
-          >
-            {subtitle}
-          </p>
-        </div>
+        <SectionTitle title={title} summary={subtitle} />
+
         {/* feature list */}
         <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
           {list.map((item) => (

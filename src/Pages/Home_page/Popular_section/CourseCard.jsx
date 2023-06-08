@@ -9,7 +9,7 @@ const CourseCard = ({ item }) => {
   const [ratings, setRatings] = useState(rating);
   return (
     <Container>
-      <div className="single__classes__item card w-96 bg-base-100 shadow-xl mx-auto gap-5 mb-5">
+      <div className="single__classes__item card w-96 bg-base-100 shadow-xl mx-auto gap-5 mb-4">
         <div className="course__img">
           <img src={imgUrl} alt="" className="w-100" />
         </div>
