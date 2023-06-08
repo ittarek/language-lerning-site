@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 import "./Register.css";
 
 import { useForm } from "react-hook-form";
+import { useContext, useState } from "react";
+import { AuthContext } from "./../../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 const Register = () => {
+  const { registration, userUpdating } = useContext(AuthContext);
+  const [error, setError] = useState("");
+
   // react hook form
   const {
     register,
@@ -10,9 +16,33 @@ const Register = () => {
     watch,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
-    console.log(data);
+    setError("");
+
+    registration(data.email, data.password, data.confirmPassword)
+      .then((result) => {
+        const registerUser = result.user;
+        console.log(registerUser);
+        userUpdating(result.user, data.name, data.photoURL);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    if (data.password.length < 6) {
+      setError("Password Al least 6 Character");
+      return;
+    } else {
+      return Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Registration has been successFul",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
+
   return (
     <div>
       <div className="py-10 img-gradient mb-10">
@@ -39,7 +69,7 @@ const Register = () => {
                 <div className="">
                   <input
                     type="text"
-                    placeholder="Email"
+                    placeholder="Name"
                     {...register("name", { required: true })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />{" "}
@@ -73,6 +103,7 @@ const Register = () => {
                     })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />{" "}
+                  <span className="text-red-600">{error}</span>
                   {errors.password?.type === "required" && (
                     <span className="text-red-600">
                       Password field is required
