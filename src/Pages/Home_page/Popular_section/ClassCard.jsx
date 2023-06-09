@@ -10,8 +10,8 @@ import {
 } from "react-icons/fa";
 import Rating from "react-rating";
 import Container from "../../../Componets/Container";
-import "./CoursesCard.css";
-const CourseCard = ({ singleClass }) => {
+import './classesCard.css'
+const ClassCard = ({ singleClass }) => {
   const {
     class_imgUrl,
     class_name,
@@ -27,7 +27,11 @@ const CourseCard = ({ singleClass }) => {
     <Container>
       <div className="single__classes__item col-span-3  card w-96  bg-base-100 shadow-xl mx-auto gap-5 mb-4">
         <div className="course__img">
-          <img src={class_imgUrl?class_imgUrl: "No Image"} alt="" className="w-100" />
+          <img
+            src={class_imgUrl ? class_imgUrl : "No Image"}
+            alt=""
+            className="w-100"
+          />
         </div>
 
         <div className="course__details">
@@ -73,4 +77,4 @@ const CourseCard = ({ singleClass }) => {
   );
 };
 
-export default CourseCard;
+export default ClassCard;

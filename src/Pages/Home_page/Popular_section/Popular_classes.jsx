@@ -1,11 +1,9 @@
 import React from "react";
 
-import courseImg1 from "../../../assets/images/web-design.png";
-import courseImg2 from "../../../assets/images/graphics-design.png";
-import courseImg3 from "../../../assets/images/ui-ux.png";
 
-import "./CoursesCard.css";
-import CourseCard from "./CourseCard";
+
+import "./classesCard.css";
+import ClassCard from "./ClassCard";
 import Container from "../../../Componets/Container";
 import SectionTitle from "../../../Componets/SectionTitle";
 
@@ -40,7 +38,7 @@ const Popular_classes = () => {
 
         <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
           {classes.slice(0,6).map((singleClass) => (
-            <CourseCard key={singleClass.id} singleClass={singleClass} />
+            <ClassCard key={singleClass._id} singleClass={singleClass} />
           ))}
         </div>
       </div>

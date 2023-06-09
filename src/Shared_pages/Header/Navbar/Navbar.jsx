@@ -49,9 +49,9 @@ const Navbar = () => {
   return (
     <div className="head-nav">
       <Container>
-        <div className="navbar  sticky z-50 bg-base-200">
+        <div className="navbar  fixed   top-0 z-10 bg-base-200 px-4 mx-0">
           <div className="flex-1">
-            <Link to="/" className="btn btn-ghost  text-xl">
+            <Link to="/" className="">
               {" "}
               <img src={logo} alt="" />
             </Link>
@@ -125,7 +125,7 @@ const Navbar = () => {
 
       <Container>
         {" "}
-        <div className="navbar z-10 bg-opacity-30 absolute font-bold  text-white">
+        <div className="navbar top-14 z-10 bg-opacity-30 absolute font-bold  text-white">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
@@ -145,7 +145,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-slate-700 rounded-box w-52 text-white  "
+              className="menu menu-sm dropdown-content  mt-3 p-2 shadow bg-slate-700 rounded-box w-52 text-white  "
             >
               {navItems}
             </ul>
@@ -154,7 +154,7 @@ const Navbar = () => {
           <div className="navbar">
             <div className=" w-full flex justify-between items-center">
               <div className=" hidden  lg:flex ">
-                <ul className="menu menu-horizontal px-1 text-white  text-xl">
+                <ul className="menu menu-horizontal my-auto  text-white  text-xl">
                   {navItems}
                 </ul>
               </div>

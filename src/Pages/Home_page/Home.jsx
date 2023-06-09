@@ -3,8 +3,9 @@ import Container from "../../Componets/Container";
 import Slider from "./Slider/Slider";
 
 import AboutUs from "./AboutUs/AboutUs";
-import Teachers from "./Teachers/Teachers";
+
 import Popular_classes from './Popular_section/Popular_classes';
+import Teachers from './Teachers/Teachers ';
 
 const Home = () => {
   return (
