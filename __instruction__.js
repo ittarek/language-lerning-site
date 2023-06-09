@@ -1,4 +1,4 @@
-# **Task description**
+/*# **Task description**
 
 ## **Theme: Summer Camp Learning School** :school:
 
@@ -91,7 +91,7 @@ Read the tasks carefully.
     <br/>
 
     >**Note:** A user cannot submit empty email and password fields.
-
+/*
 5. **Homepage:**
 
     - **Top Slider Section -** Will have a relevant slider. Use relevant text, information, message, and picture. The design is entirely up to you.
@@ -313,4 +313,7 @@ Show all approved classes on this page. Each Class will have the following:
 <br/>
 
 ### Earn your Reward:
-The greatest joys of life aren't gifted; they're earned.
+/**
+
+* The greatest joys of life aren't gifted; they're earned
+/***/

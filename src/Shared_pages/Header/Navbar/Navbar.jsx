@@ -11,7 +11,7 @@ import Mood from "./Mood";
 
 const Navbar = () => {
   const { user, loggedOut } = useContext(AuthContext);
-
+  const referrerPolicy = "no-referre";
   const handleLogOut = () => {
     loggedOut().then();
   };
@@ -29,19 +29,19 @@ const Navbar = () => {
       </li>
       <li>
         {" "}
-        <NavLink to='/instructors'>Instructor</NavLink>
+        <NavLink to="/instructors">Instructor</NavLink>
       </li>
       <li>
         {" "}
-        <NavLink to='/classes'>Classes</NavLink>
+        <NavLink to="/classes">Classes</NavLink>
       </li>
       <li>
         {" "}
-        <NavLink to='/blog'>Blog</NavLink>
+        <NavLink to="/blog">Blog</NavLink>
       </li>
       <li>
         {" "}
-        <NavLink to='/news'>Daily News</NavLink>
+        <NavLink to="/news">Daily News</NavLink>
       </li>
     </>
   );
@@ -49,7 +49,7 @@ const Navbar = () => {
   return (
     <div className="head-nav">
       <Container>
-        <div className="navbar  fixed   top-0 z-10 bg-base-200 px-4 mx-0">
+        <div className="navbar  fixed   top-0 z-50 bg-base-200 px-4 mx-0">
           <div className="flex-1">
             <Link to="/" className="">
               {" "}
@@ -80,7 +80,11 @@ const Navbar = () => {
                     id="MyTool"
                     onMouseOver={handleToltip}
                   >
-                    {<img src={user?.photoURL} />}
+                    {
+                      <img
+                        src={user?.photoURL ? user?.photoURL : referrerPolicy}
+                      />
+                    }
                   </div>{" "}
                 </label>
               )}
@@ -115,10 +119,12 @@ const Navbar = () => {
                 )}
 
                 {/* displayName */}
-              
-              </ul>  
+              </ul>
             </div>
-          </div>  <li><Mood></Mood></li>
+          </div>{" "}
+          <li>
+            <Mood></Mood>
+          </li>
         </div>
       </Container>
       {/* navbar main */}

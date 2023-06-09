@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "./../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+
 const Register = () => {
   const { registration, userUpdating } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -25,36 +26,50 @@ const Register = () => {
   const handleShowPassword = () => {
     setShowPassword((preve) => !preve);
   };
+  // confirm password show hide Function
   const handleShowPassword2 = () => {
     setShowPassword2((preve) => !preve);
   };
-  const onSubmit = (data) => {
-    setError("");
 
-    registration(data.email, data.password)
-      .then((result) => {
-        const registerUser = result.user;
-        // console.log(registerUser);
-        userUpdating(
-          result.user,
-          data.name,
-          data.photoURL,
-          data.confirmPassword
-        );
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Registration has been successFul",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+  // user create function
+  const onSubmit = (data) => {
+    registration(data.email, data.password).then((result) => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+
+      userUpdating(data.name, data.photoURL)
+        .then(() => {
+          const saveUser = { name: data.name, email: data.email };
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(saveUser),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                // reset();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "User created successfully.",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate(from, {replace:true});
+              }
+            });
+        })
+        .catch((error) => console.log(error));
+    });
     if (data.password.length < 6) {
       setError("Password Al least 6 Character");
+      return;
+    }
+    if (data.password !== data.confirmPassword) {
+      setError("Password Does Not Match");
       return;
     }
   };
@@ -114,10 +129,10 @@ const Register = () => {
                     name="password"
                     {...register("password", {
                       required: true,
-                      minLength: 6,
 
-                      pattern:
-                        /(?=.*[A-Z].)(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                      pattern: /(?=.*[A-Z].)/,
+                      pattern: /(?=.*[a-z].)/,
+                      pattern: /(?=.*[0-9].)/,
                     })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />{" "}
@@ -127,42 +142,47 @@ const Register = () => {
                   >
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
-                  <span className="text-red-600">{error}</span>
                   {errors.password?.type === "required" && (
                     <span className="text-red-600">
                       Password field is required
                     </span>
                   )}
-                  {errors.password?.type === "minLength" && (
-                    <span className="text-red-600">
-                      Password must be 6 character
+                  {errors.password?.type === "pattern" && (
+                    <span className="text-red-600 block">
+                      Password must be 1 uppercase
+                    </span>
+                  )}
+                  {errors.password?.type === "pattern" && (
+                    <span className="text-red-600 block">
+                      Password must be 1 lowercase
                     </span>
                   )}
                   {errors.password?.type === "pattern" && (
                     <span className="text-red-600">
-                      Password must be 1 spacial character 1 uppercase 1 number
-                      1 lowercase{" "}
+                      Password must be 1 number
                     </span>
                   )}
                 </div>
-                <div className="mt-5">
+                <div className="mt-1">
                   <input
-                  type={showPassword ? "text" : "password"}
+                    type={showPassword ? "text" : "password"}
                     name="confirmPassword"
                     placeholder="Confirm Password"
                     {...register("confirmPassword", { required: true })}
                     className="border border-gray-400 py-1 px-2 w-full"
-                  /> <span
-                  className="-right-[300px] -top-8 relative text-xl cursor-pointer"
-                  onClick={handleShowPassword2}
-                >
-                  {showPassword2 ? <FaEye /> : <FaEyeSlash />}
-                </span>
+                  />{" "}
+                  <span
+                    className="-right-[300px] -top-8 relative text-xl cursor-pointer"
+                    onClick={handleShowPassword2}
+                  >
+                    {showPassword2 ? <FaEye /> : <FaEyeSlash />}
+                  </span>
                   {errors.confirmPassword && (
                     <span className="text-red-600">
                       Confirm Password is required
                     </span>
-                  )}
+                  )}{" "}
+                  <span className="text-red-600">{error}</span>
                 </div>
                 <div className="form-control">
                   <input

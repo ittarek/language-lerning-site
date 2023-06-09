@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [spinner, setSpinner] = useState(true);
   const [photoUrl, setPhotoUrl] = useState(null);
+  const [error, setError] = useState('')
 
   //   user create
   const registration = (email, password) => {
@@ -50,7 +51,12 @@ const AuthProvider = ({ children }) => {
     setSpinner(true);
     signOut(auth);
   };
-
+  // user data update 
+  const userUpdating = (name, photo) => {
+    return updateProfile(auth.currentUser, {
+        displayName: name, photoURL: photo
+    });
+}
   // user observe
   useEffect;
   useEffect(() => {
@@ -64,19 +70,6 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  // user data update 
-  const userUpdating = (user, name, photoUrl) => {
-    updateProfile(user, {
-      displayName: name,
-      photoURL: photoUrl,
-    })
-      .then(() => {
-        console.log("Your name and photo has been updated");
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  };
 
   const authInfo = {
     user,
