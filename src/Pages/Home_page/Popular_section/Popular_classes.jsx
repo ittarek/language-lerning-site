@@ -8,42 +8,16 @@ import "./CoursesCard.css";
 import CourseCard from "./CourseCard";
 import Container from "../../../Componets/Container";
 import SectionTitle from "../../../Componets/SectionTitle";
+import useClass from "../../../Hooks/useClass";
 
-const Popular_section = () => {
-  const coursesData = [
-    {
-      id: "01",
-      title: "Web Design BootCamp-2022 for Beginners",
-      lesson: 12,
-      students: 12.5,
-      rating: 5.9,
-      imgUrl: courseImg1,
-    },
-
-    {
-      id: "02",
-      title: "Professional Graphics Design, PhotoShop, Adobe XD, Figma",
-      lesson: 12,
-      students: 12.5,
-      rating: 5.9,
-      imgUrl: courseImg2,
-    },
-
-    {
-      id: "03",
-      title: "UI/UX BootCamp for Beginners in 2022",
-      lesson: 12,
-      students: 12.5,
-      rating: 5.9,
-      imgUrl: courseImg3,
-    },
-  ];
+const Popular_classes = () => {
+  const [classes] = useClass()
+ 
   return (
     <Container>
       {/* Todo */}
       <div className="my-5">
         <div className="course__top flex justify-between items-center">
-         
           <SectionTitle
             title="Our Popular Classes"
             summary=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
@@ -56,9 +30,9 @@ const Popular_section = () => {
           </div> */}
         </div>
 
-        <div className="lg:flex justify-between items-center gap-11">
-          {coursesData.map((item) => (
-            <CourseCard key={item.id} item={item} />
+        <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
+          {classes.map((singleClass) => (
+            <CourseCard key={singleClass.id} singleClass={singleClass} />
           ))}
         </div>
       </div>
@@ -66,4 +40,4 @@ const Popular_section = () => {
   );
 };
 
-export default Popular_section;
+export default Popular_classes;

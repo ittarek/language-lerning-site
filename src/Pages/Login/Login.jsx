@@ -8,9 +8,12 @@ import "./Login.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+
 const Login = () => {
   const { user, login } = useContext(AuthContext);
-  // const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -21,6 +24,11 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm();
+  // password show function
+  const handleShowPassword = () => {
+    setShowPassword((preve) => !preve);
+  };
+
   const onSubmit = (data) => {
     login(data.email, data.password)
       .then((result) => {
@@ -72,10 +80,15 @@ const Login = () => {
               <label>Password</label>
               <input
                 className="p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 {...register("password", { required: true })}
-              />
+              />  <span
+              className="-right-[300px] -top-8 relative text-xl cursor-pointer"
+              onClick={handleShowPassword}
+            >
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
+            </span>
               {errors.password && (
                 <span className="text-red-600">Password field is required</span>
               )}

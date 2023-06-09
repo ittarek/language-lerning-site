@@ -3,8 +3,8 @@ import Container from "../../Componets/Container";
 import Slider from "./Slider/Slider";
 
 import AboutUs from "./AboutUs/AboutUs";
-import Popular_section from "./Popular_section/Popular_section";
 import Teachers from "./Teachers/Teachers";
+import Popular_classes from './Popular_section/Popular_classes';
 
 const Home = () => {
   return (
@@ -15,7 +15,7 @@ const Home = () => {
       <Container>
         <Slider></Slider>
       </Container>
-      <Popular_section></Popular_section>
+      <Popular_classes></Popular_classes>
       <Teachers></Teachers>
       <AboutUs></AboutUs>
     </div>

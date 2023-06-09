@@ -8,7 +8,7 @@ import ClassCArd from "./ClassCArd";
 const Classes = () => {
   return (
     <Container>
-      <section className="relative -top-16">
+      <section className="relative -top-[69px]">
         <Helmet>
           <title>Summer | Classes</title>
         </Helmet>

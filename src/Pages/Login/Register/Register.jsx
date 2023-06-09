@@ -1,17 +1,19 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Register.css";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "./../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 const Register = () => {
   const { registration, userUpdating } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const ref = useRef()
+  const ref = useRef();
   // react hook form
   const {
     register,
@@ -19,12 +21,17 @@ const Register = () => {
     watch,
     formState: { errors },
   } = useForm();
-
+  // password show function
+  const handleShowPassword = () => {
+    setShowPassword((preve) => !preve);
+  };
+  const handleShowPassword2 = () => {
+    setShowPassword2((preve) => !preve);
+  };
   const onSubmit = (data) => {
-
     setError("");
-  
-    registration(data.email,data.password)
+
+    registration(data.email, data.password)
       .then((result) => {
         const registerUser = result.user;
         // console.log(registerUser);
@@ -79,7 +86,7 @@ const Register = () => {
                   <input
                     type="text"
                     placeholder="Name"
-                     {...register("name", { required: true })}
+                    {...register("name", { required: true })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />{" "}
                   {errors.name && (
@@ -102,9 +109,10 @@ const Register = () => {
                 </div>
                 <div className="mt-5">
                   <input
-                    type="password"
-                    placeholder="Password" name="password"
-                   {...register("password", {
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    name="password"
+                    {...register("password", {
                       required: true,
                       minLength: 6,
 
@@ -113,6 +121,12 @@ const Register = () => {
                     })}
                     className="border border-gray-400 py-1 px-2 w-full"
                   />{" "}
+                  <span
+                    className="-right-[300px] -top-8 relative text-xl cursor-pointer"
+                    onClick={handleShowPassword}
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </span>
                   <span className="text-red-600">{error}</span>
                   {errors.password?.type === "required" && (
                     <span className="text-red-600">
@@ -133,11 +147,17 @@ const Register = () => {
                 </div>
                 <div className="mt-5">
                   <input
-                    type="password" name="confirmPassword"
+                  type={showPassword ? "text" : "password"}
+                    name="confirmPassword"
                     placeholder="Confirm Password"
-                {...register("confirmPassword", { required: true })}
+                    {...register("confirmPassword", { required: true })}
                     className="border border-gray-400 py-1 px-2 w-full"
-                  />
+                  /> <span
+                  className="-right-[300px] -top-8 relative text-xl cursor-pointer"
+                  onClick={handleShowPassword2}
+                >
+                  {showPassword2 ? <FaEye /> : <FaEyeSlash />}
+                </span>
                   {errors.confirmPassword && (
                     <span className="text-red-600">
                       Confirm Password is required
@@ -147,7 +167,7 @@ const Register = () => {
                 <div className="form-control">
                   <input
                     type="text"
-              {...register("photoURL", { required: true })}
+                    {...register("photoURL", { required: true })}
                     placeholder="Photo URL"
                     className="input input-bordered"
                   />

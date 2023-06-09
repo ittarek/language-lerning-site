@@ -1,0 +1,80 @@
+[
+  {
+    "class_name": "Beginner Spanish",
+    "instructor_name": "Maria Sanchez",
+    "available_seats": 15,
+    "lesson": 10,
+    "price": 100,
+    "students": 20,
+    "enrolled_students": 3,
+    "rating": 4.5,
+    "imgUrl": "https://img.freepik.com/premium-photo/concept-learning-spanish-language-colorful-wooden-letters-with-text-you-speak-spanish-flag-spain-model-airplane-headphones_656538-1556.jpg?w=740",
+    "category": "Spanish",
+    "category_id": 1
+  },
+  {
+    "class_name": "Intermediate French",
+    "instructor_name": "Sophie Martin",
+    "available_seats": 10,
+    "lesson": 8,
+    "price": 120,
+    "students": 12,
+    "enrolled_students": 2,
+    "rating": 4.8,
+    "imgUrl": "https://img.freepik.com/free-psd/language-learning-landing-page-template_23-2149618808.jpg?w=826&t=st=1686306902~exp=1686307502~hmac=7b7a954b5bc98517501cf19ca51602cdb6441e5c52fc87722f651403a69c4436",
+    "category": "French",
+    "category_id": 2
+  },
+  {
+    "class_name": "Advanced German",
+    "instructor_name": "Hans Mueller",
+    "available_seats": 5,
+    "lesson": 12,
+    "price": 150,
+    "students": 8,
+    "enrolled_students": 1,
+    "rating": 4.9,
+    "imgUrl": "https://img.freepik.com/premium-photo/word-german-student-holding-notepad-against-grey-vignette_1134-70343.jpg?w=740",
+    "category": "German",
+    "category_id": 3
+  },
+  {
+    "class_name": "Business English",
+    "instructor_name": "David Johnson",
+    "available_seats": 20,
+    "lesson": 15,
+    "price": 90,
+    "students": 25,
+    "enrolled_students": 2,
+    "rating": 4.7,
+    "imgUrl": "https://img.freepik.com/free-vector/gradient-english-school-landing-page_23-2149490274.jpg?w=740&t=st=1686306990~exp=1686307590~hmac=cf9e0918cdfa32f3cce0b74efbf17cfaff00515acc5b61fee41bc0fc8ca1f109",
+    "category": "English",
+    "category_id": 4
+  },
+  {
+    "class_name": "Elementary Italian",
+    "instructor_name": "Giuseppe Rossi",
+    "available_seats": 12,
+    "lesson": 6,
+    "price": 80,
+    "students": 15,
+    "enrolled_students": 3,
+    "rating": 4.3,
+    "imgUrl": "https://img.freepik.com/free-photo/italian-lettering-yellow-background_23-2148293444.jpg?w=740&t=st=1686307033~exp=1686307633~hmac=faac1e14a06b6c786f75ba74a3bd6cb678af397489bb8cd4066d51a0c772f4ce",
+    "category": "Italian",
+    "category_id": 5
+  },
+  {
+    "class_name": "Mandarin Chinese for Kids",
+    "instructor_name": "Li Wei",
+    "available_seats": 8,
+    "lesson": 10,
+    "price": 110,
+    "students": 10,
+    "enrolled_students": 2,
+    "rating": 4.6,
+    "imgUrl": "https://img.freepik.com/free-photo/woman-drawing-oriental-symbols_1122-1515.jpg?w=740&t=st=1686307160~exp=1686307760~hmac=de3c15e2c06e49ad021ad02d0d24dde34a8c745028e69fba87df7cbc93119351",
+    "category": "Chinese",
+    "category_id": 6
+  }
+]
