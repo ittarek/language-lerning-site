@@ -39,13 +39,17 @@ const Register = () => {
 
       userUpdating(data.name, data.photoURL)
         .then(() => {
-          const saveUser = { name: data.name, email: data.email };
-          fetch("http://localhost:5000/users", {
+          const savedUser = {
+            name: data.name,
+            email: data.email,
+            PhotoURL: data.photoURL,
+          };
+          fetch(`${import.meta.env.VITE_API_URL}/users`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
             },
-            body: JSON.stringify(saveUser),
+            body: JSON.stringify(savedUser),
           })
             .then((res) => res.json())
             .then((data) => {
@@ -58,7 +62,7 @@ const Register = () => {
                   showConfirmButton: false,
                   timer: 1500,
                 });
-                navigate(from, {replace:true});
+                navigate(from, { replace: true });
               }
             });
         })

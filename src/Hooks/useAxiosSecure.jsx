@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import useAuth from "./useAuth";
+import { AuthContext } from "../Provider/AuthProvider";
+
 // const ulr = import.meta.env.VITE_API_UR;
 const axiosSecure = axios.create({
   baseURL:`${import.meta.env.VITE_API_UR}`
 });
 const useAxiosSecure = () => {
-  const { signOutUser } = useAuth();
+  const { loggedOut } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,13 +27,13 @@ const useAxiosSecure = () => {
           error.response &&
           (error.response.status === 401 || error.response.status === 403)
         ) {
-          await signOutUser();
+          await loggedOut();
           navigate("/login");
         }
         return Promise.reject(error);
       }
     );
-  }, [signOutUser, navigate]);
+  }, [loggedOut, navigate]);
 
   return [axiosSecure];
 };
