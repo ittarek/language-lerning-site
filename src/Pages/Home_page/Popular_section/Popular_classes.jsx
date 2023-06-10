@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 import "./classesCard.css";
 import ClassCard from "./ClassCard";
 import Container from "../../../Componets/Container";
@@ -10,15 +8,16 @@ import SectionTitle from "../../../Componets/SectionTitle";
 import { useQuery } from "@tanstack/react-query";
 
 const Popular_classes = () => {
-// TansTack query using for data fetch
-  const { data: classes = [], isLoading:loading ,refetch } = useQuery({
+  // TansTack query using for data fetch
+const {data: classes = [], isLoading: loading, refetch,} = useQuery({
     queryKey: ["classes"],
-
+    // enable : loading,
     queryFn: async () => {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/TopClasses`);
       return res.json();
     },
   });
+  // console.log( "url", import.meta.env.VITE_API_URL);
   return (
     <Container>
       {/* Todo */}
@@ -37,7 +36,7 @@ const Popular_classes = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
-          {classes.slice(0,6).map((singleClass) => (
+          {classes.slice(0, 6).map((singleClass) => (
             <ClassCard key={singleClass._id} singleClass={singleClass} />
           ))}
         </div>

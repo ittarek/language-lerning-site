@@ -1,15 +1,59 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { FaUserAltSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-  // user get by tansTa query
-  const { data: users = [], isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/users`);
-      return res.json();
-    },
+  //   user get by tansTa query
+  //   const { data: users = [], isLoading,refetch } = useQuery({
+  //     queryKey: ["users"],
+  //     queryFn: async () => {
+  //       const res = await fetch(`${import.meta.env.VITE_API_URL}/users`);
+  //       return res.json();
+  //     },
+  //   });
+
+  const [axiosSecure] = useAxiosSecure();
+
+  const { data: users = [], refetch } = useQuery(["users"], async () => {
+    const res = await axiosSecure.get("/users");
+    return res.data;
   });
+
+  // make a admin
+  const handleMakeAdmin = (user) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "are you sure add this user admin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, add !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+          method: "PATCH",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.modifiedCount) {
+              refetch();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${user.name} is an Admin Now!`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      }
+    });
+  };
+
   console.log(users);
   return (
     <div className="w-full h-full my-10">
@@ -44,14 +88,24 @@ const ManageUsers = () => {
                   <div className="font-bold">{user.email}</div>
                 </td>
                 <th>
-                  <div className="font-bold"></div>
+                  <div className="font-bold">
+                    {user.roll === "admin" ? (
+                      "admin"
+                    ) : (
+                      <button
+                        className="btn"
+                        onClick={() => handleMakeAdmin(user)}
+                      >
+                        {" "}
+                        <FaUserAltSlash></FaUserAltSlash>
+                      </button>
+                    )}
+                  </div>
                 </th>
                 <th>
-                  {" "}
-                  <select name="" id="">
-                    <option value="Admin">Admin</option>
-                    <option value="Instructor">Instructor</option>
-                  </select>
+                  <button onClick={() => handleMakeAdmin(user)} className="btn">
+                    make Instructor
+                  </button>
                 </th>{" "}
               </tr>
             ))}

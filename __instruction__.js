@@ -236,7 +236,7 @@ Show all approved classes on this page. Each Class will have the following:
 
 </br>
 
-9. Implement  JWT token for Login and Registration systems (Email/ password & social login)\. You will send the token for the Dashboard routes and verify the user\.
+9. Implement  JWT  for Login and Registration systems (Email/ password & social login)\. You will send the token for the Dashboard routes and verify the user\.
 
 </br>
 

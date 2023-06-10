@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink, Outlet } from "react-router-dom";
-import useStudents from "../Hooks/useStudents";
+
 import useAdmin from "../Hooks/useAdmin";
 
 const DashBoard = () => {
-  const [isStudent, isStudentLoading] = useStudents();
-  const [isAdmin, isAdminLoading] = useAdmin();
-
+  // const [isStudent, isStudentLoading] = useStudents();
+  const [isAdmin] = useAdmin();
+  // const isAdmin = true
   return (
     <div>
       {" "}
@@ -30,27 +30,14 @@ const DashBoard = () => {
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="navbar menu p-4 w-80 h-full bg-base-200 text-base-content">
             {/* Sidebar content here */}
-            {isStudent ? (
+            {isAdmin ? (
               <>
-                {" "}
-                {/* student */}{" "}
+                {/* Admin */}
                 <li>
-                  <NavLink to="myClasses">My Selected Classes</NavLink>
+                  <NavLink to="manageClasses">Manage Classes</NavLink>
                 </li>
                 <li>
-                  <NavLink to="myEnroll">My Enroll Classes</NavLink>
-                </li>
-                <li>
-                  <NavLink to="paymentHistory">Payment History</NavLink>
-                </li>{" "}
-                <li>
-                  <NavLink to="myClasses">My Selected Classes</NavLink>
-                </li>
-                <li>
-                  <NavLink to="myEnroll">My Enroll Classes</NavLink>
-                </li>
-                <li>
-                  <NavLink to="paymentHistory">Payment History</NavLink>
+                  <NavLink to="manageUsers">Manage Users</NavLink>
                 </li>
               </>
             ) : (
@@ -67,13 +54,16 @@ const DashBoard = () => {
                 </li>
               </>
             )}
-            {/* Admin */}
+            {/* student */}{" "}
             <li>
-              <NavLink to="manageClasses">Manage Classes</NavLink>
+              <NavLink to="myClasses">My Selected Classes</NavLink>
             </li>
             <li>
-              <NavLink to="manageUsers">Manage Users</NavLink>
+              <NavLink to="myEnroll">My Enroll Classes</NavLink>
             </li>
+            <li>
+              <NavLink to="paymentHistory">Payment History</NavLink>
+            </li>{" "}
             <div className="divider"></div>{" "}
             <li>
               <NavLink to="/">Home</NavLink>

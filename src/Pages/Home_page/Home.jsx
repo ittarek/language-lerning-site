@@ -18,7 +18,7 @@ const Home = () => {
       </Container>
       <Popular_classes></Popular_classes>
       <Teachers></Teachers>
-      <AboutUs></AboutUs>
+      <AboutUs></AboutUs> 
     </div>
   );
 };

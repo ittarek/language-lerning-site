@@ -14,6 +14,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useEffect } from "react";
 import app from "./../Firbase/Firebase.config";
+import axios from "axios";
 
 const auth = getAuth(app);
 // google provider
@@ -24,7 +25,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [spinner, setSpinner] = useState(true);
   const [photoUrl, setPhotoUrl] = useState(null);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
 
   //   user create
   const registration = (email, password) => {
@@ -51,25 +52,38 @@ const AuthProvider = ({ children }) => {
     setSpinner(true);
     signOut(auth);
   };
-  // user data update 
+  // user data update
   const userUpdating = (name, photo) => {
     return updateProfile(auth.currentUser, {
-        displayName: name, photoURL: photo
+      displayName: name,
+      photoURL: photo,
     });
-}
+  };
   // user observe
   useEffect;
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("user login  ", currentUser);
       setUser(currentUser);
-      setSpinner(false);
+      console.log("user login  ", currentUser);
+
+      // get and set token
+      if (currentUser) {
+        axios
+          .post("http://localhost:5000/jwt", { email: currentUser.email })
+          .then((data) => {
+            // console.log(data.data.token)
+            const token = data.data.token
+            localStorage.setItem("access-token", token);
+            setSpinner(false);
+          });
+      } else {
+        localStorage.removeItem("access-token");
+      }
     });
     return () => {
       unSubscribe();
     };
   }, []);
-
 
   const authInfo = {
     user,
