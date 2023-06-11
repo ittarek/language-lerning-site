@@ -10,12 +10,14 @@ import img6 from "../../assets/class-card/portfolio6.jpg";
 import { Link } from "react-router-dom";
 import SectionTitle from "../../Componets/SectionTitle";
 import { AuthContext } from "./../../Provider/AuthProvider";
-const ClassCArd = () => {
+import { FaDollarSign, FaTable, FaUserAlt } from "react-icons/fa";
+const ClassCArd = ({ classes }) => {
+  const { class_name, instructor_name, available_seats, price } = classes;
   const { user } = useContext(AuthContext);
-  // TODO 
-  const Available_seats = 1;
+  // TODO
+
   return (
-    <section  className="">
+    <section className="">
       <SectionTitle
         title="Our Classes"
         summary="Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, quisquam. "
@@ -32,18 +34,30 @@ const ClassCArd = () => {
               alt="class"
             />
           </div>
-          <h3 className="m-2">This is Class Name</h3>
-          <p>Instructors</p>
-          <p>Available seats</p>
-          <p>Price</p>
-          <div className="">
-          {Available_seats < 0  ? "" :  <button className="btn">
-              {" "}
-              <Link to="/selectClass">Select</Link>
-            </button>}
+          <h3 className="m-2">{class_name}</h3>
+          <div className="grid grid-col-2">
+            <p className="text-xl">
+              Instructor Name :{" "}
+              <FaUserAlt className=" inline-block"></FaUserAlt>{" "}
+              {instructor_name}
+            </p>
+            <p className="text-xl my-2">
+              Available Seats :{" "}
+              <FaTable className="text-2xl inline-block"></FaTable>
+              <span className="text-red-400 text-2xl"> {available_seats}</span>
+            </p>
+            <p className="text-xl">
+              Price : <FaDollarSign className=" inline-block"></FaDollarSign>
+              <span className="text-red-400 text-2xl"> {price}</span>
+            </p>
           </div>
+
+          {available_seats < 0 ? (
+            "bg-red-400"
+          ) : (
+            <button className="btn -mr-0 "> Select</button>
+          )}
         </div>
-      
       </div>
     </section>
   );

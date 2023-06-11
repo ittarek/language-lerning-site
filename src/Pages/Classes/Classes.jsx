@@ -4,8 +4,11 @@ import Cover from "../../Componets/Cover";
 import { Helmet } from "react-helmet-async";
 import ClassSlider from "./ClassSlider";
 import ClassCArd from "./ClassCArd";
+import useClass from "../../Hooks/useClass";
 
 const Classes = () => {
+  const [classes] = useClass()
+  const approvedClass = classes.filter(filterClass => filterClass.status === "approved")
   return (
     <div>
       {" "}
@@ -21,7 +24,11 @@ const Classes = () => {
               <div className="w-full h-screen bg-[#c9cbbe] flex items-center justify-center">
                 <ClassSlider />
               </div>
-              <ClassCArd></ClassCArd>
+
+              {
+                approvedClass.map(classes =>        <ClassCArd key={classes._id} classes={classes}></ClassCArd>)
+              }
+       
             </div>
           </div>
         </section>
