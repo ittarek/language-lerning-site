@@ -22,9 +22,11 @@ import ManageClasses from "../DashBoard/AdminDashBoard/ManageClasses";
 import ManageUsers from "../DashBoard/AdminDashBoard/ManageUsers";
 import AdminROutes from "./AdminROutes";
 import InstructorHome from "./../DashBoard/InstructionDashBoard/InstructorHome";
+import ErrorPage from "../Pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
+    errorElement: <ErrorPage></ErrorPage>,
     path: "/",
     element: <MainLayOut></MainLayOut>,
     children: [

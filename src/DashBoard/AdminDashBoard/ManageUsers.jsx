@@ -5,14 +5,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-  //   user get by tansTa query
-  //   const { data: users = [], isLoading,refetch } = useQuery({
-  //     queryKey: ["users"],
-  //     queryFn: async () => {
-  //       const res = await fetch(`${import.meta.env.VITE_API_URL}/users`);
-  //       return res.json();
-  //     },
-  //   });
+
 
   const [axiosSecure] = useAxiosSecure();
 
@@ -33,12 +26,9 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, add !",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `http://localhost:5000/users/admin/${user._id}`,
-          {
-            method: "PATCH",
-          }
-        )
+        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+          method: "PATCH",
+        })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);

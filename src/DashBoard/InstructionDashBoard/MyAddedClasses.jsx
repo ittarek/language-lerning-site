@@ -25,7 +25,7 @@ const MyAddedClasses = () => {
                 <th>Name</th>
                 <th>Status</th>
                 <th>
-                  Total Enhttps://b7-a12-summer-camp-server-side-inky.vercel.app
+                  Total Enrolled
                   Students
                 </th>
                 <th>Action</th>

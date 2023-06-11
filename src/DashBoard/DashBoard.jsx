@@ -2,12 +2,15 @@ import { Helmet } from "react-helmet-async";
 import { NavLink, Outlet } from "react-router-dom";
 
 import useAdmin from "../Hooks/useAdmin";
-import useInstructors from "./../Hooks/useInstructor";
+
+import { useQuery } from "@tanstack/react-query";
+import useInstructors from "../Hooks/useInstructor";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const DashBoard = () => {
-  // const [isInstructor] = useInstructors();
+  const [isInstructor] = useInstructors();
   const [isAdmin] = useAdmin();
-  // const isAdmin = true
+
   return (
     <div>
       {" "}
@@ -39,10 +42,11 @@ userRole === "instructor"?
 Your Instrictor routes
 <>:
 <> Students Routes<>
+
 } */}
             {isAdmin ? (
               <>
-                {/* Admin */}
+                {/* admin */}
                 <li>
                   <NavLink
                     to="manageClasses"
@@ -62,9 +66,38 @@ Your Instrictor routes
                   </NavLink>
                 </li>
               </>
+            ) : isInstructor ? (
+              <>
+                <li>
+                  <NavLink
+                    to="instructorHome"
+                    className="font-bold text-2xl text-purple-600 "
+                  >
+                    Instructors Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="addClass" className="font-bold text-1xl ">
+                    Add A Classes
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="myAddedClasses" className="font-bold text-1xl ">
+                    My Classes
+                  </NavLink>
+                </li>
+              </>
             ) : (
               <>
                 {" "}
+                <li>
+                  <NavLink
+                    to="myClasses"
+                    className="font-bold text-2xl text-purple-600 "
+                  >
+                    Student Home
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink to="myClasses" className="font-bold text-1xl ">
                     My Selected Classes
@@ -82,32 +115,6 @@ Your Instrictor routes
                 </li>
               </>
             )}
-
-            {/* instruction */}
-            <li>
-              <NavLink
-                to="instructorHome"
-                className="font-bold text-2xl text-purple-600 "
-              >
-                Instructors Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="addClass" className="font-bold text-1xl ">
-                Add A Classes
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="myAddedClasses" className="font-bold text-1xl ">
-                My Classes
-              </NavLink>
-            </li>
-
-            {/* <li>
-              <NavLink to="feedBack" className="font-bold text-1xl ">
-                FeedBack
-              </NavLink>
-            </li> */}
 
             <div className=" divider text-red-400 mt-24"></div>
             <li>

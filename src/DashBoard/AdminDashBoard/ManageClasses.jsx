@@ -1,20 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import useClass from "../../Hooks/useClass";
 
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
 
 const ManageClasses = () => {
-  const [classes] = useClass();
+  const [classes, , refetch] = useClass();
+  const [show, setShow] = useState(true);
+
+//   handle Approve button
+const notify = () =>
+toast("Add This recipe is Favourite !!!", {
+  icon: "👏",
+});
+const handlebtn = () => {
+notify();
+setShow(false);
+};
+
+
+
+
 
   const handleApprove = (myClass) => {
-    const { status } = myClass;
-    fetch(`${import.meta.env.VITE_API_URL}/AllClasses/${myClass._id}`, {
-      method: "PATCH",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "are you sure add this Approve ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, add !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/AllClasses/${myClass._id}`, {
+          method: "PATCH",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.modifiedCount) {
+              refetch();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Approve Successful",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      }
+    });
   };
 
   return (
@@ -68,15 +108,20 @@ const ManageClasses = () => {
                     <div className="font-bold">{myClass?.price}</div>
                   </td>
                   <td>
-                    <div className="font-bold">{myClass?.status}</div>
+                    <div className="font-bold">
+                      {myClass.status === "pending" ? "pending" : "Approve"}
+                    </div>
                   </td>
                   <th>
-                    <button
-                      onClick={() => handleApprove(myClass)}
-                      className="btn"
-                    >
-                      Approve
-                    </button>
+                    {show && (
+                      <button
+                        onClick={() => handleApprove(myClass)}
+                        className="btn"
+                        onChange={handlebtn}
+                      >
+                        Approve  <ToastContainer position="top-center"></ToastContainer>
+                      </button>
+                    )}
                   </th>{" "}
                   <th>
                     <button
