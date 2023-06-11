@@ -3,27 +3,23 @@ import useClass from "../../Hooks/useClass";
 
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-import { ToastContainer, toast } from "react-toastify";
+// import useAxiosSecure from "../../Hooks/useAxiosSecure";
+// import { useQuery } from "@tanstack/react-query";
+// import { ToastContainer, toast } from "react-toastify";
 
 const ManageClasses = () => {
   const [classes, , refetch] = useClass();
   const [show, setShow] = useState(true);
 
-//   handle Approve button
-const notify = () =>
-toast("Add This recipe is Favourite !!!", {
-  icon: "👏",
-});
-const handlebtn = () => {
-notify();
-setShow(false);
-};
-
-
-
-
+  //   handle Approve button
+  // const notify = () =>
+  //   toast("Add This class is  Selected !!!", {
+  //     icon: "👏",
+  //   });
+  // const handlebtn = () => {
+  //   notify();
+  //   setShow(false);
+  // };
 
   const handleApprove = (myClass) => {
     Swal.fire({
@@ -108,8 +104,8 @@ setShow(false);
                     <div className="font-bold">{myClass?.price}</div>
                   </td>
                   <td>
-                    <div className="font-bold">
-                      {myClass.status === "pending" ? "pending" : "Approve"}
+                    <div className="font-bold text-green-400">
+                      {myClass.status === "pending" ? "Pending" : myClass.status === "approved" ? "Approve" : <p className="text-yellow-800">pending</p>}
                     </div>
                   </td>
                   <th>
@@ -117,9 +113,10 @@ setShow(false);
                       <button
                         onClick={() => handleApprove(myClass)}
                         className="btn"
-                        onChange={handlebtn}
+                    
                       >
-                        Approve  <ToastContainer position="top-center"></ToastContainer>
+                        Approve{" "}
+                        
                       </button>
                     )}
                   </th>{" "}

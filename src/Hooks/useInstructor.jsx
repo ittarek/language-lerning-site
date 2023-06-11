@@ -11,7 +11,7 @@ const useInstructor = () => {
 enabled: !spinner,
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/instructor/${user?.email}`);
-      console.log("is instructor response", res.data);
+      // console.log("is instructor response", res.data);
       return res.data.instructor;
     },
   });

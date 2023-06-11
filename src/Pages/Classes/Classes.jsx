@@ -12,7 +12,7 @@ const Classes = () => {
   const approvedClass = classes.filter(
     (filterClass) => filterClass.status === "approved"
   );
-  console.log(approvedClass);
+  // console.log(approvedClass);
   return (
     <div>
       {" "}

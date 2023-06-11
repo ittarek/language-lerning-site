@@ -5,8 +5,6 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-
-
   const [axiosSecure] = useAxiosSecure();
 
   const { data: users = [], refetch } = useQuery(["users"], async () => {
@@ -46,11 +44,44 @@ const ManageUsers = () => {
       }
     });
   };
+  // making a instructor function
+  const handleMakeInstructor = (user) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "are you sure add this user Instructor ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, add !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+          method: "PATCH",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.modifiedCount) {
+              refetch();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${user.name} is an instructor Now!`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      }
+    });
+  };
 
   console.log(users);
   return (
     <div className="w-full h-full my-10">
-      <div className="overflow-x-auto">
+      <h2 className="h2 pl-2">Total User : <span className="text-green-300">{users?.length}</span></h2>
+      <div className="overflow-x-auto pl-2">
         <table className="table">
           {/* head */}
           <thead>
@@ -96,12 +127,19 @@ const ManageUsers = () => {
                   </div>
                 </th>
                 <th>
-                  <button
-                    onClick={() => handleInstructor(user)}
-                    className="btn"
-                  >
-                    make Instructor
-                  </button>
+                  <div className="font-bold text-purple-500 text-2xl">
+                    {user.roll === "instructor" ? (
+                      "instructor"
+                    ) : (
+                      <button
+                        className="btn"
+                        onClick={() => handleMakeInstructor(user)}
+                      >
+                        {" "}
+                        make Instructor
+                      </button>
+                    )}
+                  </div>
                 </th>{" "}
               </tr>
             ))}

@@ -14,7 +14,7 @@ import { Parallax } from "react-parallax";
 
 const Slider = () => {
   return (
-    <div className="relative">
+    <div className="relative dark">
       <>
         <Swiper
           spaceBetween={30}

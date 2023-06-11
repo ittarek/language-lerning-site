@@ -12,7 +12,7 @@ import PrivetRoute from "./PrivetRoute";
 import DashBoardLayOut from "../LayOut/DashBoardLayOut";
 import DashBoard from "../DashBoard/DashBoard";
 import PaymentHistory from "../DashBoard/StudenDashBoard/PaymentHistory";
-import MyClasses from "../DashBoard/StudenDashBoard/MyClasses";
+
 import MyEnroll from "../DashBoard/StudenDashBoard/MyEnroll";
 import AddClass from "../DashBoard/InstructionDashBoard/AddClass";
 
@@ -23,6 +23,7 @@ import ManageUsers from "../DashBoard/AdminDashBoard/ManageUsers";
 import AdminROutes from "./AdminROutes";
 import InstructorHome from "./../DashBoard/InstructionDashBoard/InstructorHome";
 import ErrorPage from "../Pages/ErrorPage";
+import MySelectClasses from "../DashBoard/StudenDashBoard/MySelectClasses";
 
 export const router = createBrowserRouter([
   {
@@ -90,7 +91,7 @@ export const router = createBrowserRouter([
       // Student Route
       {
         path: "myClasses",
-        element: <MyClasses></MyClasses>,
+        element: <MySelectClasses></MySelectClasses>,
       },
       {
         path: "myEnroll",

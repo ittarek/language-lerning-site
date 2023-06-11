@@ -31,7 +31,7 @@ const DashBoard = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="navbar menu p-4 w-80 h-full bg-purple-400 text-base-content ">
+          <ul className="navbar menu p-4 w-80 h-full bg-zinc-400 text-base-content ">
             {/* Sidebar content here */}
             {/* { usreRole === 'admin' ?
 <>

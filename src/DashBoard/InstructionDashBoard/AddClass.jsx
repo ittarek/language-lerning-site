@@ -46,9 +46,9 @@ const AddClass = () => {
             class_imgUrl: imgURL,
             status: "pending",
           };
-          console.log(newClass);
+          // console.log(newClass);
           axiosSecure.post("/addClass", newClass).then((data) => {
-            console.log("after posting new menu item", data.data);
+            // console.log("after posting new menu item", data.data);
             if (data.data.insertedId) {
               //     reset();
               Swal.fire({
@@ -99,7 +99,7 @@ const AddClass = () => {
                   type="text"
                   placeholder={user?.displayName}
                   {...register("instructor_name", { required: true })}
-                  defaultValue={user?.displayName}
+                  value={user?.displayName}
                   className="border border-gray-400 py-1 px-2"
                 />
               </div>
@@ -109,7 +109,7 @@ const AddClass = () => {
                   type="text"
                   placeholder={user?.email}
                   {...register("instructor_email", { required: true })}
-                  defaultValue={user?.email}
+                value={user?.email}
                   className="border border-gray-400 py-1 px-2 w-full"
                 />{" "}
               </div>
@@ -132,7 +132,7 @@ const AddClass = () => {
                 />{" "}
               </div>
               <div className="mt-5">
-                <label htmlFor="">Status</label>
+                <label htmlFor="" className="hidden">Status</label>
                 <input
                   type="text"
                   name="status"
