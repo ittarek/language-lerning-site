@@ -21,6 +21,7 @@ import InsTructionFeedBack from "../DashBoard/InstructionDashBoard/InsTructionFe
 import ManageClasses from "../DashBoard/AdminDashBoard/ManageClasses";
 import ManageUsers from "../DashBoard/AdminDashBoard/ManageUsers";
 import AdminROutes from "./AdminROutes";
+import InstructorHome from './../DashBoard/InstructionDashBoard/InstructorHome';
 
 export const router = createBrowserRouter([
   {
@@ -68,11 +69,11 @@ export const router = createBrowserRouter([
 
   {
     path: "dashboard",
-    element: <DashBoardLayOut></DashBoardLayOut>,
+    element:<PrivetRoute> <DashBoardLayOut></DashBoardLayOut></PrivetRoute>,
     children: [
       {
         path: "dashboard",
-        element: <DashBoard></DashBoard>,
+        element:<PrivetRoute> <DashBoard></DashBoard></PrivetRoute>,
       },
       // Student Route
       {
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
       },
       // Instruction Route
       {
+path:'instructorHome',
+element:<InstructorHome></InstructorHome>
+      },
+      {
         path: "addClass",
         element: <AddClass></AddClass>,
       },
@@ -97,7 +102,7 @@ export const router = createBrowserRouter([
         element: <MyAddedClasses></MyAddedClasses>,
       },
       {
-        path: "feedBack",
+        path: "myAddedClasses/feedback",
         element: <InsTructionFeedBack></InsTructionFeedBack>,
       },
       // Admin Route

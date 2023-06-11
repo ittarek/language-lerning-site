@@ -88,7 +88,7 @@ const ManageUsers = () => {
                   <div className="font-bold">{user.email}</div>
                 </td>
                 <th>
-                  <div className="font-bold">
+                  <div className="font-bold text-purple-500 text-2xl">
                     {user.roll === "admin" ? (
                       "admin"
                     ) : (
@@ -97,13 +97,16 @@ const ManageUsers = () => {
                         onClick={() => handleMakeAdmin(user)}
                       >
                         {" "}
-                        <FaUserAltSlash></FaUserAltSlash>
+                   
+                          {" "}
+                         Make Admin
+                    
                       </button>
                     )}
                   </div>
                 </th>
                 <th>
-                  <button onClick={() => handleMakeAdmin(user)} className="btn">
+                  <button onClick={() => handleInstructor(user)} className="btn">
                     make Instructor
                   </button>
                 </th>{" "}

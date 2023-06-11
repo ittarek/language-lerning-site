@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink, Outlet } from "react-router-dom";
 
@@ -28,45 +27,77 @@ const DashBoard = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="navbar menu p-4 w-80 h-full bg-base-200 text-base-content">
+          <ul className="navbar menu p-4 w-80 h-full bg-purple-400 text-base-content ">
             {/* Sidebar content here */}
             {isAdmin ? (
               <>
                 {/* Admin */}
                 <li>
-                  <NavLink to="manageClasses">Manage Classes</NavLink>
+                  <NavLink to="manageClasses" className="font-bold text-2xl text-purple-600 ">
+                    Admin Home
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="manageUsers">Manage Users</NavLink>
+                  <NavLink to="manageClasses" className="font-bold text-1xl ">
+                    Manage Classes
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="manageUsers" className="font-bold text-1xl ">
+                    Manage Users
+                  </NavLink>
                 </li>
               </>
             ) : (
               <>
-                {/* instruction */}
+                {" "}
                 <li>
-                  <NavLink to="addClass">Add A Classes</NavLink>
+                  <NavLink to="myClasses" className="font-bold text-1xl ">
+                    My Selected Classes
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="myAddedClasses">My Classes</NavLink>
+                  <NavLink to="myEnroll" className="font-bold text-1xl ">
+                    My Enroll Classes
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="feedBack">FeedBack</NavLink>
+                  <NavLink to="paymentHistory" className="font-bold text-1xl ">
+                    Payment History
+                  </NavLink>
                 </li>
               </>
             )}
-            {/* student */}{" "}
+            {/* student */}
+
+            <>
+              {/* instruction */}
+              <li>
+                <NavLink to="instructorHome" className="font-bold text-2xl text-purple-600 ">
+                  Instructors Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="addClass" className="font-bold text-1xl ">
+                  Add A Classes
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="myAddedClasses" className="font-bold text-1xl ">
+                  My Classes
+                </NavLink>
+              </li>
+              {/* <li>
+                <NavLink to="feedBack" className="font-bold text-1xl ">
+                  FeedBack
+                </NavLink>
+              </li> */}
+            </>
+<div className=" divider text-red-400 mt-24"></div>
             <li>
-              <NavLink to="myClasses">My Selected Classes</NavLink>
-            </li>
-            <li>
-              <NavLink to="myEnroll">My Enroll Classes</NavLink>
-            </li>
-            <li>
-              <NavLink to="paymentHistory">Payment History</NavLink>
-            </li>{" "}
-            <div className="divider"></div>{" "}
-            <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" className="font-bold text-2xl  ">
+                Home
+              </NavLink>
             </li>
           </ul>
         </div>
