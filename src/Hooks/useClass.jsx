@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const useClass = () => {
-  // const url ="http://localhost:5000/"
+  // const url ="https://b7-a12-summer-camp-server-side-inky.vercel.app/"
   const { spinner } = useContext(AuthContext);
   const {
     data: classes = [],

@@ -33,9 +33,12 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, add !",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/users/admin/${user._id}`, {
-          method: "PATCH",
-        })
+        fetch(
+          `http://localhost:5000/users/admin/${user._id}`,
+          {
+            method: "PATCH",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
@@ -97,16 +100,16 @@ const ManageUsers = () => {
                         onClick={() => handleMakeAdmin(user)}
                       >
                         {" "}
-                   
-                          {" "}
-                         Make Admin
-                    
+                        Make Admin
                       </button>
                     )}
                   </div>
                 </th>
                 <th>
-                  <button onClick={() => handleInstructor(user)} className="btn">
+                  <button
+                    onClick={() => handleInstructor(user)}
+                    className="btn"
+                  >
                     make Instructor
                   </button>
                 </th>{" "}

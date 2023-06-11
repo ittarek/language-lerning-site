@@ -9,6 +9,7 @@ import useClass from "../../Hooks/useClass";
 const Classes = () => {
   const [classes] = useClass()
   const approvedClass = classes.filter(filterClass => filterClass.status === "approved")
+  console.log(approvedClass);
   return (
     <div>
       {" "}

@@ -2,9 +2,10 @@ import { Helmet } from "react-helmet-async";
 import { NavLink, Outlet } from "react-router-dom";
 
 import useAdmin from "../Hooks/useAdmin";
+import useInstructors from "./../Hooks/useInstructor";
 
 const DashBoard = () => {
-  // const [isStudent, isStudentLoading] = useStudents();
+  // const [isInstructor] = useInstructors();
   const [isAdmin] = useAdmin();
   // const isAdmin = true
   return (
@@ -29,11 +30,24 @@ const DashBoard = () => {
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="navbar menu p-4 w-80 h-full bg-purple-400 text-base-content ">
             {/* Sidebar content here */}
+            {/* { usreRole === 'admin' ?
+<>
+Your Admin routes
+<> :
+userRole === "instructor"?
+<>
+Your Instrictor routes
+<>:
+<> Students Routes<>
+} */}
             {isAdmin ? (
               <>
                 {/* Admin */}
                 <li>
-                  <NavLink to="manageClasses" className="font-bold text-2xl text-purple-600 ">
+                  <NavLink
+                    to="manageClasses"
+                    className="font-bold text-2xl text-purple-600 "
+                  >
                     Admin Home
                   </NavLink>
                 </li>
@@ -68,32 +82,34 @@ const DashBoard = () => {
                 </li>
               </>
             )}
-            {/* student */}
 
-            <>
-              {/* instruction */}
-              <li>
-                <NavLink to="instructorHome" className="font-bold text-2xl text-purple-600 ">
-                  Instructors Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="addClass" className="font-bold text-1xl ">
-                  Add A Classes
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="myAddedClasses" className="font-bold text-1xl ">
-                  My Classes
-                </NavLink>
-              </li>
-              {/* <li>
-                <NavLink to="feedBack" className="font-bold text-1xl ">
-                  FeedBack
-                </NavLink>
-              </li> */}
-            </>
-<div className=" divider text-red-400 mt-24"></div>
+            {/* instruction */}
+            <li>
+              <NavLink
+                to="instructorHome"
+                className="font-bold text-2xl text-purple-600 "
+              >
+                Instructors Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="addClass" className="font-bold text-1xl ">
+                Add A Classes
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="myAddedClasses" className="font-bold text-1xl ">
+                My Classes
+              </NavLink>
+            </li>
+
+            {/* <li>
+              <NavLink to="feedBack" className="font-bold text-1xl ">
+                FeedBack
+              </NavLink>
+            </li> */}
+
+            <div className=" divider text-red-400 mt-24"></div>
             <li>
               <NavLink to="/" className="font-bold text-2xl  ">
                 Home

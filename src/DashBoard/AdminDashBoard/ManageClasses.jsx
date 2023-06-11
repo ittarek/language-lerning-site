@@ -5,6 +5,18 @@ import { Link } from "react-router-dom";
 
 const ManageClasses = () => {
   const [classes] = useClass();
+
+  const handleApprove = (myClass) => {
+    const { status } = myClass;
+    fetch(`${import.meta.env.VITE_API_URL}/AllClasses/${myClass._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <div className="w-full h-full mt-16 mx-4 px-4">
       <h2 className="h2">All Of The Classes : {classes.length}</h2>
@@ -59,13 +71,6 @@ const ManageClasses = () => {
                     <div className="font-bold">{myClass?.status}</div>
                   </td>
                   <th>
-                    <div className="font-bold  text-2xl">
-                      <Link to="/feedback" className="btn text-purple-500">
-                        Feedback
-                      </Link>
-                    </div>
-                  </th>
-                  <th>
                     <button
                       onClick={() => handleApprove(myClass)}
                       className="btn"
@@ -81,6 +86,13 @@ const ManageClasses = () => {
                       Denied
                     </button>
                   </th>{" "}
+                  <th>
+                    <div className="font-bold  text-2xl">
+                      <Link to="/feedback" className="btn text-purple-500">
+                        Feedback
+                      </Link>
+                    </div>
+                  </th>
                 </tr>
               ))}
             </tbody>

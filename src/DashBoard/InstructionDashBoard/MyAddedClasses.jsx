@@ -24,9 +24,12 @@ const MyAddedClasses = () => {
                 <th>Image</th>
                 <th>Name</th>
                 <th>Status</th>
-                <th>Total Enroll Students</th>
-                <th>Feedback</th>
+                <th>
+                  Total Enhttps://b7-a12-summer-camp-server-side-inky.vercel.app
+                  Students
+                </th>
                 <th>Action</th>
+                <th>Feedback</th>
               </tr>
             </thead>
             <tbody>
@@ -55,16 +58,6 @@ const MyAddedClasses = () => {
                     </div>
                   </td>
                   <th>
-                    <div className="font-bold  text-2xl">
-                      <Link to='/feedback'
-                        className="btn text-purple-500"
-                        onClick={() => handleFeedback(myClass)}
-                      >
-                        Feedback
-                      </Link>
-                    </div>
-                  </th>
-                  <th>
                     <button
                       onClick={() => handleUpdate(myClass)}
                       className="btn"
@@ -72,6 +65,17 @@ const MyAddedClasses = () => {
                       Update
                     </button>
                   </th>{" "}
+                  <th>
+                    <div className="font-bold  text-2xl">
+                      <Link
+                        to="/feedback"
+                        className="btn text-purple-500"
+                        onClick={() => handleFeedback(myClass)}
+                      >
+                        Feedback
+                      </Link>
+                    </div>
+                  </th>
                 </tr>
               ))}
             </tbody>
