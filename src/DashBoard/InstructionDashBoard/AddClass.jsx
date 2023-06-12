@@ -29,20 +29,21 @@ const AddClass = () => {
         if (resultImage.success) {
           const imgURL = resultImage.data.display_url;
           const {
-               class_name,
+            class_name,
             instructor_name,
             instructor_email,
             price,
             available_seats,
             status,
+            instructor_img,
           } = data;
           const newClass = {
-               class_name,
+            class_name,
             instructor_name,
             instructor_email,
             price: parseFloat(price),
             available_seats,
-
+            instructor_img,
             class_imgUrl: imgURL,
             status: "pending",
           };
@@ -109,7 +110,7 @@ const AddClass = () => {
                   type="text"
                   placeholder={user?.email}
                   {...register("instructor_email", { required: true })}
-                value={user?.email}
+                  value={user?.email}
                   className="border border-gray-400 py-1 px-2 w-full"
                 />{" "}
               </div>
@@ -132,7 +133,9 @@ const AddClass = () => {
                 />{" "}
               </div>
               <div className="mt-5">
-                <label htmlFor="" className="hidden">Status</label>
+                <label htmlFor="" className="hidden">
+                  Status
+                </label>
                 <input
                   type="text"
                   name="status"
@@ -143,12 +146,23 @@ const AddClass = () => {
               </div>
 
               <div className="mt-5">
-                <label htmlFor="">Image</label>
+                <label htmlFor="">Class Image</label>
                 <input
                   type="file"
                   placeholder="Image"
                   {...register("image", { required: true })}
                   className="border border-gray-400 py-1 px-2 w-full file:hidden rounded "
+                />
+              </div>
+              <div className="mt-5 hidden">
+                <label htmlFor="" className="hidden">Instructor Image</label>
+                <input
+                  type="image"
+                  name="instructor_img"
+                  placeholder={user?.photoURL}
+                  {...register("instructor_img", { required: true })}
+                  value={user?.photoURL}
+                  className="border border-gray-400 py-1 px-2 w-full image:hidden  rounded "
                 />
               </div>
 

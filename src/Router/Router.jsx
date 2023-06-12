@@ -24,6 +24,7 @@ import AdminROutes from "./AdminROutes";
 import InstructorHome from "./../DashBoard/InstructionDashBoard/InstructorHome";
 import ErrorPage from "../Pages/ErrorPage";
 import MySelectClasses from "../DashBoard/StudenDashBoard/MySelectClasses";
+import Payment from "../DashBoard/StudenDashBoard/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -61,41 +62,33 @@ export const router = createBrowserRouter([
       },
       {
         path: "/selectClass",
-        element: (
-          <PrivetRoute>
-            <SelectClass></SelectClass>
-          </PrivetRoute>
-        ),
+        element: <SelectClass></SelectClass>,
       },
     ],
   },
 
   {
     path: "dashboard",
-    element: (
-      <PrivetRoute>
-        {" "}
-        <DashBoardLayOut></DashBoardLayOut>
-      </PrivetRoute>
-    ),
+    element: <DashBoardLayOut></DashBoardLayOut>,
     children: [
       {
         path: "dashboard",
-        element: (
-          <PrivetRoute>
-            {" "}
-            <DashBoard></DashBoard>
-          </PrivetRoute>
-        ),
+        element: <DashBoard></DashBoard>,
       },
       // Student Route
       {
-        path: "myClasses",
+        path: "mySelectedClasses",
         element: <MySelectClasses></MySelectClasses>,
       },
       {
         path: "myEnroll",
         element: <MyEnroll></MyEnroll>,
+      },
+      {
+        path: "mySelectedClasses/payment/:id",
+        element: <Payment></Payment>,
+        loader: ({ params }) =>
+        fetch(`${import.meta.env.VITE_API_URL}/paymentClass/${params.id}`),
       },
       {
         path: "paymentHistory",
@@ -121,21 +114,11 @@ export const router = createBrowserRouter([
       // Admin Route
       {
         path: "manageClasses",
-        element: (
-          <AdminROutes>
-            {" "}
-            <ManageClasses></ManageClasses>
-          </AdminROutes>
-        ),
+        element: <ManageClasses></ManageClasses>,
       },
       {
         path: "manageUsers",
-        element: (
-          <AdminROutes>
-            {" "}
-            <ManageUsers></ManageUsers>
-          </AdminROutes>
-        ),
+        element: <ManageUsers></ManageUsers>,
       },
     ],
   },

@@ -8,9 +8,14 @@ import { Helmet } from "react-helmet-async";
 import useClass from "../../Hooks/useClass";
 import { Link } from "react-router-dom";
 import SectionTitle from "../../Componets/SectionTitle";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Instructors = () => {
+  const {user} = useContext(AuthContext)
+
   const [classes] = useClass();
+  console.log(classes);
   return (
     <div>
       {" "}
@@ -40,7 +45,7 @@ const Instructors = () => {
                 >
                   {/* bg image */}
                   <div className=" xl:flex absolute top-0 right-0 -z-10">
-                    <img src={instructor?.instructor_bg_img} />
+                    <img src={Feature4BgImg} />
                   </div>
 
                   {/* icon image */}
@@ -49,7 +54,7 @@ const Instructors = () => {
                     data-aos="zoom-in-right"
                     data-aos-delay="400"
                   >
-                    <img src={instructor?.instructor_img} />
+                    <img src={instructor.instructor_img} />
                   </div>
                   {/* text */}
                   <div className="max-w-[220px]">

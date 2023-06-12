@@ -99,7 +99,7 @@ Your Instrictor routes
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="myClasses" className="font-bold text-1xl ">
+                  <NavLink to="mySelectedClasses" className="font-bold text-1xl ">
                     My Selected Classes
                   </NavLink>
                 </li>

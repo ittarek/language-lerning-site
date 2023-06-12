@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MySelectClasses = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +15,45 @@ const MySelectClasses = () => {
       return res.json();
     },
   });
+
+// delete class by function
+const handleDelete = (_id) => {
+          Swal.fire({
+            title: "Are you sure?",
+            text: "are you sure Delete This Class ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, add !",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              fetch(`http://localhost:5000/payment/${_id}`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(data);
+                  if (data.deletedCount) {
+                    refetch();
+                    Swal.fire({
+                      position: "top-end",
+                      icon: "success",
+                      title: "Delete Successful",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  }
+                });
+            }
+          });
+        };
+
+
+
+
+
 
   return (
     <div className="w-full h-full mt-10">
@@ -27,6 +68,7 @@ const MySelectClasses = () => {
           <thead>
             <tr>
               <th>No</th>
+              <th>Image</th>
               <th>Name</th>
               <th>Instructor Name</th>
               <th>Price</th>
@@ -45,11 +87,12 @@ const MySelectClasses = () => {
                     alt="Class Image"
                   />
                 </td>
+                <td>{singleClass.class_name}</td>
                 <td>{singleClass.instructor_name}</td>
                 <td>{singleClass.price}</td>
-                <td className="btn">Pay</td>
+                <th ><button className="btn"><Link to={`payment/${singleClass._id}`}>Pay</Link></button></th>
                 <th>
-                  <button className="btn btn-ghost btn-xs">Delete</button>
+                  <button className="btn " onClick={()=>handleDelete(singleClass._id)}>Delete</button>
                 </th>
               </tr>
             ))}
