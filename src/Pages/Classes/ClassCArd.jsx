@@ -61,8 +61,12 @@ const ClassCArd = ({ classes }) => {
         price,
         _id,
         enrolled_students,
+        studentEmail: user?.email,
       };
 
+      // if (_id) {
+      //   alert("this class already have your dashboard");
+      // }
       axios
         .post(
           `${import.meta.env.VITE_API_URL}/selectedClass/${classes._id}`,

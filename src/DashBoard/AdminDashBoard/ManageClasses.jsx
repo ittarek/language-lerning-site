@@ -26,12 +26,12 @@ const ManageClasses = () => {
       confirmButtonText: "Yes, add !",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/AllClasses/approved/${myClass._id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
+        fetch(
+          `${import.meta.env.VITE_API_URL}/AllClasses/approved/${myClass._id}`,
+          {
+            method: "PATCH",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
@@ -114,7 +114,7 @@ const ManageClasses = () => {
               {/* row 1 */}
 
               {classes.map((myClass, index) => (
-                <tr key={myClass._id}>   
+                <tr key={myClass._id}>
                   <th>{index + 1}</th>
                   <td>
                     <div className="avatar mask mask-squircle w-12 h-12">
@@ -186,7 +186,6 @@ const ManageClasses = () => {
           </table>
         </div>
       </div>
-   
     </div>
   );
 };
