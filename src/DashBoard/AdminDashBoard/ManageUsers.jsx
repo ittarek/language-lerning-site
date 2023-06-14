@@ -24,7 +24,7 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, add !",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/users/admin/${user._id}`, {
           method: "PATCH",
         })
           .then((res) => res.json())
@@ -56,7 +56,7 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, add !",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+        fetch(`${import.meta.VITE_API_URL}/users/instructor/${user._id}`, {
           method: "PATCH",
         })
           .then((res) => res.json())

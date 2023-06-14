@@ -6,7 +6,7 @@ const Blog = () => {
           return (
                     <div>
                      <Helmet>
-        <title>Summer | Blog</title>
+        <title>Language Learner | Blog</title>
       </Helmet>
                               <Cover></Cover>
                     </div>

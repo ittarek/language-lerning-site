@@ -12,7 +12,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Instructors = () => {
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   const [classes] = useClass();
   console.log(classes);
@@ -20,7 +20,7 @@ const Instructors = () => {
     <div>
       {" "}
       <Helmet>
-        <title>Summer | Instructors</title>
+        <title>Language Learner | Instructor</title>
       </Helmet>
       <Container>
         {/* TOdo */}
@@ -30,8 +30,7 @@ const Instructors = () => {
           <div className="">
             <SectionTitle
               title=" Out Popular Instructors"
-              summary="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas,
-            similique?"
+              summary="Welcome to the world of learning! As your instructor, I am here to guide you on a transformative educational journey. Together, we will explore new ideas, expand your knowledge, and develop crucial skills. Through engaging discussions, interactive activities, and personalized support, I aim to empower you to reach your full potential."
             />
           </div>
           <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
@@ -50,9 +49,8 @@ const Instructors = () => {
 
                   {/* icon image */}
                   <div
-                    className="max-w-[120px] xl:mr-7 xl:max-w-[232px]"
-                    data-aos="zoom-in-right"
-                    data-aos-delay="400"
+                    className="max-w-[120px] xl:mr-7 xl:max-w-[232px]  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+             
                   >
                     <img src={instructor.instructor_img} />
                   </div>

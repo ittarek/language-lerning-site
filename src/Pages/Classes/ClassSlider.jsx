@@ -9,7 +9,7 @@ import women from '../../assets/img/women.png'
 import { useMotionValue, useTransform, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const Card = () => {
+const ClassSlider = () => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotateX = useTransform(y, [-100, 100], [30, -30]);
@@ -25,7 +25,7 @@ const Card = () => {
 
     return (
     // card wrapper
-    <div style={{ perspective: 2000 }}>
+    <div style={{ perspective: 2000 }} className='sm-max-w-[100px]'>
         {/* card */}
         <motion.div
         style={{ x, y, rotateX, rotateY, z: 100 }}
@@ -85,4 +85,4 @@ const Card = () => {
     );
 };
 
-export default Card;
+export default ClassSlider;

@@ -4,7 +4,7 @@ import { Helmet} from 'react-helmet-async'
 const News = () => {
           return (
                     <div>   <Helmet>
-                    <title>Summer | News</title>
+                    <title>Language Learner | News</title>
                   </Helmet>
                               <Cover></Cover>
                     </div>

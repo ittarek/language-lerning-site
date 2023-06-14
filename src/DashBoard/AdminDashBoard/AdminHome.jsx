@@ -1,11 +1,11 @@
 import React from 'react';
 
-const FeedBack = () => {
+const AdminHome = () => {
           return (
                     <div>
-                              <h1 className="h1">FeedBack</h1>
+                    <h2 className="h2">Admin Home</h2>
                     </div>
           );
 };
 
-export default FeedBack;
+export default AdminHome;

@@ -25,7 +25,9 @@ const ClassCard = ({ singleClass }) => {
   const [ratings, setRatings] = useState(rating);
   return (
     <Container>
-      <div className="single__classes__item col-span-3  card w-96  bg-base-100 shadow-xl mx-auto gap-5 mb-4">
+      <div className="single__classes__item col-span-3  card w-96  bg-base-100 shadow-xl mx-auto gap-5 mb-4" data-aos="fade-down"
+     data-aos-easing="linear"
+     data-aos-duration="1500">
         <div className="course__img">
           <img
             src={class_imgUrl ? class_imgUrl : "No Image"}

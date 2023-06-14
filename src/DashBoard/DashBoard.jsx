@@ -6,6 +6,7 @@ import useAdmin from "../Hooks/useAdmin";
 import { useQuery } from "@tanstack/react-query";
 import useInstructors from "../Hooks/useInstructor";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { FaAd, FaAdn, FaBookOpen, FaHandMiddleFinger, FaHistory, FaHome, FaHouzz, FaPeace, FaUser } from "react-icons/fa";
 
 const DashBoard = () => {
   const [isInstructor] = useInstructors();
@@ -31,38 +32,29 @@ const DashBoard = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="navbar menu p-4 w-80 h-full bg-zinc-400 text-base-content ">
+          <ul className="navbar menu p-4 w-80 h-full bg-black text-base-content ">
             {/* Sidebar content here */}
-            {/* { usreRole === 'admin' ?
-<>
-Your Admin routes
-<> :
-userRole === "instructor"?
-<>
-Your Instrictor routes
-<>:
-<> Students Routes<>
-
-} */}
+         
             {isAdmin ? (
               <>
                 {/* admin */}
                 <li>
                   <NavLink
-                    to="manageClasses"
-                    className="font-bold text-2xl text-purple-600 "
+                    to="adminHome"
+                    className="font-bold text-2xl text-white "
                   >
-                    Admin Home
+                   <FaAdn
+                    className="text-purple-400"></FaAdn> Admin Home
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="manageClasses" className="font-bold text-1xl ">
-                    Manage Classes
+                 <FaHouzz className="text-purple-400"/>   Manage Classes
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="manageUsers" className="font-bold text-1xl ">
-                    Manage Users
+                  <FaUser className="text-purple-400"></FaUser>  Manage Users
                   </NavLink>
                 </li>
               </>
@@ -73,17 +65,17 @@ Your Instrictor routes
                     to="instructorHome"
                     className="font-bold text-2xl text-purple-600 "
                   >
-                    Instructors Home
+                 <FaHome className="text-purple-400"/>   Instructors Home
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="addClass" className="font-bold text-1xl ">
-                    Add A Classes
+                   <FaAd className="text-purple-400"/> Add A Classes
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="myAddedClasses" className="font-bold text-1xl ">
-                    My Classes
+                  <FaBookOpen className="text-purple-400"/>  My Classes
                   </NavLink>
                 </li>
               </>
@@ -92,25 +84,25 @@ Your Instrictor routes
                 {" "}
                 <li>
                   <NavLink
-                    to="myClasses"
+                    to="studentHome"
                     className="font-bold text-2xl text-purple-600 "
                   >
-                    Student Home
+                    <FaHome className="text-purple-400"/> Student Home
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="mySelectedClasses" className="font-bold text-1xl ">
-                    My Selected Classes
+                  <NavLink to="mySelectedClasses" className="font-bold text-1xl text-white ">
+                   <FaBookOpen className="text-purple-400"/> My Selected Classes
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="myEnroll" className="font-bold text-1xl ">
-                    My Enroll Classes
+                  <NavLink to="myEnroll" className="font-bold text-1xl text-white ">
+                  <FaPeace className="text-purple-400"/>  My Enroll Classes
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="paymentHistory" className="font-bold text-1xl ">
-                    Payment History
+                  <NavLink to="paymentHistory" className="font-bold text-1xl text-white ">
+                   <FaHistory className="text-purple-400"/> Payment History
                   </NavLink>
                 </li>
               </>
@@ -118,8 +110,8 @@ Your Instrictor routes
 
             <div className=" divider text-red-400 mt-24"></div>
             <li>
-              <NavLink to="/" className="font-bold text-2xl  ">
-                Home
+              <NavLink to="/" className="font-bold text-2xl text-white  ">
+               <FaHome className="text-purple-400"></FaHome>  Home
               </NavLink>
             </li>
           </ul>

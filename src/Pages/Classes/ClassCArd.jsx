@@ -7,42 +7,62 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import useInstructor from "../../Hooks/useInstructor";
+import Container from "../../Componets/Container";
 const ClassCArd = ({ classes }) => {
   const { user } = useContext(AuthContext);
-  const [isAdmin] = useAdmin()
-  const [isInstructor] = useInstructor()
+  const [isAdmin] = useAdmin();
+  const [isInstructor] = useInstructor();
   const [disable, setDisable] = useState(true);
   const navigate = useNavigate();
-  const { class_name, instructor_name, class_imgUrl, available_seats, price } =
-    classes;
 
-  const notify = () =>{
+  const {
+    instructor_name,
+    instructor_email,
+    class_name,
+    class_imgUrl,
+    available_seats,
+    price,
+    _id,
+    enrolled_students,
+  } = classes;
+
+  const notify = () => {
     toast("Add This class is Selected got to dashboard !!!", {
       icon: "👏",
     });
-    setDisable(false)
-
-  }
-    
+    setDisable(false);
+  };
 
   const handleSelect = (classes) => {
-    const { instructor_name,class_name, class_imgUrl, available_seats, price, _id } =
-      classes;
+    const {
+      instructor_name,
+      instructor_email,
+      class_name,
+      class_imgUrl,
+      available_seats,
+      price,
+      _id,
+      enrolled_students,
+    } = classes;
     if (!user) {
-      confirm("at first login");
+      alert("At first Login !!!");
       return navigate("/login");
     } else {
       const newSelectedClass = {
         instructor_name,
+        instructor_email,
         class_name,
         class_imgUrl,
-        available_seats,
         price: parseFloat(price),
-        email: user.email,
+        available_seats,
+        price,
+        _id,
+        enrolled_students,
       };
+
       axios
         .post(
           `${import.meta.env.VITE_API_URL}/selectedClass/${classes._id}`,
@@ -57,8 +77,14 @@ const ClassCArd = ({ classes }) => {
     }
   };
   return (
-    <section className="">
-      <div className="class__item p-6 w-full h-full card rounded-3xl hover:bg-transparent hover:border-sky-200 bg-slate-300">
+    <Container>
+      <div
+        className={`class__item p-1 sm:w-full h-full card rounded-3xl hover:bg-transparent hover:border-sky-200 bg-slate-300   transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 border-l-4 border-white ${
+          available_seats === 0 ? "bg-red-200" : ""
+        }`}
+        // data-aos="fade-up"
+      >
+        {/* class__item p-6  w-full h-full card rounded-3xl hover:bg-transparent hover:border-sky-200 bg-slate-300 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 */}
         <div className=" card-image">
           <img
             className="rounded-2xl overflow-hidden"
@@ -85,13 +111,18 @@ const ClassCArd = ({ classes }) => {
             </p>
           </div>
         </div>
-      {
-        isAdmin || isInstructor ? ""   : <button className="btn"  disabled={!disable} onClick={() => handleSelect(classes)}>
-        Select <ToastContainer position="top-center"></ToastContainer>
-      </button>
-      }
+
+        <button
+          className="btn"
+          // disabled={!disable}
+          disabled={isAdmin || isInstructor}
+          onClick={() => handleSelect(classes)}
+        >
+          {!user?.email && navigate}select{" "}
+          <ToastContainer position="top-center"></ToastContainer>
+        </button>
       </div>
-    </section>
+    </Container>
   );
 };
 

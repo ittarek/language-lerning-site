@@ -36,6 +36,7 @@ const AddClass = () => {
             available_seats,
             status,
             instructor_img,
+            feedback
           } = data;
           const newClass = {
             class_name,
@@ -46,12 +47,12 @@ const AddClass = () => {
             instructor_img,
             class_imgUrl: imgURL,
             status: "pending",
+            feedback
           };
           // console.log(newClass);
           axiosSecure.post("/addClass", newClass).then((data) => {
-            // console.log("after posting new menu item", data.data);
             if (data.data.insertedId) {
-              //     reset();
+              // reset();
               Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -73,8 +74,14 @@ const AddClass = () => {
             <h1 className="text-white text-3xl mb-3">Welcome</h1>
             <div>
               <p className="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                suspendisse aliquam varius rutrum purus maecenas ac{" "}
+                Please let me know the specific subject or topic you would like
+                to have a class on, and I'll be happy to provide you with a
+                detailed lesson plan. Whether it's a one-on-one session or a
+                group class, I'll ensure that the content is structured,
+                informative, and interactive. Together, we'll dive deep into the
+                subject matter, explore key concepts, and engage in meaningful
+                discussions to enhance your understanding and learning
+                experience. Let's get started on your educational journey!
                 <a href="#" className="text-purple-500 font-semibold">
                   Learn more
                 </a>
@@ -140,7 +147,7 @@ const AddClass = () => {
                   type="text"
                   name="status"
                   placeholder="pending"
-                  //    defaultValue={pending}
+                    //  defaultValue={pending}
                   className="border border-gray-400 py-1 px-2 w-full hidden"
                 />{" "}
               </div>
@@ -155,7 +162,9 @@ const AddClass = () => {
                 />
               </div>
               <div className="mt-5 hidden">
-                <label htmlFor="" className="hidden">Instructor Image</label>
+                <label htmlFor="" className="hidden">
+                  Instructor Image
+                </label>
                 <input
                   type="image"
                   name="instructor_img"
@@ -164,6 +173,15 @@ const AddClass = () => {
                   value={user?.photoURL}
                   className="border border-gray-400 py-1 px-2 w-full image:hidden  rounded "
                 />
+              </div>
+              <div className="hidden">
+                <textarea
+                  name="feedback"
+                  id=""
+                  cols="30"
+                  rows="10"
+                  {...register("feedback")}
+                ></textarea>
               </div>
 
               <div className="mt-5">

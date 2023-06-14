@@ -47,11 +47,11 @@ const MyAddedClasses = () => {
                     <div className="font-bold">{myClass.class_name}</div>
                   </td>
                   <td>
-                    <div className="font-bold">{myClass.status}</div>
+                   { <div className="font-bold">{myClass.status === "approved" ? <span className="text-green-600">approved</span> :myClass.status ==="pending" ? <span className="text-yellow-600">pending</span> : <span className="text-red-400">denied</span>  }</div>}
                   </td>
                   <td>
                     <div className="font-bold text-center">
-                      {" "}
+               
                       {myClass.enrolled_students
                         ? myClass.enrolled_students
                         : 0}
@@ -68,7 +68,7 @@ const MyAddedClasses = () => {
                   <th>
                     <div className="font-bold  text-2xl">
                       <Link
-                        to="/feedback"
+                        to="instructorFeedback"
                         className="btn text-purple-500"
                         onClick={() => handleFeedback(myClass)}
                       >

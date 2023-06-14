@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "./../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import "./Register.css";
 
 const Register = () => {
   const { registration, userUpdating } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const ref = useRef();
+
   // react hook form
   const {
     register,
@@ -22,6 +23,10 @@ const Register = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  const password = useRef({});
+  password.current = watch("password", "");
+
   // password show function
   const handleShowPassword = () => {
     setShowPassword((preve) => !preve);
@@ -35,7 +40,7 @@ const Register = () => {
   const onSubmit = (data) => {
     registration(data.email, data.password).then((result) => {
       const loggedUser = result.user;
-      console.log(loggedUser);
+      // console.log(loggedUser);
 
       userUpdating(data.name, data.photoURL)
         .then(() => {
@@ -66,16 +71,19 @@ const Register = () => {
               }
             });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          if (error) {
+            setError(error.message);
+            Swal.fire({
+              position: "top-end",
+              icon: "warning",
+              title: "Something wrong",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
     });
-    if (data.password.length < 6) {
-      setError("Password Al least 6 Character");
-      return;
-    }
-    if (data.password !== data.confirmPassword) {
-      setError("Password Does Not Match");
-      return;
-    }
   };
 
   return (
@@ -87,8 +95,13 @@ const Register = () => {
               <h1 className="text-white text-3xl mb-3">Welcome</h1>
               <div>
                 <p className="text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aenean suspendisse aliquam varius rutrum purus maecenas ac{" "}
+                  Discover the endless possibilities of our website by signing
+                  up today. Gain access to premium features, personalized
+                  recommendations, and member-only perks. Stay up-to-date with
+                  the latest news, events, and promotions. Join a vibrant
+                  community of like-minded individuals, share your thoughts, and
+                  connect with others who share your interests. Don't miss out,
+                  sign up now!{" "}
                   <Link to="" className="text-purple-500 font-semibold">
                     Learn more
                   </Link>
@@ -106,7 +119,7 @@ const Register = () => {
                     type="text"
                     placeholder="Name"
                     {...register("name", { required: true })}
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="input input-bordered border-gray-800 py-1 px-2 w-full"
                   />{" "}
                   {errors.name && (
                     <span className="text-red-600">Name field is required</span>
@@ -118,10 +131,10 @@ const Register = () => {
                     placeholder="Email"
                     name="email"
                     {...register("email", { required: true })}
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="input input-bordered border-gray-800 py-1 px-2 w-full"
                   />{" "}
                   {errors.email && (
-                    <span className="text-red-600">
+                    <span className="text-red-600 error-p">
                       Email field is required
                     </span>
                   )}
@@ -133,12 +146,10 @@ const Register = () => {
                     name="password"
                     {...register("password", {
                       required: true,
-
-                      pattern: /(?=.*[A-Z].)/,
-                      pattern: /(?=.*[a-z].)/,
-                      pattern: /(?=.*[0-9].)/,
+                      minLength: 6,
+                      pattern: /(?=.*[A-Z].)(?=.*[0-9])(?=.*[a-z])/,
                     })}
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    className="input input-bordered border-gray-800 py-1 px-2 w-full"
                   />{" "}
                   <span
                     className="-right-[300px] -top-8 relative text-xl cursor-pointer"
@@ -151,29 +162,29 @@ const Register = () => {
                       Password field is required
                     </span>
                   )}
-                  {errors.password?.type === "pattern" && (
-                    <span className="text-red-600 block">
-                      Password must be 1 uppercase
-                    </span>
-                  )}
-                  {errors.password?.type === "pattern" && (
-                    <span className="text-red-600 block">
-                      Password must be 1 lowercase
+                  {errors.password?.type === "minLength" && (
+                    <span className="text-red-600">
+                      Password must be 6 character
                     </span>
                   )}
                   {errors.password?.type === "pattern" && (
                     <span className="text-red-600">
-                      Password must be 1 number
+                      Password must be 1 uppercase 1 number 1 lowercase{" "}
                     </span>
                   )}
                 </div>
                 <div className="mt-1">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword2 ? "text" : "password"}
                     name="confirmPassword"
                     placeholder="Confirm Password"
-                    {...register("confirmPassword", { required: true })}
-                    className="border border-gray-400 py-1 px-2 w-full"
+                    {...register("confirmPassword", {
+                      required: true,
+                      validate: (value) =>
+                        value === password.current ||
+                        "The passwords do not match",
+                    })}
+                    className="input input-bordered border-gray-800 border-gray-400 py-1 px-2 w-full"
                   />{" "}
                   <span
                     className="-right-[300px] -top-8 relative text-xl cursor-pointer"
@@ -182,10 +193,13 @@ const Register = () => {
                     {showPassword2 ? <FaEye /> : <FaEyeSlash />}
                   </span>
                   {errors.confirmPassword && (
-                    <span className="text-red-600">
-                      Confirm Password is required
-                    </span>
-                  )}{" "}
+                    <p className="error-p">
+                      {errors.confirmPassword.message} ||{" "}
+                      <span className="text-red-600">
+                        Confirm Password is required
+                      </span>{" "}
+                    </p>
+                  )}
                   <span className="text-red-600">{error}</span>
                 </div>
                 <div className="form-control">
@@ -200,19 +214,6 @@ const Register = () => {
                   )}
                 </div>
                 <div className="mt-5">
-                  <input type="checkbox" className="border border-gray-400" />
-                  <span>
-                    I accept the{" "}
-                    <Link to="" className="text-purple-500 font-semibold">
-                      Terms of Use
-                    </Link>{" "}
-                    &{" "}
-                    <Link to="" className="text-purple-500 font-semibold">
-                      Privacy Policy
-                    </Link>
-                  </span>
-                </div>
-                <div className="mt-5">
                   <button className="w-full bg-purple-500 py-3 text-center text-white">
                     <input type="submit" value="Register Now" />
                   </button>
@@ -222,8 +223,9 @@ const Register = () => {
                   <Link to="/login" className="text-purple-500">
                     Login
                   </Link>
-                </span>
-              </form>
+                </span>{" "}
+
+              </form>  <span className="text-red-800 text-2xl font-bolder ">{error}</span>
             </div>
           </div>
         </div>

@@ -19,7 +19,6 @@ const Teachers = () => {
     },
   });
 
-
   return (
     <section className="">
       {/* Todo */}
@@ -46,12 +45,14 @@ const Teachers = () => {
                 </div>
 
                 {/* icon image */}
-                <div
-                  className="max-w-[120px] xl:mr-7 xl:max-w-[232px]"
-                  data-aos="zoom-in-right"
-                  data-aos-delay="400"
-                >
-                  <img src={item?.instructor_img} />
+                <div className="max-w-[120px] xl:mr-7 xl:max-w-[232px]  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-125">
+                  <img
+                    src={item?.instructor_img}
+                   
+                  />
+ {/* data-aos="zoom-in-right" */}
+                    {/* data-aos-delay="400" */}
+
                 </div>
                 {/* text */}
                 <div className="max-w-[220px]">

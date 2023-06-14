@@ -131,12 +131,17 @@ const Navbar = () => {
 
       <Container>
         {" "}
-        <div className="navbar top-14 z-10 bg-opacity-30 absolute font-bold  text-white">
+        <div className="navbar top-10 z-10 bg-opacity-30 absolute font-bold  text-white">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-5 w-5 bg-green-800 text-white 
+           
+                
+                
+                
+  "
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

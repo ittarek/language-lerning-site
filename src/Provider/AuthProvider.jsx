@@ -69,7 +69,7 @@ const AuthProvider = ({ children }) => {
       // get and set token
       if (currentUser) {
         axios
-          .post("http://localhost:5000/jwt", {
+          .post(`${import.meta.env.VITE_API_URL}/jwt`, {
             email: currentUser.email,
           })
           .then((data) => {

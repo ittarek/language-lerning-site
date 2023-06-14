@@ -25,9 +25,9 @@ const {data: classes = [], isLoading: loading, refetch,} = useQuery({
         <div className="course__top flex justify-between items-center">
           <SectionTitle
             title="Top 6 Popular Classes"
-            summary=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-                consequatur libero quod voluptatibus ullam quia quas, vitae
-                voluptatem recusandae reprehenderit!"
+            summary="Introduction to Programming: Learn the fundamentals of coding, explore different programming languages, and develop problem-solving skills.
+
+            Creative Writing Workshop: Unleash your creativity and enhance your writing skills through engaging exercises, prompts, and constructive feedback.!"
           />
 
           {/* <div className="w-50 text-end">

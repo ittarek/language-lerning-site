@@ -13,13 +13,23 @@ const AboutUs = () => {
         <SectionTitle title="about us" />
         <div className="lg:flex my-10 gap-10">
           <div className="col">
-            <div className="about__img">
+            <div
+              className="about__img"
+              data-aos="flip-left"
+              data-aos-easing="ease-out-cubic"
+              data-aos-duration="2000"
+            >
               <img src={aboutImg} alt="" className="w-100" />
             </div>
           </div>
 
           <div>
-            <div className="about__content">
+            <div
+              className="about__content"
+              data-aos="fade-up"
+              data-aos-easing="ease-out-cubic"
+              data-aos-duration="1500"
+            >
               <h2>About Us</h2>
               <p>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.

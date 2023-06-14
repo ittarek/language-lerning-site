@@ -3,23 +3,17 @@ import useClass from "../../Hooks/useClass";
 
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-// import useAxiosSecure from "../../Hooks/useAxiosSecure";
-// import { useQuery } from "@tanstack/react-query";
-// import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import AdminFeedBack from "./AdminFeedBack";
 
 const ManageClasses = () => {
   const [classes, , refetch] = useClass();
-  const [show, setShow] = useState(true);
 
-  //   handle Approve button
-  // const notify = () =>
-  //   toast("Add This class is  Selected !!!", {
-  //     icon: "👏",
-  //   });
-  // const handlebtn = () => {
-  //   notify();
-  //   setShow(false);
-  // };
+  const notify = () => {
+    toast("This Button is Disabled !!!", {
+      icon: "👏",
+    });
+  };
 
   const handleApprove = (myClass) => {
     Swal.fire({
@@ -32,18 +26,57 @@ const ManageClasses = () => {
       confirmButtonText: "Yes, add !",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/AllClasses/${myClass._id}`, {
+        fetch(`http://localhost:5000/AllClasses/approved/${myClass._id}`, {
           method: "PATCH",
+          headers: {
+            "Content-type": "application/json",
+          },
         })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
             if (data.modifiedCount) {
+              notify();
               refetch();
               Swal.fire({
                 position: "top-end",
                 icon: "success",
                 title: "Approve Successful",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      }
+    });
+  };
+  const handleDenied = (myClass) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "are you sure add this Denied ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, add !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(
+          `${import.meta.env.VITE_API_URL}/AllClasses/denied/${myClass._id}`,
+          {
+            method: "PATCH",
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.modifiedCount) {
+              notify();
+              refetch();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Denied Successful",
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -81,7 +114,7 @@ const ManageClasses = () => {
               {/* row 1 */}
 
               {classes.map((myClass, index) => (
-                <tr key={myClass._id}>
+                <tr key={myClass._id}>   
                   <th>{index + 1}</th>
                   <td>
                     <div className="avatar mask mask-squircle w-12 h-12">
@@ -105,34 +138,46 @@ const ManageClasses = () => {
                   </td>
                   <td>
                     <div className="font-bold text-green-400">
-                      {myClass.status === "pending" ? "Pending" : myClass.status === "approved" ? "Approve" : <p className="text-yellow-800">pending</p>}
+                      {myClass.status === "pending" ? (
+                        "Pending"
+                      ) : myClass.status === "approved" ? (
+                        "Approve"
+                      ) : (
+                        <p className="text-yellow-800">denied</p>
+                      )}
                     </div>
                   </td>
                   <th>
-                    {show && (
-                      <button
-                        onClick={() => handleApprove(myClass)}
-                        className="btn"
-                    
-                      >
-                        Approve{" "}
-                        
-                      </button>
-                    )}
+                    <button
+                      // disabled={!disable1}
+                      onClick={() => handleApprove(myClass)}
+                      className="btn"
+                      disabled={myClass.status === "approved"}
+                    >
+                      Approve
+                      <ToastContainer position="top-center"></ToastContainer>
+                    </button>
                   </th>{" "}
                   <th>
                     <button
                       onClick={() => handleDenied(myClass)}
                       className="btn"
+                      disabled={myClass.status === "denied"}
                     >
-                      Denied
+                      Deny
+                      <ToastContainer position="top-center"></ToastContainer>
                     </button>
-                  </th>{" "}
+                  </th>
                   <th>
                     <div className="font-bold  text-2xl">
-                      <Link to="/feedback" className="btn text-purple-500">
-                        Feedback
-                      </Link>
+                      <button className="btn">
+                        <Link
+                          to={`adminFeedBack/${myClass._id}`}
+                          className=" text-purple-500"
+                        >
+                          Feedback
+                        </Link>
+                      </button>
                     </div>
                   </th>
                 </tr>
@@ -141,6 +186,7 @@ const ManageClasses = () => {
           </table>
         </div>
       </div>
+   
     </div>
   );
 };

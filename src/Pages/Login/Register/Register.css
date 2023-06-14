@@ -4,3 +4,11 @@
 .bg-image {
   background-image: url("../../../assets/login/Register-Background.png");
 }
+.error-p{
+  color: red;
+}
+.error-p::before {
+  color: red;
+  display: inline;
+  content: "⚠ ";
+}
