@@ -22,7 +22,7 @@ const DashBoard = () => {
         {" "}
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center justify-center">
-          {/* Page content here */} <Outlet />
+          {/* Page content here */} <h1>DashBoard</h1> <Outlet />
           <label
             htmlFor="my-drawer-2"
             className="btn btn-primary drawer-button lg:hidden"
@@ -112,6 +112,11 @@ const DashBoard = () => {
             <li>
               <NavLink to="/" className="font-bold text-2xl text-white  ">
                <FaHome className="text-purple-400"></FaHome>  Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/classes" className="font-bold text-2xl text-white  ">
+               <FaBookOpen className="text-purple-400"></FaBookOpen>  Classes
               </NavLink>
             </li>
           </ul>

@@ -8,7 +8,7 @@ const useAdmin = () => {
   const {user, spinner} = useContext(AuthContext)
   const [axiosSecure] = useAxiosSecure();
   const {data: isAdmin, isLoading: isAdminLoading} = useQuery({
-enabled: !spinner,
+    enabled: !spinner && !!user?.email && !!localStorage.getItem("access-token"),
       queryKey: ['isAdmin', user?.email],
       queryFn: async () => {
           const res = await axiosSecure.get(`/users/admin/${user?.email}`);

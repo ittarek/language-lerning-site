@@ -10,9 +10,9 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-
 const Login = () => {
   const { user, login } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,7 +35,7 @@ const Login = () => {
         const loggedUser = result.user;
         console.log(loggedUser);
 
-      Swal.fire({
+        Swal.fire({
           position: "top-end",
           icon: "success",
           title: "login  has been successFul",
@@ -46,7 +46,7 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        console.log(error.message);
+       setError(error.message);
       });
   };
   return (
@@ -57,10 +57,12 @@ const Login = () => {
         </div>
 
         <div className="bg-gray-900 flex flex-col justify-center ">
+       
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-[400px] w-full mx-auto rounded-lg  p-8 px-8"
           >
+               <p className="text-red-400">{error}</p>
             <h2 className="text-4xl dark:text-white font-bold text-center">
               SIGN IN
             </h2>
@@ -83,12 +85,13 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 {...register("password", { required: true })}
-              />  <span
-              className="-right-[300px] -top-8 relative text-xl cursor-pointer"
-              onClick={handleShowPassword}
-            >
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
-            </span>
+              />{" "}
+              <span
+                className="-right-[300px] -top-8 relative text-xl cursor-pointer"
+                onClick={handleShowPassword}
+              >
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </span>
               {errors.password && (
                 <span className="text-red-600">Password field is required</span>
               )}

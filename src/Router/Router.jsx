@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayOut from "../LayOut/MainLayOut";
 import Home from "../Pages/Home_page/Home";
 import Login from "../Pages/Login/Login";
-import Register from "../Pages/Login/Register/Register";
+import Register from "../Pages/Register/Register";
 import Instructors from "../Pages/Instructors_page/Instructors";
 import Classes from "../Pages/Classes/Classes";
 import Blog from "../Pages/Blog/Blog";
@@ -95,9 +95,8 @@ export const router = createBrowserRouter([
       {
         path: "mySelectedClasses/payment/:id",
         element: <Payment></Payment>,
-        loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_URL}/paymentClass/${params.id}`),
       },
+
       {
         path: "paymentHistory",
         element: <PaymentHistory></PaymentHistory>,

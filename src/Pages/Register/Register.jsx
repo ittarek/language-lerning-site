@@ -3,7 +3,7 @@ import "./Register.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useContext, useRef, useState } from "react";
-import { AuthContext } from "./../../../Provider/AuthProvider";
+import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import "./Register.css";
 

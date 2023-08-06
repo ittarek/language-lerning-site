@@ -3,29 +3,33 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-// import useClass from "../../Hooks/useClass";
+import useClass from "../../Hooks/useClass";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
 // import Spinner from './../../Componets/Spinner';
 
 const MySelectClasses = () => {
   const { user, spinner } = useContext(AuthContext);
-  // const [classes] = useClass()
+  const [classes] = useClass();
+  const [axiosSecure] = useAxiosSecure();
   const { data: classData = [], refetch } = useQuery({
+  
     queryKey: ["classData", user?.email],
-    // enabled: !Spinner,
+    
+    enabled: !spinner && !!user?.email && !!localStorage.getItem("access-token"),
+
     queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/getSelectedClass`
-      );
-
-      // console.log("classData", classData);
-      return res.json();
-    },
+      const res= await axiosSecure.get(`/getSelectedClass?email=${user?.email}`);
+      // console.log(classData);
+      // console.log(res.data);
+      return res.data;
+}
   });
-
+  console.log(classData);
   const filterClass = classData.filter(
     (emailFiled) => user?.email === emailFiled.studentEmail
   );
-  console.log(filterClass);
+  // console.log("email",filterClass);
 
   // delete class by function
   const handleDelete = (_id) => {

@@ -12,7 +12,7 @@ const useClass = () => {
   } = useQuery({
     queryKey: ["classes"],
 
-    // enabled: !spinner,
+    enabled: !spinner,
 
     queryFn: async () => {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/AllClasses`);

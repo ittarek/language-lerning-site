@@ -11,11 +11,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import useInstructor from "../../Hooks/useInstructor";
 import Container from "../../Componets/Container";
-const ClassCArd = ({ classes }) => {
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+const ClassCArd = ({ classes, refetch }) => {
   const { user } = useContext(AuthContext);
+
   const [isAdmin] = useAdmin();
   const [isInstructor] = useInstructor();
-  const [disable, setDisable] = useState(true);
+  const [disable, setDisable] = useState(false);
+  const [axiosSecure] = useAxiosSecure()
   const navigate = useNavigate();
 
   const {
@@ -29,13 +33,6 @@ const ClassCArd = ({ classes }) => {
     enrolled_students,
   } = classes;
 
-  const notify = () => {
-    toast("Add This class is Selected got to dashboard !!!", {
-      icon: "👏",
-    });
-    setDisable(false);
-  };
-
   const handleSelect = (classes) => {
     const {
       instructor_name,
@@ -47,10 +44,7 @@ const ClassCArd = ({ classes }) => {
       _id,
       enrolled_students,
     } = classes;
-    if (!user) {
-      alert("At first Login !!!");
-      return navigate("/login");
-    } else {
+    if (user && user.email) {
       const newSelectedClass = {
         instructor_name,
         instructor_email,
@@ -59,32 +53,42 @@ const ClassCArd = ({ classes }) => {
         price: parseFloat(price),
         available_seats,
         price,
-        _id,
+        classId:_id,
         enrolled_students,
         studentEmail: user?.email,
       };
 
-      // if (_id) {
-      //   alert("this class already have your dashboard");
-      // }
-      axios
-        .post(
-          `${import.meta.env.VITE_API_URL}/selectedClass/${classes._id}`,
-          newSelectedClass
-        )
-        .then((data) => {
-          console.log(data.data);
-          if (data.data.insertedId) {
-            notify();
-          }
-        });
+
+      axiosSecure.post("/selectedClass" ,newSelectedClass)
+      .then((res) => {
+        if (res.data.insertedId) {
+          // refetch();
+          // alert('opk')
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setDisable(true)
+        }
+      });
+
+     
+    } else {
+      toast("At first Login!!!", {
+        icon: "👏",
+      });
+      return navigate("/login");
     }
   };
   return (
     <Container>
       <div
         className={`class__item p-1 sm:w-full h-full card rounded-3xl hover:bg-transparent hover:border-sky-200 bg-slate-300   transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 border-l-4 border-white ${
-          available_seats === 0 ? "bg-red-200" : ""
+          available_seats === 0 ? "bg-red-400" : ""
         }`}
         // data-aos="fade-up"
       >
@@ -119,11 +123,17 @@ const ClassCArd = ({ classes }) => {
         <button
           className="btn"
           // disabled={!disable}
-          disabled={isAdmin || isInstructor}
+          disabled={
+            isAdmin === true ||
+            isInstructor === true ||
+            available_seats === 0 ||
+            disable
+          }
           onClick={() => handleSelect(classes)}
         >
-          {!user?.email && navigate}select{" "}
-          <ToastContainer position="top-center"></ToastContainer>
+          {!user?.email && navigate}
+          select
+           {/* <ToastContainer position="top-center"></ToastContainer> */}
         </button>
       </div>
     </Container>

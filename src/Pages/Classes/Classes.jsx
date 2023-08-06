@@ -9,7 +9,7 @@ import SectionTitle from "../../Componets/SectionTitle";
 import { useQuery } from "@tanstack/react-query";
 
 const Classes = () => {
-  const [classes] = useClass();
+  const [classes  , refetch] = useClass();
   const approvedClass = classes.filter(
     (filterClass) => filterClass.status === "approved"
   );
@@ -52,7 +52,7 @@ const Classes = () => {
               <div className="grid lg:grid-cols-3  gap-10">
                 {" "}
                 {approvedClass.map((classes) => (
-                  <ClassCArd key={classes._id} classes={classes}></ClassCArd>
+                  <ClassCArd key={classes._id} classes={classes} refetch={refetch}></ClassCArd>
                 ))}
               </div>
             </div>

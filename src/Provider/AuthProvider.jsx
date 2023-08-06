@@ -70,12 +70,12 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         axios
           .post(`${import.meta.env.VITE_API_URL}/jwt`, {
-            email: currentUser.email,
+            email: currentUser?.email,
           })
           .then((data) => {
             // console.log(data.data.token)
-            const token = data.data.token;
-            localStorage.setItem("access-token", token);
+
+            localStorage.setItem("access-token",   data.data.token);
             setSpinner(false);
           });
       } else {
