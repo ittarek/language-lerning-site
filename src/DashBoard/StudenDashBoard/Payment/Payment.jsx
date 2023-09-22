@@ -11,34 +11,17 @@ import SectionTitle from "../../../Componets/SectionTitle";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 // loadStripe
 const stripePromise = loadStripe(import.meta.env.VITE_payment_getWay_pk);
 
 // console.log(import.meta.env.VITE_payment_getWay_pk);
 const Payment = () => {
-  const { user, spinner } = useContext(AuthContext);
+  const paymentCourse = useLoaderData();
 
-  const [classes] = useClass();
-  const { id } = useParams();
-  const paymentCourse = classes.find((course) => course._id === id);
   const price = parseFloat(paymentCourse?.price);
-  console.log(price);
-
-  const handleSuccess = () => {
-    Swal.fire({
-      icon: "success",
-      title: "Payment was successful",
-      time: 4000,
-    });
-  };
-  const handleFailure = () => {
-    Swal.fire({
-      icon: "error",
-      title: "Payment was not successful",
-      time: 4000,
-    });
-  };
+  console.log("price", price);
 
   return (
     <Container>
@@ -53,7 +36,7 @@ const Payment = () => {
             <CheckoutForm
               price={price}
               selectCourse={paymentCourse}
-              classes={classes}
+              // classes={classes}
             ></CheckoutForm>
           </Elements>
         </div>

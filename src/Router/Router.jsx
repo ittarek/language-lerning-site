@@ -95,6 +95,10 @@ export const router = createBrowserRouter([
       {
         path: "mySelectedClasses/payment/:id",
         element: <Payment></Payment>,
+        loader: ({ params }) =>
+          fetch(
+            `${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`
+          ),
       },
 
       {

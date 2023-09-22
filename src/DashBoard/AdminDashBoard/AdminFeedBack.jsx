@@ -5,7 +5,7 @@ import useClass from "../../Hooks/useClass";
 const AdminFeedBack = () => {
 
           const [classes] = useClass()
-          console.log(classes);
+          // console.log(classes);
   const notify = () => {
     toast("This Button is Disabled !!!", {
       icon: "👏",
@@ -23,7 +23,7 @@ const AdminFeedBack = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       });
   };
 

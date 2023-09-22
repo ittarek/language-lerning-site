@@ -7,10 +7,15 @@ import { useQuery } from "@tanstack/react-query";
 import useInstructors from "../Hooks/useInstructor";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { FaAd, FaAdn, FaBookOpen, FaHandMiddleFinger, FaHistory, FaHome, FaHouzz, FaPeace, FaUser } from "react-icons/fa";
+import Spinner from "../Componets/Spinner";
 
 const DashBoard = () => {
   const [isInstructor] = useInstructors();
   const [isAdmin] = useAdmin();
+
+  if(isAdmin){
+    return <Spinner/>
+  }
 
   return (
     <div>
@@ -35,7 +40,7 @@ const DashBoard = () => {
           <ul className="navbar menu p-4 w-80 h-full bg-black text-base-content ">
             {/* Sidebar content here */}
          
-            {isAdmin ? (
+            {isAdmin && !isInstructor && 
               <>
                 {/* admin */}
                 <li>
@@ -58,8 +63,8 @@ const DashBoard = () => {
                   </NavLink>
                 </li>
               </>
-            ) : isInstructor ? (
-              <>
+}
+{isInstructor && !isAdmin &&    <>
                 <li>
                   <NavLink
                     to="instructorHome"
@@ -78,35 +83,36 @@ const DashBoard = () => {
                   <FaBookOpen className="text-purple-400"/>  My Classes
                   </NavLink>
                 </li>
-              </>
-            ) : (
-              <>
-                {" "}
-                <li>
-                  <NavLink
-                    to="studentHome"
-                    className="font-bold text-2xl text-purple-600 "
-                  >
-                    <FaHome className="text-purple-400"/> Student Home
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="mySelectedClasses" className="font-bold text-1xl text-white ">
-                   <FaBookOpen className="text-purple-400"/> My Selected Classes
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="myEnroll" className="font-bold text-1xl text-white ">
-                  <FaPeace className="text-purple-400"/>  My Enroll Classes
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="paymentHistory" className="font-bold text-1xl text-white ">
-                   <FaHistory className="text-purple-400"/> Payment History
-                  </NavLink>
-                </li>
-              </>
-            )}
+              </> }
+           
+    {user && !isAdmin && !isInstructor &&    <>
+              
+              <li>
+                <NavLink
+                  to="studentHome"
+                  className="font-bold text-2xl text-purple-600 "
+                >
+                  <FaHome className="text-purple-400"/> Student Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="mySelectedClasses" className="font-bold text-1xl text-white ">
+                 <FaBookOpen className="text-purple-400"/> My Selected Classes
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="myEnroll" className="font-bold text-1xl text-white ">
+                <FaPeace className="text-purple-400"/>  My Enroll Classes
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="paymentHistory" className="font-bold text-1xl text-white ">
+                 <FaHistory className="text-purple-400"/> Payment History
+                </NavLink>
+              </li>
+            </>}
+           
+ 
 
             <div className=" divider text-red-400 mt-24"></div>
             <li>

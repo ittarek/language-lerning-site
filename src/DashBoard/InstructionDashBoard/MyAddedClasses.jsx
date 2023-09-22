@@ -9,7 +9,7 @@ const MyAddedClasses = () => {
   const filterClass = classes.filter(
     (emailFiled) => user?.email === emailFiled.instructor_email
   );
-  console.log(filterClass);
+  // console.log(filterClass);
   return (
     <div className="w-full h-full mt-16 mx-4 px-4">
       <h2 className="h2">My Classes : {filterClass.length}</h2>

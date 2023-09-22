@@ -16,7 +16,7 @@ const AddClass = () => {
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_Hosting_Key}`;
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     const formData = new FormData();
     formData.append("image", data.image[0]);
 
