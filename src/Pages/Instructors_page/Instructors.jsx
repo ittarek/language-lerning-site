@@ -15,7 +15,7 @@ const Instructors = () => {
   const { user } = useContext(AuthContext);
 
   const [classes] = useClass();
-  console.log(classes);
+  // console.log(classes);
   return (
     <div>
       {" "}

@@ -8,12 +8,15 @@ import useInstructors from "../Hooks/useInstructor";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { FaAd, FaAdn, FaBookOpen, FaHandMiddleFinger, FaHistory, FaHome, FaHouzz, FaPeace, FaUser } from "react-icons/fa";
 import Spinner from "../Componets/Spinner";
+import { useContext } from "react";
+import  { AuthContext } from "../Provider/AuthProvider";
 
 const DashBoard = () => {
+  const {user} = useContext(AuthContext)
   const [isInstructor] = useInstructors();
-  const [isAdmin] = useAdmin();
+  const [isAdmin, isAdminLoading] = useAdmin();
 
-  if(isAdmin){
+  if(isAdminLoading){
     return <Spinner/>
   }
 
@@ -41,7 +44,7 @@ const DashBoard = () => {
             {/* Sidebar content here */}
          
             {isAdmin && !isInstructor && 
-              <>
+             ( <>
                 {/* admin */}
                 <li>
                   <NavLink
@@ -62,9 +65,10 @@ const DashBoard = () => {
                   <FaUser className="text-purple-400"></FaUser>  Manage Users
                   </NavLink>
                 </li>
-              </>
+              </>)
 }
-{isInstructor && !isAdmin &&    <>
+{isInstructor && !isAdmin && 
+  ( <>
                 <li>
                   <NavLink
                     to="instructorHome"
@@ -83,9 +87,11 @@ const DashBoard = () => {
                   <FaBookOpen className="text-purple-400"/>  My Classes
                   </NavLink>
                 </li>
-              </> }
+              </>)
+               }
            
-    {user && !isAdmin && !isInstructor &&    <>
+    {user && !isAdmin && !isInstructor && 
+    (   <>
               
               <li>
                 <NavLink
@@ -110,7 +116,8 @@ const DashBoard = () => {
                  <FaHistory className="text-purple-400"/> Payment History
                 </NavLink>
               </li>
-            </>}
+            </>)
+            }
            
  
 
