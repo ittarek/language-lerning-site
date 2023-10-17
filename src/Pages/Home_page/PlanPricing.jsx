@@ -61,7 +61,7 @@ const PlanPricing = () => {
                       {plan.details}
                     </p>
                   </div>
-                  <div className="mx-auto  lg:-mb-[40%]">
+                  <div className="mx-auto  lg:-mb-[40%] -mt-8">
                     <button
                       className="btn  
                      bg-green-800"

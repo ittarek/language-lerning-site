@@ -8,6 +8,7 @@ import Popular_classes from './Popular_section/Popular_classes';
 import Teachers from './Teachers/Teachers ';
 import StartingCourse from "./StartingCourse";
 import PlanPricing from "./PlanPricing";
+import TrandingArticle from "./TrandingArticle";
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <Teachers></Teachers>
       <StartingCourse />
       <PlanPricing />
+      <TrandingArticle />
       <AboutUs></AboutUs> 
     </div>
   );
