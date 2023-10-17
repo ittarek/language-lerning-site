@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../../Componets/Container";
 import Cover from "../../Componets/Cover";
 import { Helmet } from "react-helmet-async";
-import ClassSlider from "./ClassSlider";
+import SilderClass from "./SilderClass";
 import ClassCArd from "./ClassCArd";
 import useClass from "../../Hooks/useClass";
 import SectionTitle from "../../Componets/SectionTitle";
@@ -41,7 +41,7 @@ const Classes = () => {
           <div className="">
             <div className="bg-dark" data-aos="fade-up" data-aos-offset="300">
               <div className="w-full h-screen bg-[#c9cbbe] flex items-center justify-center">
-                <ClassSlider />
+                <SilderClass />
               </div>{" "}
               <SectionTitle
                 title="Our Classes"
@@ -51,8 +51,12 @@ const Classes = () => {
               </SectionTitle>
               <div className="grid lg:grid-cols-3  gap-10">
                 {" "}
-                {approvedClass.map((classes) => (
-                  <ClassCArd key={classes._id} classes={classes} refetch={refetch}></ClassCArd>
+                {approvedClass.map(classes => (
+                  <ClassCArd
+                    key={classes._id}
+                    classes={classes}
+                    refetch={refetch}
+                  ></ClassCArd>
                 ))}
               </div>
             </div>

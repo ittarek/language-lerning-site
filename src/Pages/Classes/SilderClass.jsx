@@ -9,7 +9,7 @@ import women from '../../assets/img/women.png'
 import { useMotionValue, useTransform, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const ClassSlider = () => {
+const SilderClass = () => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotateX = useTransform(y, [-100, 100], [30, -30]);
@@ -85,4 +85,4 @@ const ClassSlider = () => {
     );
 };
 
-export default ClassSlider;
+export default SilderClass;

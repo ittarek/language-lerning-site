@@ -6,6 +6,8 @@ import AboutUs from "./AboutUs/AboutUs";
 
 import Popular_classes from './Popular_section/Popular_classes';
 import Teachers from './Teachers/Teachers ';
+import StartingCourse from "./StartingCourse";
+import PlanPricing from "./PlanPricing";
 
 const Home = () => {
   return (
@@ -18,6 +20,8 @@ const Home = () => {
       </Container>
       <Popular_classes></Popular_classes>
       <Teachers></Teachers>
+      <StartingCourse />
+      <PlanPricing />
       <AboutUs></AboutUs> 
     </div>
   );
