@@ -1,22 +1,22 @@
 import React from "react";
 import useClass from "../../Hooks/useClass";
-import Container from "../../Componets/Container";
+import Container from "../../Components/Container";
 
 const InsTructionFeedBack = () => {
-  const [classes] = useClass();
+    const [classes] = useClass();
 
-  return (
-    <div className="w-full ">
-      <Container>
-        <div>
-          Feedback :{" "}
-          {classes.map((feedback) => (
-            <div> {feedback.feedback && <p>{feedback.feedback}</p>}</div>
-          ))}
+    return (
+        <div className="w-full ">
+            <Container>
+                <div>
+                    Feedback :{" "}
+                    {classes.map((feedback) => (
+                        <div> {feedback.feedback && <p>{feedback.feedback}</p>}</div>
+                    ))}
+                </div>
+            </Container>
         </div>
-      </Container>
-    </div>
-  );
+    );
 };
 
 export default InsTructionFeedBack;
