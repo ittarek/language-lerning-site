@@ -1,10 +1,10 @@
-import NewsLettar from "./NewsLatter/NewsLettar";
+import NewsLatter from "./NewsLatter/NewsLatter";
 
 const Footer = () => {
   return (
     <div className="relative">
        <div className="">
-        <NewsLettar></NewsLettar>
+        <NewsLatter></NewsLatter>
        </div>
       <footer className="footer p-10 bg-base-200 text-base-content  ">
         <div>

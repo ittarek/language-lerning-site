@@ -22,6 +22,7 @@ const Home = () => {
                 <Banner></Banner>
 
 
+            <Container>
                 <Popular_classes></Popular_classes>
                 <Teachers></Teachers>
                 <Event />
@@ -29,6 +30,7 @@ const Home = () => {
                 <PlanPricing />
                 <TradingArticle />
                 <AboutUs></AboutUs>
+         </Container>
         </>
     );
 };
