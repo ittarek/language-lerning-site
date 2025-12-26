@@ -32,7 +32,6 @@ const Classes = () => {
     // console.log(approvedClass);
     return (
         <div>
-            {" "}
             <Helmet>
                 <title>Language Learner | Classes</title>
             </Helmet>
@@ -43,13 +42,8 @@ const Classes = () => {
                             <div className="w-full h-screen bg-[#c9cbbe] flex items-center justify-center">
                                 <SilderClass />
                             </div>{" "}
-                            <SectionTitle
-                                title="Our Classes"
-                                summary="Welcome to the world of learning! As your instructor, I am here to guide you on a transformative educational journey. Together, we will explore new ideas, expand your knowledge, and develop crucial skills. Through engaging discussions, interactive activities, and personalized support, I aim to empower you to reach your full potential. "
-                            >
-                                {" "}
-                            </SectionTitle>
-                            <div className="grid lg:grid-cols-3  gap-10">
+                    
+                            <div className="grid lg:grid-cols-3 mt-11  gap-10">
                                 {" "}
                                 {approvedClass.map(classes => (
                                     <ClassCArd

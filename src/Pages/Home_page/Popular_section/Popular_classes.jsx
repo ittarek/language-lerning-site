@@ -4,6 +4,7 @@ import Container from "../../../Components/Container";
 import SectionTitle from "../../../Components/SectionTitle";
 import { useQuery } from "@tanstack/react-query";
 import ClassCardSkeleton from "../../../Components/Skelton/ClassCardSkeleton ";
+import { Link } from "react-router-dom";
 
 const Popular_classes = () => {
     // TansTack query using for data fetch
@@ -22,15 +23,13 @@ const Popular_classes = () => {
             <div className="mt-[50px]">
                 <div className="course__top flex justify-between items-center">
                     <SectionTitle
-                        title="Top 6 Popular Classes"
-                        summary="Introduction to Programming: Learn the fundamentals of coding, explore different programming languages, and develop problem-solving skills."
+                        title="Top Classes"
+                        summary="Learn the fundamentals of language, explore different  languages, and develop problem-solving skills."
 
 
                     />
 
-                    {/* <div className="w-50 text-end">
-            <button className="btn">See All</button>
-          </div> */}
+
                 </div>
                 <div>
                     <div className="grid grid-cols-1 gap-[50px] lg:grid-cols-4 items-center mx-auto">
@@ -46,6 +45,9 @@ const Popular_classes = () => {
                             ))
                         )}
                     </div>
+                </div>
+                <div className="w-50 text-end">
+                    <Link to="/classes">  <button className="btn">See All Classes</button> </Link>
                 </div>
             </div>
         </Container>

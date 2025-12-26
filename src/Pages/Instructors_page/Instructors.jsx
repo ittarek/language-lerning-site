@@ -25,14 +25,8 @@ const Instructors = () => {
             <Container>
                 {/* TOdo */}
                 <div className="relative">
-                    {" "}
                     <Cover image={Feature4BgImg} title="Our Instructors"></Cover>
-                    <div className="">
-                        <SectionTitle
-                            title=" Out Popular Instructors"
-                            summary="Welcome to the world of learning! As your instructor, I am here to guide you on a transformative educational journey. Together, we will explore new ideas, expand your knowledge, and develop crucial skills. Through engaging discussions, interactive activities, and personalized support, I aim to empower you to reach your full potential."
-                        />
-                    </div>
+            
                     <div className="grid grid-cols-1 gap-[50px] xl:grid-cols-2">
                         {classes.map((instructor) => (
                             <div key={instructor._id}>

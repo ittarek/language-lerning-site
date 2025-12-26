@@ -15,7 +15,7 @@ const Home = () => {
     return (
         <>
             <Helmet>
-                <title>Summer | Home</title>
+                <title>Learning | Home</title>
             </Helmet>
 
 
@@ -25,7 +25,7 @@ const Home = () => {
             <Container>
                 <Popular_classes></Popular_classes>
                 <Teachers></Teachers>
-                <Event />
+                {/* <Event /> */}
                 <StartingCourse />
                 <PlanPricing />
                 <TradingArticle />

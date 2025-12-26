@@ -3,6 +3,8 @@ import { BsArrowRight } from "react-icons/bs";
 import SectionTitle from "../../../Components/SectionTitle";
 import { useQuery } from "@tanstack/react-query";
 import { FaUser } from "react-icons/fa";
+import Container from "../../../Components/Container";
+import { Link } from "react-router-dom";
 
 const Teachers = () => {
     // TansTack query using for data fetch
@@ -20,13 +22,13 @@ const Teachers = () => {
     });
 
     return (
-        <section className="">
-            {/* Todo */}
-            <div className="container mx-auto">
+     
+            <Container>
+            <div className=" mx-auto">
                 {/* text */}
                 <SectionTitle
-                    title="Top 6 Popular Instructors"
-                    summary="With our app you can view the route of your order, from our local headquarters to the place where you are. Look for the app now!"
+                    title="Top Instructors"
+                    summary="Meet our top instructors who are passionate about teaching and dedicated to helping you succeed.  "
                 />
 
                 {/* feature list */}
@@ -72,8 +74,13 @@ const Teachers = () => {
                         </div>
                     ))}
                 </div>
+                        <div className="w-50 text-end">
+                    <Link to="/instructors">  <button className="btn">See All Instructors</button> </Link>
+                                </div>
             </div>
-        </section>
+
+            </Container>
+
     );
 };
 
