@@ -142,7 +142,7 @@ import bgImage from "../../../assets/slider/slider-4.png";
 
 const Banner = () => {
     return (
-        <div className="mt-[70px] relative overflow-hidden">
+        <div className=" relative overflow-hidden">
             {/* Background Image with Overlay */}
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"

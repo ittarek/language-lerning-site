@@ -126,7 +126,7 @@ const Teachers = () => {
                 />
 
                 {/* Instructors Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                <div className="grid max-w-7xl mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                     {topInstructors.slice(0, 6).map((instructor, index) => (
                         <div
                             key={instructor._id}
