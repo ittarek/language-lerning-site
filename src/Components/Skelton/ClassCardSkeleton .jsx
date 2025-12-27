@@ -2,12 +2,12 @@ import React from 'react';
 import { FaBook, FaDollarSign, FaUser, FaRegStar } from 'react-icons/fa';
 import './classesCard.css';
 // Skeleton Loader Component matching ClassCard structure
- const ClassCardSkeleton = () => {
+const ClassCardSkeleton = () => {
     return (
-        <div className="single__classes__item  card w-96 bg-base-100 shadow-xl mx-auto gap-5 mb-4">
+        <div className="single__classes__item  card rounded-2xl bg-base-100 shadow-xl mx-auto gap-5 mb-4">
             {/* Image Skeleton with shimmer animation */}
             <div className="course__img relative overflow-hidden">
-                <div className="w-full h-64 bg-gray-300 animate-pulse relative">
+                <div className="w-full h-64 rounded-2xl bg-gray-300 animate-pulse relative">
                     <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
                 </div>
             </div>

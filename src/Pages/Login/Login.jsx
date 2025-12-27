@@ -1,126 +1,241 @@
-import React, { useContext, useState } from "react";
-import "./Login.css";
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
+import Swal from "sweetalert2";
 import loginImg from "../../assets/login/login.jpg";
 import Container from "../../Components/Container";
-import SocailLogin from "../../Components/Socail/SocailLogin";
-import { useForm } from "react-hook-form";
-import "./Login.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import SocialLogin from "../../Components/Socail/SocailLogin";
 import { AuthContext } from "../../Provider/AuthProvider";
-import Swal from "sweetalert2";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
-    const { user, login } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
-    // react hook form
+
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm();
-    // password show function
-    const handleShowPassword = () => {
-        setShowPassword((preve) => !preve);
-    };
 
-    const onSubmit = (data) => {
-        login(data.email, data.password)
-            .then((result) => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
+    const onSubmit = async (data) => {
+        setError("");
+        setIsLoading(true);
 
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "login  has been successFul",
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
+        try {
+            const result = await login(data.email, data.password);
+            console.log(result.user);
 
-                navigate(from, { replace: true });
-            })
-            .catch((error) => {
-                setError(error.message);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Login Successful!",
+                showConfirmButton: false,
+                timer: 1500,
             });
+
+            navigate(from, { replace: true });
+        } catch (error) {
+            setError(error.message || "Failed to login. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
     };
+
     return (
-        <Container>
-            <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full mb-10">
-                <div className="hidden sm:block">
-                    <img className="w-full h-full object-cover" src={loginImg} alt="" />
-                </div>
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+            <Container>
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white rounded-3xl shadow-2xl overflow-hidden">
 
-                <div className="bg-gray-900 flex flex-col justify-center ">
+                        {/* Left Side - Image */}
+                        <div className="hidden lg:block relative overflow-hidden">
+                            <img
+                                className="w-full h-full object-cover"
+                                src={loginImg}
+                                alt="Login illustration"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/90 to-purple-600/90 flex items-center justify-center p-12">
+                                <div className="text-center space-y-6">
+                                    <h2 className="text-4xl font-bold text-white">
+                                        Welcome Back!
+                                    </h2>
+                                    <p className="text-xl text-white/90">
+                                        Continue your language learning journey
+                                    </p>
+                                    <div className="flex items-center justify-center gap-8 pt-8">
+                                        <div className="text-center">
+                                            <div className="text-3xl font-bold text-white">10K+</div>
+                                            <div className="text-sm text-white/80">Students</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-3xl font-bold text-white">50+</div>
+                                            <div className="text-sm text-white/80">Courses</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-3xl font-bold text-white">95%</div>
+                                            <div className="text-sm text-white/80">Success</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="max-w-[400px] w-full mx-auto rounded-lg  p-8 px-8"
-                    >
-                        <p className="text-red-400">{error}</p>
-                        <h2 className="text-4xl dark:text-white font-bold text-center">
-                            SIGN IN
-                        </h2>
-                        <div className="flex flex-col text-gray-400 py-2">
-                            <label>Email</label>
-                            <input
-                                className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-                                type="text"
-                                name="email"
-                                {...register("email", { required: true })}
-                            />{" "}
-                            {errors.email && (
-                                <span className="text-red-600">Email field is required</span>
+                        {/* Right Side - Form */}
+                        <div className="flex flex-col justify-center p-8 sm:p-12">
+
+                            {/* Header */}
+                            <div className="text-center mb-8">
+                                <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
+                                    Sign In
+                                </h2>
+                                <p className="text-gray-600">
+                                    Welcome back! Please enter your details
+                                </p>
+                            </div>
+
+                            {/* Error Message */}
+                            {error && (
+                                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                    <p className="text-red-600 text-sm">{error}</p>
+                                </div>
                             )}
-                        </div>
-                        <div className="flex flex-col text-gray-400 py-2">
-                            <label>Password</label>
-                            <input
-                                className="p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                {...register("password", { required: true })}
-                            />{" "}
-                            <span
-                                className="-right-[300px] -top-8 relative text-xl cursor-pointer"
-                                onClick={handleShowPassword}
-                            >
-                                {showPassword ? <FaEye /> : <FaEyeSlash />}
-                            </span>
-                            {errors.password && (
-                                <span className="text-red-600">Password field is required</span>
-                            )}
-                        </div>
-                        <div className="flex justify-between text-gray-400 py-2">
-                            <p className="flex items-center">
-                                <input className="mr-2" type="checkbox" /> Remember Me
+
+                            {/* Form */}
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
+                                {/* Email Field */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Email Address
+                                    </label>
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <FaEnvelope className="text-gray-400" />
+                                        </div>
+                                        <input
+                                            type="email"
+                                            {...register("email", {
+                                                required: "Email is required",
+                                                pattern: {
+                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                    message: "Invalid email address"
+                                                }
+                                            })}
+                                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                                            placeholder="Enter your email"
+                                        />
+                                    </div>
+                                    {errors.email && (
+                                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Password Field */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Password
+                                    </label>
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <FaLock className="text-gray-400" />
+                                        </div>
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            {...register("password", {
+                                                required: "Password is required",
+                                                minLength: {
+                                                    value: 6,
+                                                    message: "Password must be at least 6 characters"
+                                                }
+                                            })}
+                                            className="w-full pl-12 pr-12 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                                            placeholder="Enter your password"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                                        >
+                                            {showPassword ? <FaEye /> : <FaEyeSlash />}
+                                        </button>
+                                    </div>
+                                    {errors.password && (
+                                        <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Remember Me & Forgot Password */}
+                                <div className="flex items-center justify-between">
+                                    <label className="flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        />
+                                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                                    </label>
+                                    <Link
+                                        to="/forgot-password"
+                                        className="text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
+                                    >
+                                        Forgot password?
+                                    </Link>
+                                </div>
+
+                                {/* Submit Button */}
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                >
+                                    {isLoading ? (
+                                        <>
+                                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Signing in...
+                                        </>
+                                    ) : (
+                                        "Sign In"
+                                    )}
+                                </button>
+                            </form>
+
+                            {/* Divider */}
+                            <div className="relative my-8">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-gray-300"></div>
+                                </div>
+                                <div className="relative flex justify-center text-sm">
+                                    <span className="px-4 bg-white text-gray-500">Or continue with</span>
+                                </div>
+                            </div>
+
+                            {/* Social Login */}
+                            <SocialLogin />
+
+                            {/* Sign Up Link */}
+                            <p className="mt-8 text-center text-sm text-gray-600">
+                                Don't have an account?{" "}
+                                <Link
+                                    to="/register"
+                                    className="font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
+                                >
+                                    Sign up for free
+                                </Link>
                             </p>
-                            <p>Forgot Password</p>
                         </div>
-                        <button className="w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg">
-                            {" "}
-                            <input type="submit" value="SIGNIN" />
-                        </button>
-                        <span className="text-white">
-                            New To Language Center? Please !{" "}
-                            <Link to="/register" className="text-green-400">
-                                SignUp
-                            </Link>
-                        </span>
-                    </form>
-                    <SocailLogin></SocailLogin>
-
-                    {errors.exampleRequired && (
-                        <span className="text-red-400">This field is required</span>
-                    )}
+                    </div>
                 </div>
-            </div>
-        </Container>
+            </Container>
+        </div>
     );
 };
 
