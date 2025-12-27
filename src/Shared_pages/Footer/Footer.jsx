@@ -90,7 +90,7 @@ const Footer = () => {
 
     return (
         <div className="relative">
- <MoveToTop/>
+            <MoveToTop />
             <Newsletter />
 
             {/* Main Footer */}
