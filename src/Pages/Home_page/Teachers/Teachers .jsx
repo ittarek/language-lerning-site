@@ -91,30 +91,44 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../Components/SectionTitle";
 import Container from "../../../Components/Container";
+import { ErrorState } from "../../../Components/FetchStates/ErrorState";
+import { LoadingState } from "../../../Components/FetchStates/FetchStates";
+import useFetchData from "../../../Hooks/useFetchTeacher";
+import { EmptyState } from "../../../Components/FetchStates/EmptyState";
 
 const Teachers = () => {
     // TanStack query using for data fetch
     const {
         data: topInstructors = [],
-        isLoading: loading,
+        isLoading,
+        isError,
+        error,
         refetch,
-    } = useQuery({
-        queryKey: ["topInstructors"],
-        queryFn: async () => {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/TopInstructors`);
-            return res.json();
-        },
-    });
+        isFetching
+    } = useFetchData('/TopInstructors', 'topInstructors');
 
-    if (loading) {
+    // Loading State
+    if (isLoading) {
+        return <LoadingState message="Loading top instructors..." />;
+    }
+
+    // Error State
+    if (isError) {
+        return <ErrorState error={error} onRetry={refetch} isRetrying={isFetching} />;
+    }
+
+    // Empty State
+    if (topInstructors.length === 0) {
         return (
-            <Container>
-                <div className="flex justify-center items-center min-h-[400px]">
-                    <span className="loading loading-spinner loading-lg text-indigo-600"></span>
-                </div>
-            </Container>
+            <EmptyState
+                title="No Instructors Found"
+                message="We couldn't find any instructors at the moment"
+                icon="👨‍🏫"
+                onRefresh={refetch}
+            />
         );
     }
+
 
     return (
         <Container>
