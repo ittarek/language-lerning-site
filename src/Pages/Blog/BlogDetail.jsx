@@ -225,13 +225,13 @@ Accept that mistakes are essential. Practice consistently rather than intensivel
             {/* Reading Progress Bar */}
             <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
                 <div
-                    className="h-full bg-gradient-to-r from-indigo-600 to-purple-600 transition-all duration-150"
+                    className="h-full bg-gradient-to-r from-gray-950 via-purple-800 to-gray-900   transition-all duration-150"
                     style={{ width: `${scrollProgress}%` }}
                 ></div>
             </div>
 
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 pt-32 pb-20">
+            <div className="relative bg-gradient-to-br from-gray-950 via-purple-800 to-gray-900  pt-32 pb-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto">
                         {/* Back Button */}
@@ -394,7 +394,7 @@ Accept that mistakes are essential. Practice consistently rather than intensivel
             </div>
 
             {/* CTA Section */}
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-20">
+            <div className="bg-gradient-to-r from-gray-950 via-purple-800 to-gray-900   py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="text-4xl font-bold text-white mb-4">

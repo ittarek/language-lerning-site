@@ -14,7 +14,7 @@ const useFetchData = (endpoint, queryKey, options = {}) => {
         queryKey: [queryKey],
         queryFn: async () => {
             const url = `${apiUrl}${endpoint}`;
-            console.log(`🔍 Fetching from: ${url}`);
+            // console.log(`🔍 Fetching from: ${url}`);
 
             const response = await fetch(url);
 
@@ -25,7 +25,7 @@ const useFetchData = (endpoint, queryKey, options = {}) => {
             }
 
             const data = await response.json();
-            console.log(`✅ Fetched ${data.length || 0} items from ${endpoint}`);
+            // console.log(`✅ Fetched ${data.length || 0} items from ${endpoint}`);
 
             return data;
         },

@@ -232,7 +232,7 @@ As technology improves, the line between human and AI instruction continues to b
             </div>
 
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-br from-red-600 via-orange-600 to-yellow-500 pt-32 pb-20">
+            <div className="relative bg-gradient-to-br from-gray-950 via-purple-800 to-gray-900  pt-32 pb-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto">
                         {/* Back Button */}
@@ -417,7 +417,7 @@ As technology improves, the line between human and AI instruction continues to b
             </div>
 
             {/* CTA Section */}
-            <div className="bg-gradient-to-r from-red-600 to-orange-600 py-20">
+            <div className="bg-gradient-to-r from-gray-950 via-purple-800 to-gray-900   py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="text-4xl font-bold text-white mb-4">

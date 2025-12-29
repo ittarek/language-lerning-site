@@ -180,7 +180,7 @@ const TradingArticle = () => {
 
                 {/* Newsletter CTA */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-                    <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+                    <div className="bg-gradient-to-r from-gray-950 via-slate-500 to-pink-900 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
 

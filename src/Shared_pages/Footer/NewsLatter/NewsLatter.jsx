@@ -19,7 +19,7 @@ const Newsletter = () => {
     return (
         <div className="w-full py-8 px-4 sm:px-6 lg:px-8  -mb-16 relative">
             <div className="max-w-4xl mx-auto">
-                <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl">
+                <div className="bg-gradient-to-r from-gray-950 via-slate-500 to-pink-900  rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl">
                     <div className="text-center space-y-4 sm:space-y-6">
                         {/* Heading */}
                         <div className="space-y-2 sm:space-y-3">

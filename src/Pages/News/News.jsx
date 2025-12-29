@@ -134,7 +134,7 @@ const News = () => {
             </Helmet>
 
            {/* Hero Section */}
-            <div className="bg-gradient-to-br from-red-600 via-orange-600 to-yellow-500 py-20">
+            <div className="bg-gradient-to-br from-gray-950 via-purple-800 to-gray-900   py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center">
                         <div className="flex items-center justify-center gap-2 mb-4">
@@ -165,7 +165,7 @@ const News = () => {
 
             {/* Breaking News Ticker */}
             {breakingNews.length > 0 && (
-                <div className="bg-red-600 text-white py-3 overflow-hidden">
+                <div className="bg-red-800 text-white py-3 overflow-hidden">
                     <div className="container mx-auto px-4">
                         <div className="flex items-center gap-4 animate-marquee">
                             <span className="bg-white text-red-600 px-4 py-1 rounded-full font-bold text-sm flex-shrink-0">
@@ -213,7 +213,7 @@ const News = () => {
                     {/* Main News Column */}
                     <div className="lg:col-span-2">
                         <div className="flex items-center gap-2 mb-8">
-                            <div className="w-2 h-8 bg-gradient-to-b from-red-600 to-orange-600 rounded-full"></div>
+                            <div className="w-2 h-8 bg-gradient-to-b from-gray-950 via-slate-500 to-pink-900  rounded-full"></div>
                             <h2 className="text-3xl font-bold text-gray-800">Top Stories</h2>
                         </div>
 
@@ -327,8 +327,8 @@ const News = () => {
                         </div>
 
                         {/* Newsletter Signup */}
-                        <div className="bg-gradient-to-br from-red-600 to-orange-600 rounded-2xl shadow-lg p-6 text-white">
-                            <h3 className="text-2xl font-bold mb-3">Stay Informed</h3>
+                        <div className="bg-gradient-to-br from-gray-950 via-purple-800 to-gray-900       rounded-2xl shadow-lg p-6 text-white sticky">
+                            <h3 className="text-2xl font-bold mb-3 text-white">Stay Informed</h3>
                             <p className="mb-6 text-white/90">
                                 Get the latest language learning news delivered to your inbox
                             </p>
@@ -346,7 +346,7 @@ const News = () => {
             </div>
 
             {/* CTA Section */}
-            <div className="bg-gradient-to-r from-red-600 to-orange-600 py-20">
+            <div className="bg-gradient-to-r from-gray-950 via-purple-800 to-gray-900    py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="text-4xl font-bold text-white mb-4">

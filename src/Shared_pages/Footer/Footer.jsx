@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MoveToTop } from '../../Components/MoveToTop';
 import Newsletter from './NewsLatter/NewsLatter';
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -9,7 +10,10 @@ import Newsletter from './NewsLatter/NewsLatter';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const location = useLocation();
+    const pathName = location.pathname === '/';
 
+    
     const footerLinks = {
         courses: [
             { name: 'Spanish Courses', href: '#' },
@@ -91,7 +95,7 @@ const Footer = () => {
     return (
         <div className="relative">
             <MoveToTop />
-            <Newsletter />
+            {pathName && <Newsletter />}
 
             {/* Main Footer */}
             <footer className="bg-gray-900 text-gray-300">

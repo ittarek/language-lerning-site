@@ -30,6 +30,7 @@ import AdminFeedBack from "../DashBoard/AdminDashBoard/AdminFeedBack";
 import StudentHome from "../DashBoard/StudenDashBoard/StudentHome";
 import BlogDetail from "../Pages/Blog/BlogDetail";
 import NewsDetail from "../Pages/News/NewsDetail";
+import EventDetail from "../Components/Event/EventDetail";
 
 export const router = createBrowserRouter([
     {
@@ -64,7 +65,7 @@ export const router = createBrowserRouter([
             {
                 path: "/news",
                 element: <News></News>,
-            },  
+            },
             {
                 path: "/blog/:id",
                 element: <BlogDetail></BlogDetail>,
@@ -72,93 +73,97 @@ export const router = createBrowserRouter([
             {
                 path: "/news/:id",
                 element: <NewsDetail></NewsDetail>,
+            },
+            {
+                path: "/events/:id",
+                element: <EventDetail></EventDetail>,
             }
-    ],
-  },
+        ],
+    },
 
-{
-    path: "dashboard",
+    {
+        path: "dashboard",
         element: <DashBoardLayOut></DashBoardLayOut>,
-            children: [
-                {
-                    path: "dashboard",
-                    element: (
-                        <PrivetRoute>
-                            {" "}
-                            <DashBoard></DashBoard>
-                        </PrivetRoute>
+        children: [
+            {
+                path: "dashboard",
+                element: (
+                    <PrivetRoute>
+                        {" "}
+                        <DashBoard></DashBoard>
+                    </PrivetRoute>
+                ),
+            },
+            // Student Route
+            {
+                path: "studentHome",
+                element: <StudentHome></StudentHome>,
+            },
+            {
+                path: "mySelectedClasses",
+                element: <MySelectClasses></MySelectClasses>,
+            },
+            {
+                path: "myEnroll",
+                element: <MyEnroll></MyEnroll>,
+            },
+            {
+                path: "mySelectedClasses/payment/:id",
+                element: <Payment></Payment>,
+                loader: ({ params }) =>
+                    fetch(
+                        `${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`
                     ),
-                },
-                // Student Route
-                {
-                    path: "studentHome",
-                    element: <StudentHome></StudentHome>,
-                },
-                {
-                    path: "mySelectedClasses",
-                    element: <MySelectClasses></MySelectClasses>,
-                },
-                {
-                    path: "myEnroll",
-                    element: <MyEnroll></MyEnroll>,
-                },
-                {
-                    path: "mySelectedClasses/payment/:id",
-                    element: <Payment></Payment>,
-                    loader: ({ params }) =>
-                        fetch(
-                            `${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`
-                        ),
-                },
+            },
 
-                {
-                    path: "paymentHistory",
-                    element: <PaymentHistory></PaymentHistory>,
-                },
-                // Instruction Route
-                {
-                    path: "instructorHome",
-                    element: <InstructorHome></InstructorHome>,
-                },
-                {
-                    path: "addClass",
-                    element: <AddClass></AddClass>,
-                },
-                {
-                    path: "myAddedClasses",
-                    element: <MyAddedClasses></MyAddedClasses>,
-                },
-                {
-                    path: "myAddedClasses/instructorFeedback",
-                    element: <InsTructionFeedBack></InsTructionFeedBack>,
-                },
-                // Admin Route
-                {
-                    path: "manageClasses",
-                    element: (
-                        <AdminROutes>
-                            <ManageClasses></ManageClasses>
-                        </AdminROutes>
-                    ),
-                },
-                {
-                    path: "manageUsers",
-                    element: (
-                        <AdminROutes>
-                            <ManageUsers></ManageUsers>
-                        </AdminROutes>
-                    ),
-                },
-                {
-                    path: "adminHome",
-                    element: <AdminHome></AdminHome>,
-                },
-                {
-                    path: "manageClasses/adminFeedBack/:id",
-                    element: <AdminFeedBack></AdminFeedBack>,
-                    loader: ({ params }) =>
-                        fetch(`${import.meta.env.VITE_API_URL}/AllClass/${params.id}`),
-                },
-            ],
-  },
+            {
+                path: "paymentHistory",
+                element: <PaymentHistory></PaymentHistory>,
+            },
+            // Instruction Route
+            {
+                path: "instructorHome",
+                element: <InstructorHome></InstructorHome>,
+            },
+            {
+                path: "addClass",
+                element: <AddClass></AddClass>,
+            },
+            {
+                path: "myAddedClasses",
+                element: <MyAddedClasses></MyAddedClasses>,
+            },
+            {
+                path: "myAddedClasses/instructorFeedback",
+                element: <InsTructionFeedBack></InsTructionFeedBack>,
+            },
+            // Admin Route
+            {
+                path: "manageClasses",
+                element: (
+                    <AdminROutes>
+                        <ManageClasses></ManageClasses>
+                    </AdminROutes>
+                ),
+            },
+            {
+                path: "manageUsers",
+                element: (
+                    <AdminROutes>
+                        <ManageUsers></ManageUsers>
+                    </AdminROutes>
+                ),
+            },
+            {
+                path: "adminHome",
+                element: <AdminHome></AdminHome>,
+            },
+            {
+                path: "manageClasses/adminFeedBack/:id",
+                element: <AdminFeedBack></AdminFeedBack>,
+                loader: ({ params }) =>
+                    fetch(`${import.meta.env.VITE_API_URL}/AllClass/${params.id}`),
+            },
+        ],
+    },
 ]);

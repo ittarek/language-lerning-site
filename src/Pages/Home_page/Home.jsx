@@ -9,7 +9,7 @@ import Teachers from './Teachers/Teachers ';
 import StartingCourse from "./StartingCourse";
 import PlanPricing from "./PlanPricing";
 import TradingArticle from "./TradingArticle";
-import { Event } from "../../Components/Event/Event";
+import  Event  from "../../Components/Event/Event";
 
 const Home = () => {
     return (
@@ -25,7 +25,7 @@ const Home = () => {
             <Container>
                 <Popular_classes></Popular_classes>
                 <Teachers></Teachers>
-                {/* <Event /> */}
+                <Event />
                 <StartingCourse />
                 <PlanPricing />
                 <TradingArticle />
