@@ -1,5 +1,5 @@
 import { FaExclamationTriangle, FaRedo } from "react-icons/fa";
-import Container from "../Container";
+import Container from "../../Container";
 
 export const ErrorState = ({ error, onRetry, isRetrying = false }) => {
     return (

@@ -133,7 +133,7 @@ const AboutUs = () => {
                         </div>
 
                         {/* Features Grid */}
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-4 md:[&>div>h4]:text-2xl [&>div>h4]:text-sm">
                             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4 hover:shadow-lg transition-shadow duration-300">
                                 <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-3">
                                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

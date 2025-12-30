@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Cover from '../../Components/Cover';
 import { Helmet } from 'react-helmet-async';
 import { FaCalendar, FaUser, FaClock, FaArrowRight, FaSearch, FaBookOpen, FaGraduationCap, FaGlobe, FaLightbulb } from 'react-icons/fa';
+import FilterSection from '../../Components/Shared/FilterSection/FilterSection';
 
 const Blog = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -155,25 +156,22 @@ const Blog = () => {
                 </div>
             </div>
 
+
+
             {/* Category Filter */}
-            <div className="sticky top-20 z-40 bg-white shadow-md">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex flex-wrap gap-3 justify-center">
-                        {categories.map(category => (
-                            <button
-                                key={category}
-                                onClick={() => setSelectedCategory(category)}
-                                className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
-                                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg scale-105'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </div>
+            <FilterSection
+                filters={[
+                    {
+                        label: 'Category',
+                        options: categories,
+                        selected: selectedCategory,
+                        onSelect: setSelectedCategory,
+                        color: 'indigo'
+                    }
+
+                ]}
+            />
+
 
             {/* Main Content */}
             <div className="container mx-auto px-4 py-16">

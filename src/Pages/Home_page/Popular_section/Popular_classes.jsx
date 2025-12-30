@@ -5,9 +5,9 @@ import ClassCard from "./ClassCard";
 import Container from "../../../Components/Container";
 import SectionTitle from "../../../Components/SectionTitle";
 import ClassCardSkeleton from "../../../Components/Skelton/ClassCardSkeleton ";
-import { EmptyState } from "../../../Components/FetchStates/EmptyState";
-import { ErrorState } from "../../../Components/FetchStates/ErrorState";
-import { LoadingState } from "../../../Components/FetchStates/FetchStates";
+import { EmptyState } from "../../../Components/Shared/FetchStates/EmptyState";
+import { ErrorState } from "../../../Components/Shared/FetchStates/ErrorState";
+import { LoadingState } from "../../../Components/Shared/FetchStates/FetchStates";
 import useFetchData from "../../../Hooks/useFetchTeacher";
 
 const Popular_classes = () => {

@@ -6,7 +6,7 @@ import DashBoardLayOut from "../LayOut/DashBoardLayOut";
 
 import PrivetRoute from "./PrivetRoute";
 import AdminROutes from "./AdminROutes";
-import { LoadingState } from "../Components/FetchStates/FetchStates";
+import { LoadingState } from "../Components/Shared/FetchStates/FetchStates";
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import("../Pages/Home_page/Home"));
