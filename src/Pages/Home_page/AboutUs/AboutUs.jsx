@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SectionTitle from '../../../Components/SectionTitle';
 
 const AboutUs = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -47,20 +48,17 @@ const AboutUs = () => {
         <div id="about-section" className="py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
 
             {/* Section Header */}
-            <div className="text-center mb-16 px-4">
-                <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                    </svg>
-                    Our Story
-                </div>
-                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-                    About <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Our Platform</span>
-                </h2>
-                <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                    Empowering learners worldwide with innovative language education
-                </p>
-            </div>
+
+            <SectionTitle
+                variant="icon"
+                subtitle="Our Story"
+                title="About Our Platform"
+                gradientText="Our Platform"
+                summary='    Empowering learners worldwide with innovative language education'
+                icon={<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                </svg>}
+            />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">

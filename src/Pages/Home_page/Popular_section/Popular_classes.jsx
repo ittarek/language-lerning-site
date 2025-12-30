@@ -48,8 +48,11 @@ const Popular_classes = () => {
                 {/* Section Header */}
                 <div className="mb-12">
                     <SectionTitle
+                        variant="gradient-text"
                         title="Top Classes"
-                        summary="Learn the fundamentals of language, explore different languages, and develop problem-solving skills."
+                        gradientText="Classes"
+                        summary="Select the plan that best fits your learning goals."
+                        color="indigo"
                     />
                 </div>
 

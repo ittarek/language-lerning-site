@@ -1,4 +1,5 @@
 import Container from "../../Components/Container";
+import SectionTitle from "../../Components/SectionTitle";
 
 const courseData = [
     {
@@ -62,21 +63,16 @@ const StartingCourse = () => {
             <div className="py-16 bg-gradient-to-b from-white to-gray-50">
 
                 {/* Section Header */}
-                <div className="text-center mb-12 space-y-4">
-                    <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-                        </span>
-                        Coming Soon
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
-                        Course Starting <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Soon</span>
-                    </h2>
-                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                        Don't miss out! Register early and get exclusive access to our upcoming courses
-                    </p>
-                </div>
+        
+                <SectionTitle
+                    variant="animated-badge"
+                    subtitle="Coming Soon"
+                    title="Course Starting Soon"
+                    gradientText="Soon"
+                    summary="Don't miss out! Register early and get exclusive access to our upcoming courses"
+                    color="indigo"
+                    size="lg"
+                />
 
                 {/* Course Cards Grid */}
                 <div className="max-w-xlg    mx-auto px-4 sm:px-6 ">

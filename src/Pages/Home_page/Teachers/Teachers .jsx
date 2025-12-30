@@ -48,7 +48,9 @@ const Teachers = () => {
             <div className="py-16">
                 {/* Section Title */}
                 <SectionTitle
+                    variant="gradient-text"
                     title="Top Instructors"
+                    gradientText="Instructors"
                     summary="Meet our top instructors who are passionate about teaching and dedicated to helping you succeed."
                 />
 
