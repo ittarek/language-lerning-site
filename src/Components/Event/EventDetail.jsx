@@ -20,6 +20,7 @@ import {
 } from 'react-icons/fa';
 import Container from '../../Components/Container';
 import Swal from 'sweetalert2';
+import OptimizedImage from '../Shared/OptimizedImage';
 
 const EventDetail = () => {
     const { id } = useParams();
@@ -191,16 +192,24 @@ const EventDetail = () => {
             </Helmet>
 
             {/* Hero Image Section */}
-            <div className="relative h-96 overflow-hidden mt-6 rounded-xl max-w-7xl mx-auto">
+            <div className="relative h-96 overflow-hidden mt-6 rounded-xl max-w-7xl mx-auto ">
                 <img
                     src={event.image}
                     alt={event.title}
                     className="w-full h-full object-cover"
                 />
+
+                <OptimizedImage
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-full object-cover"
+                    aspectRatio="4/3"
+
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
 
                 <Container>
-                    <div className="absolute bottom-8 left-0 right-0">
+                    <div className="absolute bottom-8 left-0 right-0 px-2">
                         <Link
                             to="/events"
                             className="inline-flex items-center gap-2 text-white/90 hover:text-white mb-6 transition-colors group"
@@ -487,10 +496,13 @@ const EventDetail = () => {
                                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group"
                             >
                                 <div className="relative h-48 overflow-hidden">
-                                    <img
+                             
+                                    <OptimizedImage
                                         src={relatedEvent.image}
                                         alt={relatedEvent.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                        aspectRatio="4/3"
+
                                     />
                                 </div>
                                 <div className="p-6">

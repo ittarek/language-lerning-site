@@ -14,6 +14,7 @@ import {
 } from 'react-icons/fa';
 import Container from '../Container';
 import FilterSection from '../Shared/FilterSection/FilterSection';
+import OptimizedImage from '../Shared/OptimizedImage';
 // import FilterSection from './FilterSection';
 
 
@@ -255,10 +256,13 @@ const Events = () => {
                                     <div key={event.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 group">
                                         <div className="grid md:grid-cols-2">
                                             <div className="relative h-64 md:h-auto overflow-hidden">
-                                                <img
+                                          
+                                                <OptimizedImage
                                                     src={event.image}
                                                     alt={event.title}
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                                    aspectRatio="4/3"
+                                             
                                                 />
                                                 <div className="absolute top-4 left-4">
                                                     <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
@@ -340,10 +344,13 @@ const Events = () => {
                                 {upcomingEvents.map(event => (
                                     <div key={event.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group">
                                         <div className="relative h-48 overflow-hidden">
-                                            <img
+                                    
+                                            <OptimizedImage
                                                 src={event.image}
                                                 alt={event.title}
                                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                                aspectRatio="4/3"
+
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                             <div className="absolute bottom-4 left-4 right-4">

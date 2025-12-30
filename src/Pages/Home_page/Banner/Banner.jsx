@@ -1,4 +1,5 @@
 import bgImage from "../../../assets/slider/slider-4.png";
+import OptimizedImage from "../../../Components/Shared/OptimizedImage";
 
 const Banner = () => {
     return (
@@ -86,9 +87,14 @@ const Banner = () => {
 
                         {/* Main image */}
                         <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/20 backdrop-blur-sm">
-                            <img
-                                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1471&auto=format&fit=crop"
-                                alt="Language Learning"
+
+                            <OptimizedImage
+                                src={"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1471&auto=format&fit=crop"}
+                                alt={"Language Learning"}
+                                //   aspectRatio="16/9"
+                                width="1200"
+                                height="600"
+                                priority={true}
                                 className="w-full h-auto object-cover"
                             />
 

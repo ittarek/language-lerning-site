@@ -8,6 +8,7 @@ import { ErrorState } from "../../../Components/Shared/FetchStates/ErrorState";
 import { LoadingState } from "../../../Components/Shared/FetchStates/FetchStates";
 import useFetchData from "../../../Hooks/useFetchTeacher";
 import { EmptyState } from "../../../Components/Shared/FetchStates/EmptyState";
+import OptimizedImage from "../../../Components/Shared/OptimizedImage";
 
 const Teachers = () => {
     // TanStack query using for data fetch
@@ -75,10 +76,15 @@ const Teachers = () => {
 
                                     {/* Image */}
                                     <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-500">
-                                        <img
+                         
+
+                                        <OptimizedImage
                                             src={instructor?.instructor_img || "https://via.placeholder.com/150"}
                                             alt={instructor?.instructor_name}
                                             className="w-full h-full object-cover"
+                                            width={600}
+                                            height={400}
+
                                         />
                                     </div>
 

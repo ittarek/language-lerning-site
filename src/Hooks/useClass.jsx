@@ -15,7 +15,9 @@ const useClass = () => {
     enabled: !spinner,
 
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/AllClasses`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/AllClasses`);
+        console.log("res",res);
+        
       return res.json();
     },
   });

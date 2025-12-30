@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import SectionTitle from '../../../Components/SectionTitle';
+import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 
 const AboutUs = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -74,12 +75,15 @@ const AboutUs = () => {
 
                             {/* Main Image */}
                             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                                <img
+
+
+                                <OptimizedImage
                                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800"
                                     alt="About Us"
                                     className="w-full h-auto object-cover"
-                                />
+                                    aspectRatio="1/1"
 
+                                />
                                 {/* Floating Stats Card */}
                                 <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl">
                                     <div className="flex items-center justify-between">

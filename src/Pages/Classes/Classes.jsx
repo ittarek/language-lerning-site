@@ -13,6 +13,7 @@ const Classes = () => {
     const approvedClass = classes.filter(
         (filterClass) => filterClass.status === "approved"
     );
+console.log(classes);
 
     // const { data: seatClass = [], refetch } = useQuery({
     //       queryKey: ["seatClass"],
