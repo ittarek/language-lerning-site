@@ -15,8 +15,6 @@ import {
 import Container from '../Container';
 import FilterSection from '../Shared/FilterSection/FilterSection';
 import OptimizedImage from '../Shared/OptimizedImage';
-// import FilterSection from './FilterSection';
-
 
 const Events = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');

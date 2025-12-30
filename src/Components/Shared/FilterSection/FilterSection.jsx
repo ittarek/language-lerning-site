@@ -2,7 +2,7 @@
 import { FaFilter, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useRef, useState, useEffect } from 'react';
 import Container from '../../Container';
-
+import styles from './FilterSection.module.css';
 /**
  * Reusable Filter Section Component
  * 
@@ -156,7 +156,7 @@ const FilterSection = ({
                             {/* Scrollable Container */}
                             <div
                                 ref={el => scrollRefs.current[filterIndex] = el}
-                                className="flex md:flex-wrap gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory scroll-smooth"
+                                className={`flex md:flex-wrap gap-2 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth ${styles.scrollbarHide}`}
                             >
                                 {filter.options.map((option, optionIndex) => (
                                     <button
@@ -198,16 +198,7 @@ const FilterSection = ({
                 ))}
             </div>
 
-            {/* Custom Scrollbar Styles */}
-            <style jsx>{`
-                .scrollbar-hide {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                }
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
-                }
-            `}</style>
+           
         </div>
     );
 

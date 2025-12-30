@@ -1,18 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* font-family: 'Poppins', sans-serif;
-font-family: 'Tinos', serif; */
-
-.navbar a.active {
-    color: green;
-}
-
-.navbar a {
-    background-color: transparent;
-}
-
-/* about */
 
 /* =========== base style ========= */
 
@@ -21,47 +9,4 @@ font-family: 'Tinos', serif; */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
-section,
-footer {
-    padding-top: 70px;
-    padding-bottom: 70px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-size: 2rem;
-    line-height: 50px;
-    font-family: 'Andada Pro', serif;
-    color: #0a2b1e;
-    font-weight: 600;
-}
-
-p {
-
-    color: #3c3f3e;
-    font-size: 1rem;
-    line-height: 35px;
-    font-family: 'Tinos', serif;
-    font-weight: 600;
-}
-
-button.btn {
-    background: #17bf9e;
-    color: #fff;
-    padding: 7px 25px;
-    border-radius: 50px;
-}
-
-i {
-    color: #17bf9e;
 }

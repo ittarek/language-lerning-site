@@ -11,8 +11,8 @@ import {
     FaChartLine,
     FaRegBookmark,
 } from "react-icons/fa";
-import Rating from "react-rating";
 import OptimizedImage from "../../../Components/Shared/OptimizedImage";
+import StarRatings from "react-star-ratings";
 
 const ClassCard = ({ singleClass }) => {
     const {
@@ -117,13 +117,17 @@ const ClassCard = ({ singleClass }) => {
 
                 {/* Rating Stars */}
                 <div className="flex items-center justify-center gap-2 py-2">
-                    <Rating
-                        placeholderRating={rating}
-                        readonly
-                        emptySymbol={<FaRegStar className="text-gray-300" />}
-                        placeholderSymbol={<FaStar className="text-yellow-400" />}
-                        fullSymbol={<FaStar className="text-yellow-400" />}
+                    <StarRatings
+                        rating={rating}
+                        starRatedColor="gold"
+                        starHoverColor="gold"
+                        starEmptyColor="gray"
+                        starDimension="20px"
+                        starSpacing="2px"
+                        numberOfStars={5}
+                        name='rating'
                     />
+                
                     <span className="text-sm text-gray-600 font-medium">({rating})</span>
                 </div>
 

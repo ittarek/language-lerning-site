@@ -1,6 +1,6 @@
-// src/Components/SectionTitle/SectionTitle.jsx
-import React from "react";
 
+import React from "react";
+import styles from './SectionTitle.module.css'; 
 /**
  * Reusable Section Title Component
  * 
@@ -217,7 +217,7 @@ const SectionTitle = ({
                 mx-auto px-4 mb-12 space-y-4
                 ${alignmentClasses[align]}
                 ${align === 'center' ? 'max-w-4xl' : 'max-w-full'}
-                ${animated ? 'animate-fade-in-up' : ''}
+                ${animated ? styles.animateFadeInUp : ''}
                 ${className}
             `}
         >
@@ -270,22 +270,8 @@ const SectionTitle = ({
                 </div>
             )}
 
-            {/* Animation styles */}
-            <style jsx>{`
-                @keyframes fadeInUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                .animate-fade-in-up {
-                    animation: fadeInUp 0.6s ease-out;
-                }
-            `}</style>
+          
+  
         </div>
     );
 };
