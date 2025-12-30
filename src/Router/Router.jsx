@@ -1,148 +1,243 @@
 import { createBrowserRouter } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
 import MainLayOut from "../LayOut/MainLayOut";
-import Home from "../Pages/Home_page/Home";
-import Login from "../Pages/Login/Login";
-import Register from "../Pages/Register/Register";
-import Instructors from "../Pages/Instructors_page/Instructors";
-import Classes from "../Pages/Classes/Classes";
-import Blog from "../Pages/Blog/Blog";
-import News from "../Pages/News/News";
+import DashBoardLayOut from "../LayOut/DashBoardLayOut";
 
 import PrivetRoute from "./PrivetRoute";
-import DashBoardLayOut from "../LayOut/DashBoardLayOut";
-import DashBoard from "../DashBoard/DashBoard";
-import PaymentHistory from "../DashBoard/StudenDashBoard/PaymentHistory";
-
-import MyEnroll from "../DashBoard/StudenDashBoard/MyEnroll";
-import AddClass from "../DashBoard/InstructionDashBoard/AddClass";
-
-import MyAddedClasses from "../DashBoard/InstructionDashBoard/MyAddedClasses";
-import InsTructionFeedBack from "../DashBoard/InstructionDashBoard/InsTructionFeedBack";
-import ManageClasses from "../DashBoard/AdminDashBoard/ManageClasses";
-import ManageUsers from "../DashBoard/AdminDashBoard/ManageUsers";
 import AdminROutes from "./AdminROutes";
-import InstructorHome from "./../DashBoard/InstructionDashBoard/InstructorHome";
-import ErrorPage from "../Pages/ErrorPage";
-import MySelectClasses from "../DashBoard/StudenDashBoard/MySelectClasses";
-import Payment from "../DashBoard/StudenDashBoard/Payment/Payment";
-import AdminHome from "../DashBoard/AdminDashBoard/AdminHome";
-import AdminFeedBack from "../DashBoard/AdminDashBoard/AdminFeedBack";
-import StudentHome from "../DashBoard/StudenDashBoard/StudentHome";
-import BlogDetail from "../Pages/Blog/BlogDetail";
-import NewsDetail from "../Pages/News/NewsDetail";
-import EventDetail from "../Components/Event/EventDetail";
+import { LoadingState } from "../Components/FetchStates/FetchStates";
+
+// 🔹 Public Pages (Lazy)
+const Home = lazy(() => import("../Pages/Home_page/Home"));
+const Login = lazy(() => import("../Pages/Login/Login"));
+const Register = lazy(() => import("../Pages/Register/Register"));
+const Instructors = lazy(() => import("../Pages/Instructors_page/Instructors"));
+const Classes = lazy(() => import("../Pages/Classes/Classes"));
+const Blog = lazy(() => import("../Pages/Blog/Blog"));
+const BlogDetail = lazy(() => import("../Pages/Blog/BlogDetail"));
+const News = lazy(() => import("../Pages/News/News"));
+const NewsDetail = lazy(() => import("../Pages/News/NewsDetail"));
+const EventDetail = lazy(() => import("../Components/Event/EventDetail"));
+const ErrorPage = lazy(() => import("../Pages/ErrorPage"));
+
+// 🔹 Dashboard Pages (Lazy)
+const DashBoard = lazy(() => import("../DashBoard/DashBoard"));
+const StudentHome = lazy(() => import("../DashBoard/StudenDashBoard/StudentHome"));
+const MySelectClasses = lazy(() => import("../DashBoard/StudenDashBoard/MySelectClasses"));
+const MyEnroll = lazy(() => import("../DashBoard/StudenDashBoard/MyEnroll"));
+const Payment = lazy(() => import("../DashBoard/StudenDashBoard/Payment/Payment"));
+const PaymentHistory = lazy(() => import("../DashBoard/StudenDashBoard/PaymentHistory"));
+
+const InstructorHome = lazy(() => import("../DashBoard/InstructionDashBoard/InstructorHome"));
+const AddClass = lazy(() => import("../DashBoard/InstructionDashBoard/AddClass"));
+const MyAddedClasses = lazy(() => import("../DashBoard/InstructionDashBoard/MyAddedClasses"));
+const InsTructionFeedBack = lazy(() =>
+    import("../DashBoard/InstructionDashBoard/InsTructionFeedBack")
+);
+
+const ManageClasses = lazy(() => import("../DashBoard/AdminDashBoard/ManageClasses"));
+const ManageUsers = lazy(() => import("../DashBoard/AdminDashBoard/ManageUsers"));
+const AdminHome = lazy(() => import("../DashBoard/AdminDashBoard/AdminHome"));
+const AdminFeedBack = lazy(() => import("../DashBoard/AdminDashBoard/AdminFeedBack"));
+
+// 🔹 Reusable Loader
+const Loader = () => <div className=""><LoadingState/></div>;
 
 export const router = createBrowserRouter([
     {
-        errorElement: <ErrorPage></ErrorPage>,
         path: "/",
-        element: <MainLayOut></MainLayOut>,
+        element: <MainLayOut />,
+        errorElement: (
+            <Suspense fallback={<Loader />}>
+                <ErrorPage />
+            </Suspense>
+        ),
         children: [
             {
                 path: "/",
-                element: <Home></Home>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Home />
+                    </Suspense>
+                ),
             },
             {
                 path: "/login",
-                element: <Login></Login>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Login />
+                    </Suspense>
+                ),
             },
             {
                 path: "/register",
-                element: <Register></Register>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Register />
+                    </Suspense>
+                ),
             },
             {
                 path: "/instructors",
-                element: <Instructors></Instructors>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Instructors />
+                    </Suspense>
+                ),
             },
             {
                 path: "/classes",
-                element: <Classes></Classes>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Classes />
+                    </Suspense>
+                ),
             },
             {
                 path: "/blog",
-                element: <Blog></Blog>,
-            },
-            {
-                path: "/news",
-                element: <News></News>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Blog />
+                    </Suspense>
+                ),
             },
             {
                 path: "/blog/:id",
-                element: <BlogDetail></BlogDetail>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <BlogDetail />
+                    </Suspense>
+                ),
+            },
+            {
+                path: "/news",
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <News />
+                    </Suspense>
+                ),
             },
             {
                 path: "/news/:id",
-                element: <NewsDetail></NewsDetail>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <NewsDetail />
+                    </Suspense>
+                ),
             },
             {
                 path: "/events/:id",
-                element: <EventDetail></EventDetail>,
-            }
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <EventDetail />
+                    </Suspense>
+                ),
+            },
         ],
     },
 
     {
         path: "dashboard",
-        element: <DashBoardLayOut></DashBoardLayOut>,
+        element: <DashBoardLayOut />,
         children: [
             {
                 path: "dashboard",
                 element: (
                     <PrivetRoute>
-                        {" "}
-                        <DashBoard></DashBoard>
+                        <Suspense fallback={<Loader />}>
+                            <DashBoard />
+                        </Suspense>
                     </PrivetRoute>
                 ),
             },
-            // Student Route
+
+            // Student
             {
                 path: "studentHome",
-                element: <StudentHome></StudentHome>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <StudentHome />
+                    </Suspense>
+                ),
             },
             {
                 path: "mySelectedClasses",
-                element: <MySelectClasses></MySelectClasses>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <MySelectClasses />
+                    </Suspense>
+                ),
             },
             {
                 path: "myEnroll",
-                element: <MyEnroll></MyEnroll>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <MyEnroll />
+                    </Suspense>
+                ),
             },
             {
                 path: "mySelectedClasses/payment/:id",
-                element: <Payment></Payment>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <Payment />
+                    </Suspense>
+                ),
                 loader: ({ params }) =>
-                    fetch(
-                        `${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`
-                    ),
+                    fetch(`${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`),
             },
-
             {
                 path: "paymentHistory",
-                element: <PaymentHistory></PaymentHistory>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <PaymentHistory />
+                    </Suspense>
+                ),
             },
-            // Instruction Route
+
+            // Instructor
             {
                 path: "instructorHome",
-                element: <InstructorHome></InstructorHome>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <InstructorHome />
+                    </Suspense>
+                ),
             },
             {
                 path: "addClass",
-                element: <AddClass></AddClass>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <AddClass />
+                    </Suspense>
+                ),
             },
             {
                 path: "myAddedClasses",
-                element: <MyAddedClasses></MyAddedClasses>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <MyAddedClasses />
+                    </Suspense>
+                ),
             },
             {
                 path: "myAddedClasses/instructorFeedback",
-                element: <InsTructionFeedBack></InsTructionFeedBack>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <InsTructionFeedBack />
+                    </Suspense>
+                ),
             },
-            // Admin Route
+
+            // Admin
             {
                 path: "manageClasses",
                 element: (
                     <AdminROutes>
-                        <ManageClasses></ManageClasses>
+                        <Suspense fallback={<Loader />}>
+                            <ManageClasses />
+                        </Suspense>
                     </AdminROutes>
                 ),
             },
@@ -150,17 +245,27 @@ export const router = createBrowserRouter([
                 path: "manageUsers",
                 element: (
                     <AdminROutes>
-                        <ManageUsers></ManageUsers>
+                        <Suspense fallback={<Loader />}>
+                            <ManageUsers />
+                        </Suspense>
                     </AdminROutes>
                 ),
             },
             {
                 path: "adminHome",
-                element: <AdminHome></AdminHome>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <AdminHome />
+                    </Suspense>
+                ),
             },
             {
                 path: "manageClasses/adminFeedBack/:id",
-                element: <AdminFeedBack></AdminFeedBack>,
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <AdminFeedBack />
+                    </Suspense>
+                ),
                 loader: ({ params }) =>
                     fetch(`${import.meta.env.VITE_API_URL}/AllClass/${params.id}`),
             },

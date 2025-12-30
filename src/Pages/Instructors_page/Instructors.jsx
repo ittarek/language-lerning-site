@@ -37,16 +37,16 @@ const Instructors = () => {
                                     data-aos-delay="400"
                                 >
                                     {/* bg image */}
-                                    <div className=" xl:flex absolute top-0 right-0 -z-10">
+                                    <div className="  xl:flex absolute top-0 right-0 -z-10">
                                         <img src={Feature4BgImg} />
                                     </div>
 
                                     {/* icon image */}
                                     <div
-                                        className="max-w-[120px] xl:mr-7 xl:max-w-[232px]  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                                        className="max-w-[120px] xl:mr-7 xl:max-w-[232px]  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
 
                                     >
-                                        <img src={instructor.instructor_img} />
+                                        <img className="rounded-full w-36 h-36" src={instructor.instructor_img} />
                                     </div>
                                     {/* text */}
                                     <div className="max-w-[220px]">

@@ -187,7 +187,7 @@ const News = () => {
             )}
 
             {/* Category Filter */}
-            <div className="sticky top-0 z-40 bg-white shadow-md">
+            <div className="sticky top-20 z-40 bg-white shadow-md">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex flex-wrap gap-3 justify-center">
                         {categories.map(category => (

@@ -191,7 +191,7 @@ const EventDetail = () => {
             </Helmet>
 
             {/* Hero Image Section */}
-            <div className="relative h-96 overflow-hidden max-w-7xl mx-auto">
+            <div className="relative h-96 overflow-hidden mt-6 rounded-xl max-w-7xl mx-auto">
                 <img
                     src={event.image}
                     alt={event.title}
