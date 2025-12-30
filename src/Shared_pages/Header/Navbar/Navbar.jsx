@@ -39,12 +39,12 @@ const Navbar = () => {
             {/* Main Navbar */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-20">
+                    <div className="flex items-center justify-between md:h-20 h-14">
 
                         {/* Logo */}
                         <Link to="/" className="flex-shrink-0">
                             <img
-                                className="h-12 w-36 md:w-auto md:h-14"
+                                className=" w-36 md:w-auto md:h-14"
                                 src={logo}
                                 alt="Logo"
                             />

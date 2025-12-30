@@ -220,7 +220,7 @@ const Events = () => {
             </div>
 
             {/* Filters */}
-            <FilterSection
+            <FilterSection 
                 filters={[
                     {
                         label: 'Category',
