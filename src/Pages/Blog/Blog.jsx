@@ -4,6 +4,7 @@ import Cover from '../../Components/Cover';
 import { Helmet } from 'react-helmet-async';
 import { FaCalendar, FaUser, FaClock, FaArrowRight, FaSearch, FaBookOpen, FaGraduationCap, FaGlobe, FaLightbulb } from 'react-icons/fa';
 import FilterSection from '../../Components/Shared/FilterSection/FilterSection';
+import OptimizedImage from '../../Components/Shared/OptimizedImage';
 
 const Blog = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -187,11 +188,14 @@ const Blog = () => {
                         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-500 group">
                             <div className="grid md:grid-cols-2 gap-0">
                                 <div className="relative h-64 md:h-auto overflow-hidden">
-                                    <img
+                                    <OptimizedImage
                                         src={featuredPost.image}
                                         alt={featuredPost.title}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        aspectRatio="4/3"
+                                        className="w-full rounded-t-xl group-hover:scale-105 transition-transform"
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                     />
+                              
                                     <div className="absolute top-4 left-4">
                                         <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
                                             ⭐ Featured

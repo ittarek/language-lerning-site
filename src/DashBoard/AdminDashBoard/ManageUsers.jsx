@@ -1,6 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { FaUserAltSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 

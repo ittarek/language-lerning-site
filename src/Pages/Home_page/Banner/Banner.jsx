@@ -1,9 +1,11 @@
 import bgImage from "../../../assets/slider/slider-4.png";
 import OptimizedImage from "../../../Components/Shared/OptimizedImage";
+import GlassNavigation from "../../../Testing/GlassNavigation";
 
 const Banner = () => {
     return (
         <div className=" relative overflow-hidden -mt-6 md:mt-0">
+            <GlassNavigation />
             {/* Background Image with Overlay */}
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -88,15 +90,21 @@ const Banner = () => {
                         {/* Main image */}
                         <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/20 backdrop-blur-sm">
 
-                            <OptimizedImage
-                                src={"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1471&auto=format&fit=crop"}
-                                alt={"Language Learning"}
-                                //   aspectRatio="16/9"
-                                width="1200"
-                                height="600"
-                                priority={true}
-                                className="w-full h-auto object-cover"
-                            />
+                            <div className="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
+                                <OptimizedImage
+                                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+                                    alt="Language Learning"
+                                    // width={1920}
+                                    // height={700}
+                                    aspectRatio="16/10" 
+                                    priority={true}
+                                    className="absolute inset-0 w-full h-full"
+                                    sizes="100vw"
+                                    objectFit="cover"
+                                />
+                            </div>
+
+                    
 
                             {/* Floating badge on image */}
                             <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl animate-bounce-slow">

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaBook, FaDollarSign, FaUser, FaRegStar } from 'react-icons/fa';
 import './classesCard.css';
 // Skeleton Loader Component matching ClassCard structure

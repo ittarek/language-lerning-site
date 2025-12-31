@@ -4,41 +4,183 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
 
-  // ✅ Build optimization
   build: {
+    // Code splitting
     cssCodeSplit: true,
-    minify: 'esbuild', // esbuild থেকে terser-এ change করুন
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    minify: 'esbuild',
+
+    // Chunk size warnings
+    chunkSizeWarningLimit: 1000,
+
+    // Rollup options for code splitting
     rollupOptions: {
       output: {
         manualChunks: {
+          // React core
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+
+          // Query library
           'query-vendor': ['@tanstack/react-query'],
-          // Tailwind এবং DaisyUI আলাদা chunk করতে পারেন
-          'ui-vendor': ['daisyui'],
+
+          // Icons (if you use a lot)
+          'icon-vendor': ['react-icons'],
+
+          // Firebase (if used)
+          // 'firebase-vendor': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
         },
+
+        // Asset file names
+        assetFileNames: assetInfo => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `assets/images/[name]-[hash][extname]`;
+          } else if (/woff|woff2|eot|ttf|otf/i.test(ext)) {
+            return `assets/fonts/[name]-[hash][extname]`;
+          }
+
+          return `assets/[name]-[hash][extname]`;
+        },
+
+        // JS file names
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
       },
     },
-    // ✅ CSS optimization
+
+    // CSS minification
     cssMinify: true,
-    // ✅ Sourcemap production-এ বন্ধ করুন
+
+    // Source maps (disable for production)
     sourcemap: false,
+
+    // esbuild options
+    esbuild: {
+      // Remove console and debugger in production
+      drop: ['console', 'debugger'],
+
+      // Pure function calls (won't be called if result not used)
+      pure: ['console.log', 'console.debug', 'console.info', 'console.warn'],
+
+      // Minify identifiers
+      minifyIdentifiers: true,
+      minifySyntax: true,
+      minifyWhitespace: true,
+    },
+
+    // Target modern browsers for smaller bundles
+    target: 'esnext',
+
+    // Optimize dependencies
+    commonjsOptions: {
+      include: [/node_modules/],
+    },
   },
 
-  // ✅ Preview server config
-  preview: {
-    port: 4173,
-    strictPort: true,
-  },
-
-  // ✅ Development server config
+  // Development server
   server: {
     port: 5173,
     strictPort: true,
+    host: true, // Listen on all addresses
+    open: true, // Auto-open browser
+  },
+
+  // Preview server (for testing production build)
+  preview: {
+    port: 4173,
+    strictPort: true,
+    host: true,
+  },
+
+  // Dependency optimization
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
+    exclude: ['@firebase/app'],
   },
 });
+
+/**
+ * ========================================
+ * 🧹 CACHE CLEAR COMMANDS
+ * ========================================
+ *
+ * Windows PowerShell:
+ * -------------------
+ * Remove-Item -Recurse -Force dist
+ * Remove-Item -Recurse -Force node_modules\.vite
+ * Remove-Item -Recurse -Force node_modules\.cache
+ *
+ * OR short form:
+ * rd -r -force dist
+ * rd -r -force node_modules\.vite
+ *
+ *
+ * Linux/Mac:
+ * ----------
+ * rm -rf dist
+ * rm -rf node_modules/.vite
+ * rm -rf node_modules/.cache
+ *
+ *
+ * ========================================
+ * 📦 BUILD COMMANDS
+ * ========================================
+ *
+ * Clean install:
+ * npm install
+ *
+ * Development:
+ * npm run dev
+ *
+ * Production build:
+ * npm run build
+ *
+ * Preview production:
+ * npm run preview
+ *
+ * Build + Preview:
+ * npm run build && npm run preview
+ *
+ *
+ * ========================================
+ * 🔍 ANALYZE BUNDLE SIZE
+ * ========================================
+ *
+ * Install:
+ * npm install -D rollup-plugin-visualizer
+ *
+ * Add to plugins array:
+ * import { visualizer } from 'rollup-plugin-visualizer';
+ *
+ * plugins: [
+ *   react(),
+ *   visualizer({
+ *     open: true,
+ *     gzipSize: true,
+ *     brotliSize: true,
+ *   })
+ * ],
+ *
+ *
+ * ========================================
+ * ⚡ PERFORMANCE TIPS
+ * ========================================
+ *
+ * 1. Lazy load routes:
+ *    const Home = lazy(() => import('./pages/Home'));
+ *
+ * 2. Code split by route:
+ *    Use React.lazy() for page components
+ *
+ * 3. Optimize images:
+ *    - Use WebP format
+ *    - Compress before upload
+ *    - Use appropriate sizes
+ *
+ * 4. Dynamic imports:
+ *    const module = await import('./module');
+ *
+ * 5. Remove unused dependencies:
+ *    npm uninstall <package-name>
+ */

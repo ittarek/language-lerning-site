@@ -10,11 +10,11 @@ import {
     FaVideo,
     FaGlobe,
     FaArrowRight,
-    FaFilter
 } from 'react-icons/fa';
 import Container from '../Container';
 import FilterSection from '../Shared/FilterSection/FilterSection';
 import OptimizedImage from '../Shared/OptimizedImage';
+
 
 const Events = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');
@@ -190,7 +190,7 @@ const Events = () => {
             </Helmet>
 
             {/* Hero Section */}
-            {/* from-indigo-900 via-purple-300 to-pink-600 */}
+   
             <div className=" max-w-7xl mx-auto rounded-t-xl bg-gradient-to-br from-gray-950 via-purple-800 to-gray-900   py-20">
 
                 <div className="text-center mx-auto">
@@ -217,7 +217,7 @@ const Events = () => {
                 </div>
 
             </div>
-
+      
             {/* Filters */}
             <FilterSection 
                 filters={[

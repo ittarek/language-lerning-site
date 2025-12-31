@@ -7,6 +7,7 @@ import loginImg from "../../assets/login/login.jpg";
 import Container from "../../Components/Container";
 import SocialLogin from "../../Components/Socail/SocailLogin";
 import { AuthContext } from "../../Provider/AuthProvider";
+import OptimizedImage from "../../Components/Shared/OptimizedImage";
 
 const Login = () => {
     const { login } = useContext(AuthContext);
@@ -56,10 +57,16 @@ const Login = () => {
 
                         {/* Left Side - Image */}
                         <div className="hidden lg:block relative overflow-hidden">
-                            <img
+
+                            <OptimizedImage
                                 className="w-full h-full object-cover"
                                 src={loginImg}
                                 alt="Login illustration"
+                                //   aspectRatio="16/9"
+                                width="1200"
+                                height="600"
+
+
                             />
                             <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/90 to-purple-600/90 flex items-center justify-center p-12">
                                 <div className="text-center space-y-6">

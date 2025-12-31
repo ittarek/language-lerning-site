@@ -16,6 +16,7 @@ import {
     FaTrophy,
     FaBookReader
 } from 'react-icons/fa';
+import OptimizedImage from '../../Components/Shared/OptimizedImage';
 
 const NewsDetail = () => {
     const { id } = useParams();
@@ -311,11 +312,15 @@ As technology improves, the line between human and AI instruction continues to b
             <div className="container mx-auto px-4 mt-11 mb-16">
                 <div className="max-w-5xl mx-auto">
                     <div className="rounded-3xl overflow-hidden shadow-2xl">
-                        <img
+                        <OptimizedImage
                             src={article.image}
                             alt={article.title}
-                            className="w-full h-96 object-cover"
+                            aspectRatio="16/9"
+                            priority={true}
+                            className="w-full rounded-2xl shadow-2xl mb-8"
+                            sizes="(max-width: 1024px) 100vw, 1024px"
                         />
+                
                     </div>
                 </div>
             </div>

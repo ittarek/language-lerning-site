@@ -5,7 +5,6 @@ import {
     FaBook,
     FaBookmark,
     FaDollarSign,
-    FaRegStar,
     FaStar,
     FaUser,
     FaChartLine,
@@ -45,9 +44,8 @@ const ClassCard = ({ singleClass }) => {
                     alt={class_name}
                     className={`w-full h-full object-cover transition-transform duration-500 ${isHovered ? 'scale-110' : 'scale-100'
                         }`}
-                    width={600}
-                    height={400}
-
+                    aspectRatio="4/3"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                 />
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>

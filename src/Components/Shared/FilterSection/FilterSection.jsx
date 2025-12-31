@@ -1,4 +1,4 @@
-// src/Components/FilterSection/FilterSection.jsx
+
 import { FaFilter, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useRef, useState, useEffect } from 'react';
 import Container from '../../Container';

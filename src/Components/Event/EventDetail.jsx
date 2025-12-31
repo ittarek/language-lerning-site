@@ -5,7 +5,6 @@ import {
     FaCalendar,
     FaClock,
     FaMapMarkerAlt,
-    FaUsers,
     FaVideo,
     FaArrowLeft,
     FaShare,
@@ -203,8 +202,9 @@ const EventDetail = () => {
                     src={event.image}
                     alt={event.title}
                     className="w-full h-full object-cover"
-                    aspectRatio="4/3"
-
+                    aspectRatio="16/9"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+           
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
 

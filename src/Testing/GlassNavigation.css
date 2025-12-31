@@ -1,0 +1,173 @@
+/* src/Components/GlassNavigation/GlassNavigation.css */
+
+:root {
+    --glass-bg-color: rgba(255, 255, 255, 0.25);
+    --glass-highlight: rgba(255, 255, 255, 0.75);
+    --glass-text: #ffffff;
+    --glass-accent: #6366f1;
+    /* Indigo-600 */
+    --glass-grey: #444739;
+}
+
+.glass-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* Glass Container */
+.glass-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-radius: 2rem;
+    overflow: hidden;
+    flex: 1 1 auto;
+    max-width: 600px;
+    box-shadow:
+        0 6px 6px rgba(0, 0, 0, 0.2),
+        0 0 20px rgba(0, 0, 0, 0.1);
+    color: var(--glass-text);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+}
+
+.glass-container--rounded {
+    border-radius: 3rem;
+}
+
+.glass-container--medium {
+    flex: 1 1 auto;
+}
+
+/* Glass Layers */
+.glass-filter,
+.glass-overlay,
+.glass-specular {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.glass-filter {
+    z-index: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-overlay {
+    z-index: 1;
+    background: var(--glass-bg-color);
+}
+
+.glass-specular {
+    z-index: 2;
+    box-shadow:
+        inset 1px 1px 0 var(--glass-highlight),
+        inset 0 0 5px var(--glass-highlight);
+}
+
+/* Glass Content */
+.glass-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: space-around;
+    padding: 12px 28px;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Glass Navigation Item */
+.glass-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--glass-grey);
+    text-decoration: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.glass-item:hover {
+    color: var(--glass-accent);
+}
+
+.glass-item:hover .glass-item__icon svg {
+    transform: scale(1.1);
+    fill: var(--glass-accent);
+}
+
+/* Glass Item Icon */
+.glass-item__icon {
+    margin-bottom: 0.25rem;
+}
+
+.glass-item__icon svg {
+    width: 40px;
+    height: 40px;
+    fill: var(--glass-grey);
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.25));
+    transition: all 0.25s ease-out;
+}
+
+/* Glass Item Label */
+.glass-item__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Active State */
+.glass-item--active {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--glass-accent);
+    box-shadow:
+        0 4px 8px rgba(99, 102, 241, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.glass-item--active .glass-item__icon svg {
+    fill: var(--glass-accent);
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.5));
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .glass-container {
+        max-width: 100%;
+    }
+
+    .glass-content {
+        padding: 8px 16px;
+        gap: 0.5rem;
+    }
+
+    .glass-item {
+        padding: 0.5rem 1rem;
+    }
+
+    .glass-item__icon svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .glass-item__label {
+        font-size: 0.75rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --glass-bg-color: rgba(0, 0, 0, 0.4);
+        --glass-highlight: rgba(255, 255, 255, 0.2);
+        --glass-grey: #e5e7eb;
+    }
+}
