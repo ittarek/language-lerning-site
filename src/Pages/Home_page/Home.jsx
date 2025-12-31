@@ -59,7 +59,7 @@ const LazySection = ({ children, className = "" }) => {
 const Home = () => {
     useScrollToHash();
     return (
-        <>
+        <main id="home">
             <Helmet>
                 <title>Learning | Home</title>
             </Helmet>
@@ -94,10 +94,12 @@ const Home = () => {
                 </LazySection>
 
                 <LazySection>
-                    <AboutUs />
+                    <section id="about">
+                        <AboutUs />
+       </section>
                 </LazySection>
             </Container>
-        </>
+        </main>
     );
 };
 

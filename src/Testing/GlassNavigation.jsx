@@ -1,77 +1,119 @@
-// src/Components/GlassNavigation/GlassNavigation.jsx
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaLayerGroup, FaWifi, FaMusic } from 'react-icons/fa';
-import './GlassNavigation.css';
 
-const GlassNavigation = ({ items }) => {
-    const location = useLocation();
+import { useState, useEffect } from 'react';
+
+const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
+    const [activeSection, setActiveSection] = useState('home');
 
     // Default navigation items if not provided
+    // User should pass their own items with react-icons
     const defaultItems = [
         {
             id: 'home',
             label: 'Home',
-            icon: <FaHome />,
-            path: '/'
+            icon: '🏠', // Fallback emoji if no icon provided
+            sectionId: 'home'
         },
         {
-            id: 'classes',
-            label: 'Classes',
-            icon: <FaLayerGroup />,
-            path: '/classes'
+            id: 'about',
+            label: 'About',
+            icon: '📋',
+            sectionId: 'about'
         },
         {
             id: 'events',
             label: 'Events',
-            icon: <FaWifi />,
-            path: '/#events'
+            icon: '📅',
+            sectionId: 'events'
         },
-
         {
             id: 'blog',
             label: 'Blog',
-            icon: <FaMusic />,
-            path: '/blog'
+            icon: '✍️',
+            sectionId: 'blog'
         }
     ];
 
     const navigationItems = items || defaultItems;
 
+    // Detect active section on scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = navigationItems.map(item =>
+                document.getElementById(item.sectionId)
+            ).filter(Boolean);
+
+            let current = 'home';
+
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) {
+                    current = section.id;
+                }
+            });
+
+            setActiveSection(current);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [navigationItems]);
+
+    // Handle smooth scroll to section
+    const handleClick = (e, item) => {
+        e.preventDefault();
+
+        const element = document.getElementById(item.sectionId);
+        if (element) {
+            // Get navbar height to offset scroll position
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Call optional onNavigate callback
+        if (onNavigate) {
+            onNavigate(item);
+        }
+    };
+
     return (
-        <div className="glass-nav-wrapper">
-            <div className="glass-container glass-container--rounded glass-container--medium">
-                <div className="glass-filter"></div>
-                <div className="glass-overlay"></div>
-                <div className="glass-specular"></div>
-                <div className="glass-content">
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[1000] p-5">
+            <nav className="bg-gray-900/80 backdrop-blur-lg border border-gray-700/50 rounded-full px-5 py-3 shadow-2xl">
+                <ul className="flex gap-2.5 list-none m-0 p-0 items-center">
                     {navigationItems.map((item) => {
-                        const isActive = location.pathname === item.path;
+                        const isActive = activeSection === item.sectionId;
 
                         return (
-                            <Link
-                                key={item.id}
-                                to={item.path}
-                                className={`glass-item ${isActive ? 'glass-item--active' : ''}`}
-                            >
-                                <div className="glass-item__icon">
-                                    {item.icon}
-                                </div>
-                                <span className="glass-item__label">{item.label}</span>
-                            </Link>
+                            <li key={item.id} className="m-0">
+                                <button
+                                    onClick={(e) => handleClick(e, item)}
+                                    className={`
+                                        flex flex-col items-center gap-1 px-4 py-3 rounded-full
+                                        border-none transition-all duration-300 cursor-pointer
+                                        ${isActive
+                                            ? 'bg-white/20 text-white shadow-lg'
+                                            : 'bg-transparent text-gray-300 hover:bg-white/10 hover:text-white'
+                                        }
+                                    `}
+                                >
+                                    <span className="text-xl">
+                                        {item.icon}
+                                    </span>
+                                    <span className={`text-xs ${isActive ? 'font-semibold' : 'font-normal'}`}>
+                                        {item.label}
+                                    </span>
+                                </button>
+                            </li>
                         );
                     })}
-                    <Link
-                        to="/#events"
-                        className="glass-item"
-                    >
-                        <div className="glass-item__icon">{item.icon}</div>
-                        <span className="glass-item__label">Events</span>
-                    </Link>
-                </div>
-            </div>
+                </ul>
+            </nav>
         </div>
     );
 };
-
-export default GlassNavigation;
