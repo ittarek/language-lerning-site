@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { FaDollarSign, FaPhabricator } from 'react-icons/fa';
 
 const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
     const [activeSection, setActiveSection] = useState('home');
@@ -30,9 +31,15 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
             label: 'Blog',
             icon: '✍️',
             sectionId: 'blog'
+        },
+        {
+            id: 'pricing',
+            label: 'Pricing',
+            icon: <FaDollarSign/>,
+            sectionId: 'pricing'
         }
     ];
-
+let bgcolor = "black"
     const navigationItems = items || defaultItems;
 
     // Detect active section on scroll
@@ -84,7 +91,7 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
 
     return (
         <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[1000] p-5">
-            <nav className="bg-gray-900/80 backdrop-blur-lg border border-gray-700/50 rounded-full px-5 py-3 shadow-2xl">
+            <nav className="bg-transparent backdrop-blur-lg border border-gray-700/50 rounded-full p-2 shadow-2xl">
                 <ul className="flex gap-2.5 list-none m-0 p-0 items-center">
                     {navigationItems.map((item) => {
                         const isActive = activeSection === item.sectionId;
@@ -94,7 +101,7 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
                                 <button
                                     onClick={(e) => handleClick(e, item)}
                                     className={`
-                                        flex flex-col items-center gap-1 px-4 py-3 rounded-full
+                                        flex flex-col items-center gap-1 p-2 rounded-full
                                         border-none transition-all duration-300 cursor-pointer
                                         ${isActive
                                             ? 'bg-white/20 text-white shadow-lg'
@@ -102,10 +109,10 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
                                         }
                                     `}
                                 >
-                                    <span className="text-xl">
+                                    <span className="">
                                         {item.icon}
                                     </span>
-                                    <span className={`text-xs ${isActive ? 'font-semibold' : 'font-normal'}`}>
+                                    <span className={`text-xs  ${isActive ? 'font-semibold' : 'font-normal'} ${bgcolor == "black" ? "text-white" : "text-black"}`}>
                                         {item.label}
                                     </span>
                                 </button>
@@ -117,3 +124,5 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
         </div>
     );
 };
+
+export default GlassNavigation

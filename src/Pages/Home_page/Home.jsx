@@ -82,11 +82,15 @@ const Home = () => {
                 </LazySection>
 
                 <LazySection>
-                    <StartingCourse />
+                    <section id="starting_course">
+                        <StartingCourse />
+                   </section>
                 </LazySection>
 
                 <LazySection>
-                    <PlanPricing />
+                    <section id="pricing">
+                        <PlanPricing />
+                    </section>
                 </LazySection>
 
                 <LazySection>
