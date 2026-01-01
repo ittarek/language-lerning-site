@@ -4,7 +4,7 @@ import { FaDollarSign, FaPhabricator } from 'react-icons/fa';
 
 const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
     const [activeSection, setActiveSection] = useState('home');
-
+const [bgColor , setBgColor] =  useState("black")
     // Default navigation items if not provided
     // User should pass their own items with react-icons
     const defaultItems = [
@@ -27,10 +27,10 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
             sectionId: 'events'
         },
         {
-            id: 'blog',
-            label: 'Blog',
+            id: 'starting_course',
+            label: 'Course',
             icon: '✍️',
-            sectionId: 'blog'
+            sectionId: 'starting_course'
         },
         {
             id: 'pricing',
@@ -40,7 +40,7 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
         }
 
     ];
-let bgcolor = "black"
+
     const navigationItems = items || defaultItems;
 
     // Detect active section on scroll
@@ -102,18 +102,19 @@ let bgcolor = "black"
                                 <button
                                     onClick={(e) => handleClick(e, item)}
                                     className={`
-                                        flex flex-col items-center gap-1 p-2 rounded-full
+                                        flex flex-col items-center gap-1 m-auto md:w-16 md:h-16 p-2 rounded-full
                                         border-none transition-all duration-300 cursor-pointer
-                                        ${isActive
-                                            ? 'bg-white/20  shadow-lg'
-                                            : 'bg-transparent text-gray-300 hover:bg-white/10 hover:text-white'
+                                    
+                                        ${isActive || bgColor === "black"
+                                            ? 'bg-white/20 text-black  shadow-lg'
+                                            : 'bg-transparent text-white hover:bg-white/10 hover:text-white'
                                         }
                                     `}
                                 >
                                     <span className="">
                                         {item.icon}
                                     </span>
-                                    <span className={`text-xs !text-black  ${isActive ? 'font-semibold' : 'font-normal'} ${bgcolor === "black" ? "text-white" : "!text-black"}`}>
+                                    <span className={`text-xs     ${isActive ? 'font-semibold' : 'font-normal'} `}>
                                         {item.label}
                                     </span>
                                 </button>
