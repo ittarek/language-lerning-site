@@ -3,7 +3,8 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import Container from "../../Components/Container";
 import Banner from "./Banner/Banner";
 import { LoadingState } from "../../Components/Shared/FetchStates/FetchStates";
-import useScrollToHash from "../../Hooks/useScrollToHash";
+
+
 
 // Lazy imports
 const AboutUs = lazy(() => import("./AboutUs/AboutUs"));
@@ -57,7 +58,7 @@ const LazySection = ({ children, className = "" }) => {
 };
 
 const Home = () => {
-    useScrollToHash();
+
     return (
         <main id="home">
             <Helmet>
