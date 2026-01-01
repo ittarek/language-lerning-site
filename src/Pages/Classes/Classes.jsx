@@ -26,7 +26,7 @@ const Classes = () => {
                                 <SliderClass />
                             </div>{" "}
                     
-                            <div className="grid lg:grid-cols-3 mt-11  gap-10">
+                            <div className="grid lg:grid-cols-4 md:grid-cols-2 mt-11  gap-10">
                                 {" "}
                                 {approvedClass.map(classes => (
                                     <ClassCArd
