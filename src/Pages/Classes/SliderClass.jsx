@@ -8,7 +8,7 @@ import OptimizedImage from "../../Components/Shared/OptimizedImage";
 import { useMotionValue, useTransform, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const SilderClass = () => {
+const SliderClass = () => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotateX = useTransform(y, [-100, 100], [30, -30]);
@@ -24,7 +24,7 @@ const SilderClass = () => {
 
     return (
         // card wrapper
-        <div style={{ perspective: 2000 }} className='sm-max-w-[100px]'>
+        <div style={{ perspective: 2000 }} className='sm-max-w-[100px] py-24'>
             {/* card */}
             <motion.div
                 style={{ x, y, rotateX, rotateY, z: 100 }}
@@ -95,4 +95,4 @@ const SilderClass = () => {
     );
 };
 
-export default SilderClass;
+export default SliderClass;

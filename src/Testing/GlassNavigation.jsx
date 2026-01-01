@@ -35,9 +35,10 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
         {
             id: 'pricing',
             label: 'Pricing',
-            icon: <FaDollarSign/>,
+            icon: '💰',
             sectionId: 'pricing'
         }
+
     ];
 let bgcolor = "black"
     const navigationItems = items || defaultItems;
@@ -104,7 +105,7 @@ let bgcolor = "black"
                                         flex flex-col items-center gap-1 p-2 rounded-full
                                         border-none transition-all duration-300 cursor-pointer
                                         ${isActive
-                                            ? 'bg-white/20 text-white shadow-lg'
+                                            ? 'bg-white/20  shadow-lg'
                                             : 'bg-transparent text-gray-300 hover:bg-white/10 hover:text-white'
                                         }
                                     `}
@@ -112,7 +113,7 @@ let bgcolor = "black"
                                     <span className="">
                                         {item.icon}
                                     </span>
-                                    <span className={`text-xs  ${isActive ? 'font-semibold' : 'font-normal'} ${bgcolor == "black" ? "text-white" : "text-black"}`}>
+                                    <span className={`text-xs !text-black  ${isActive ? 'font-semibold' : 'font-normal'} ${bgcolor === "black" ? "text-white" : "!text-black"}`}>
                                         {item.label}
                                     </span>
                                 </button>

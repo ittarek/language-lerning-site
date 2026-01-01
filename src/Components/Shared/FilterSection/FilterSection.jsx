@@ -204,7 +204,7 @@ const FilterSection = ({
 
     // Wrapper with optional sticky and container
     const wrapperClasses = `
-        ${isSticky ? 'sticky top-14 z-40' : ''}
+        ${isSticky ? 'sticky top-14 md:top-20 z-40' : ''}
         bg-white shadow-md max-w-7xl mx-auto
     `;
 

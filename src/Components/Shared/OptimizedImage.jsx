@@ -1,6 +1,5 @@
-// src/Components/OptimizedImage/OptimizedImage.jsx
 import { useState } from 'react';
-
+import "./OptimizedImage.css"
 /**
  * Optimized Image Component - Combines aspect ratio control with image optimization
  * 
@@ -149,7 +148,7 @@ const OptimizedImage = ({
                 width={dimensions.width}
                 height={dimensions.height}
                 loading={priority ? 'eager' : 'lazy'}
-                fetchPriority={priority ? 'high' : 'auto'}
+                fetchpriority={priority ? 'high' : 'auto'}
                 decoding="async"
                 onLoad={handleLoad}
                 onError={handleError}
@@ -160,21 +159,8 @@ const OptimizedImage = ({
                 `}
             />
 
-            {/* Shimmer animation styles */}
-            <style jsx>{`
-                @keyframes shimmer {
-                    0% {
-                        background-position: -1000px 0;
-                    }
-                    100% {
-                        background-position: 1000px 0;
-                    }
-                }
-                .animate-shimmer {
-                    animation: shimmer 2s infinite;
-                    background-size: 1000px 100%;
-                }
-            `}</style>
+       
+
         </div>
     );
 };
