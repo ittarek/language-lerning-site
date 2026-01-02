@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
@@ -69,11 +69,11 @@ const AddClass = () => {
   return (
     <div className="w-full min-h-screen py-10">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
+        <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12  rounded-xl mx-auto shadow-lg overflow-hidden">
           <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center bg-image">
-            <h1 className="text-white text-3xl mb-3">Welcome</h1>
+            <h1 className=" text-3xl mb-3">Welcome</h1>
             <div>
-              <p className="text-white">
+              <p className="">
                 Please let me know the specific subject or topic you would like
                 to have a class on, and I'll be happy to provide you with a
                 detailed lesson plan. Whether it's a one-on-one session or a
