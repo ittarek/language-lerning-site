@@ -9,6 +9,7 @@ import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import Mood from "./Mood";
 import GlassNavigation from "../../../Testing/GlassNavigation";
+import DynamicDashboardLink from "./DynamicDashboardLink";
 
 const Navbar = () => {
     const { user, loggedOut } = useContext(AuthContext);
@@ -157,13 +158,13 @@ const Navbar = () => {
                                                     New
                                                 </span>
                                             </Link>
-
-                                            <Link
+                                            <DynamicDashboardLink />
+                                            {/* <Link
                                                 to="/dashboard"
                                                 className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                                             >
                                                 Dashboard
-                                            </Link>
+                                            </Link> */}
 
                                             <div className="border-t border-gray-100 mt-2 pt-2">
                                                 <button

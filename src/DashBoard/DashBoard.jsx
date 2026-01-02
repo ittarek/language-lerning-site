@@ -19,6 +19,9 @@ import useAdmin from "../Hooks/useAdmin";
 import useInstructors from "../Hooks/useInstructor";
 import Spinner from "../Components/Spinner";
 import { AuthContext } from "../Provider/AuthProvider";
+import AdminHome from "./AdminDashBoard/AdminHome";
+import InstructorHome from "./InstructionDashBoard/InstructorHome";
+import StudentHome from "./StudenDashBoard/StudentHome";
 
 const DashBoard = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -73,7 +76,7 @@ const DashBoard = () => {
     const menuData = getMenuItems();
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50  ">
             <Helmet>
                 <title>Language Learner | Dashboard</title>
             </Helmet>
@@ -221,6 +224,12 @@ const DashBoard = () => {
                             </div>
                         </div>
                     </div>
+
+                    {
+                        isAdmin ? <AdminHome /> : isInstructor ? <InstructorHome /> : <StudentHome />
+
+                    }
+
 
                     {/* Page Content */}
                     <div className="p-4 sm:p-6 lg:p-8">

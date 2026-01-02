@@ -7,7 +7,8 @@ const DashBoardLayOut = () => {
                     <>
          
                      <DashBoard></DashBoard>        
-                    </>
+
+              </>
           );
 };
 

@@ -7,6 +7,7 @@ import DashBoardLayOut from "../LayOut/DashBoardLayOut";
 import PrivetRoute from "./PrivetRoute";
 import AdminROutes from "./AdminROutes";
 import { LoadingState } from "../Components/Shared/FetchStates/FetchStates";
+import RoleBasedDashboard from "./RoleBasedDashboard";
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import("../Pages/Home_page/Home"));
@@ -137,28 +138,160 @@ export const router = createBrowserRouter([
         ],
     },
 
+    // {
+    //     path: "dashboard",
+    //     element: <DashBoardLayOut />,
+    //     children: [
+    //         {
+    //             path: "dashboard",
+    //             element: (
+    //                 <PrivetRoute>
+    //                     <Suspense fallback={<Loader />}>
+    //                         <DashBoard />
+    //                     </Suspense>
+    //                 </PrivetRoute>
+    //             ),
+    //         },
+
+    //         // Student
+    //         {
+    //             path: "studentHome",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <StudentHome />
+    //                 </Suspense>
+    //             ),
+    //         },
+    //         {
+    //             path: "mySelectedClasses",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <MySelectClasses />
+    //                 </Suspense>
+    //             ),
+    //         },
+    //         {
+    //             path: "myEnroll",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <MyEnroll />
+    //                 </Suspense>
+    //             ),
+    //         },
+    //         {
+    //             path: "mySelectedClasses/payment/:id",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <Payment />
+    //                 </Suspense>
+    //             ),
+    //             loader: ({ params }) =>
+    //                 fetch(`${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`),
+    //         },
+    //         {
+    //             path: "paymentHistory",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <PaymentHistory />
+    //                 </Suspense>
+    //             ),
+    //         },
+
+    //         // Instructor
+    //         {
+    //             path: "instructorHome",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <InstructorHome />
+    //                 </Suspense>
+    //             ),
+    //         },
+    //         {
+    //             path: "addClass",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <AddClass />
+    //                 </Suspense>
+    //             ),
+    //         },
+    //         {
+    //             path: "myAddedClasses",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <MyAddedClasses />
+    //                 </Suspense>
+    //             ),
+    //         },
+    //         {
+    //             path: "myAddedClasses/instructorFeedback",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <InsTructionFeedBack />
+    //                 </Suspense>
+    //             ),
+    //         },
+
+    //         // Admin
+    //         {
+    //             path: "manageClasses",
+    //             element: (
+    //                 <AdminROutes>
+    //                     <Suspense fallback={<Loader />}>
+    //                         <ManageClasses />
+    //                     </Suspense>
+    //                 </AdminROutes>
+    //             ),
+    //         },
+    //         {
+    //             path: "manageUsers",
+    //             element: (
+    //                 <AdminROutes>
+    //                     <Suspense fallback={<Loader />}>
+    //                         <ManageUsers />
+    //                     </Suspense>
+    //                 </AdminROutes>
+    //             ),
+    //         },
+    //         {
+    //             path: "adminHome",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <AdminHome />
+    //                 </Suspense>
+    //             ),
+    //         },
+    //         {
+    //             path: "manageClasses/adminFeedBack/:id",
+    //             element: (
+    //                 <Suspense fallback={<Loader />}>
+    //                     <AdminFeedBack />
+    //                 </Suspense>
+    //             ),
+    //             loader: ({ params }) =>
+    //                 fetch(`${import.meta.env.VITE_API_URL}/AllClass/${params.id}`),
+    //         },
+    //     ],
+    // },
+   
     {
         path: "dashboard",
         element: <DashBoardLayOut />,
         children: [
+            // Default dashboard redirect
             {
-                path: "dashboard",
-                element: (
-                    <PrivetRoute>
-                        <Suspense fallback={<Loader />}>
-                            <DashBoard />
-                        </Suspense>
-                    </PrivetRoute>
-                ),
+                path: "",
+                element: <RoleBasedDashboard />
             },
 
-            // Student
+            // Student Routes
             {
                 path: "studentHome",
                 element: (
-                    <Suspense fallback={<Loader />}>
-                        <StudentHome />
-                    </Suspense>
+                    <PrivetRoute>
+                        <Suspense fallback={<Loader />}>
+                            <StudentHome />
+                        </Suspense>
+                    </PrivetRoute>
                 ),
             },
             {
@@ -196,41 +329,59 @@ export const router = createBrowserRouter([
                 ),
             },
 
-            // Instructor
+            // Instructor Routes
             {
                 path: "instructorHome",
                 element: (
-                    <Suspense fallback={<Loader />}>
-                        <InstructorHome />
-                    </Suspense>
+                    <PrivetRoute>
+                        <Suspense fallback={<Loader />}>
+                            <InstructorHome />
+                        </Suspense>
+                    </PrivetRoute>
                 ),
             },
             {
                 path: "addClass",
                 element: (
-                    <Suspense fallback={<Loader />}>
-                        <AddClass />
-                    </Suspense>
+                    <PrivetRoute>
+                        <Suspense fallback={<Loader />}>
+                            <AddClass />
+                        </Suspense>
+                    </PrivetRoute>
                 ),
             },
             {
                 path: "myAddedClasses",
                 element: (
-                    <Suspense fallback={<Loader />}>
-                        <MyAddedClasses />
-                    </Suspense>
+                    <PrivetRoute>
+                        <Suspense fallback={<Loader />}>
+                            <MyAddedClasses />
+                        </Suspense>
+                    </PrivetRoute>
                 ),
             },
             {
                 path: "myAddedClasses/instructorFeedback",
                 element: (
-                    <Suspense fallback={<Loader />}>
-                        <InsTructionFeedBack />
-                    </Suspense>
+                    <PrivetRoute>
+                        <Suspense fallback={<Loader />}>
+                            <InsTructionFeedBack />
+                        </Suspense>
+                    </PrivetRoute>
                 ),
             },
 
-            // Admin
+            // Admin Routes
+            {
+                path: "adminHome",
+                element: (
+                    <AdminROutes>
+                        <Suspense fallback={<Loader />}>
+                            <AdminHome />
+                        </Suspense>
+                    </AdminROutes>
+                ),
+            },
             {
                 path: "manageClasses",
                 element: (
@@ -252,23 +403,30 @@ export const router = createBrowserRouter([
                 ),
             },
             {
-                path: "adminHome",
-                element: (
-                    <Suspense fallback={<Loader />}>
-                        <AdminHome />
-                    </Suspense>
-                ),
-            },
-            {
                 path: "manageClasses/adminFeedBack/:id",
                 element: (
-                    <Suspense fallback={<Loader />}>
-                        <AdminFeedBack />
-                    </Suspense>
+                    <AdminROutes>
+                        <Suspense fallback={<Loader />}>
+                            <AdminFeedBack />
+                        </Suspense>
+                    </AdminROutes>
                 ),
                 loader: ({ params }) =>
                     fetch(`${import.meta.env.VITE_API_URL}/AllClass/${params.id}`),
             },
+
+            // Original dashboard (optional)
+            {
+                path: "dashboard",
+                element: (
+                    <PrivetRoute>
+                        <Suspense fallback={<Loader />}>
+                            <DashBoard />
+                        </Suspense>
+                    </PrivetRoute>
+                ),
+            },
         ],
     },
+  
 ]);
