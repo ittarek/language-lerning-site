@@ -19,18 +19,16 @@ import useAdmin from "../Hooks/useAdmin";
 import useInstructors from "../Hooks/useInstructor";
 import Spinner from "../Components/Spinner";
 import { AuthContext } from "../Provider/AuthProvider";
-import AdminHome from "./AdminDashBoard/AdminHome";
-import InstructorHome from "./InstructionDashBoard/InstructorHome";
-import StudentHome from "./StudenDashBoard/StudentHome";
+
 
 const DashBoard = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, loggedOut } = useContext(AuthContext);
     const [isInstructor] = useInstructors();
     const [isAdmin, isAdminLoading] = useAdmin();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const handleLogout = () => {
-        logOut();
+        loggedOut();
     };
 
     if (isAdminLoading) {
@@ -225,11 +223,7 @@ const DashBoard = () => {
                         </div>
                     </div>
 
-                    {
-                        isAdmin ? <AdminHome /> : isInstructor ? <InstructorHome /> : <StudentHome />
-
-                    }
-
+             
 
                     {/* Page Content */}
                     <div className="p-4 sm:p-6 lg:p-8">

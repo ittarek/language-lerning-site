@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import  { createContext } from "react";
 
 import {
     GoogleAuthProvider,
@@ -12,7 +12,6 @@ import {
     signOut,
     updateProfile,
 } from "firebase/auth";
-import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useEffect } from "react";
 import app from "./../Firbase/Firebase.config";
@@ -27,7 +26,6 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [spinner, setSpinner] = useState(true);
     const [photoUrl, setPhotoUrl] = useState(null);
-    const [error, setError] = useState("");
 
     //   user create
     const registration = (email, password) => {
