@@ -1,26 +1,72 @@
+// import { useQuery } from "@tanstack/react-query";
+// import { useContext } from "react";
+// import { AuthContext } from "../Provider/AuthProvider";
+
+// const useClass = () => {
+//     //   const url ="https://b7-a12-summer-camp-server-side-inky.vercel.app/"
+//     const { spinner } = useContext(AuthContext);
+//     const {
+//         data: classes = [],
+//         isLoading: loading,
+//         refetch,
+//     } = useQuery({
+//         queryKey: ["classes"],
+
+//         enabled: spinner,
+
+//         queryFn: async () => {
+//             const res = await fetch(`${import.meta.env.VITE_API_URL}/AllClasses`);
+
+//             return res.json();
+//         },
+//     });
+//     return [classes, loading, refetch];
+// };
+
+// export default useClass;
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const useClass = () => {
-    //   const url ="https://b7-a12-summer-camp-server-side-inky.vercel.app/"
     const { spinner } = useContext(AuthContext);
+
     const {
         data: classes = [],
         isLoading: loading,
         refetch,
+        error,
     } = useQuery({
         queryKey: ["classes"],
 
-        enabled: spinner,
+        // ✅ FIXED: Query should run when spinner is FALSE (loading is complete)
+        enabled: !spinner,
 
         queryFn: async () => {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/AllClasses`);
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_API_URL}/AllClasses`
+                );
 
-            return res.json();
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch classes: ${res.status}`);
+                }
+
+                return res.json();
+            } catch (error) {
+                console.error("Error fetching classes:", error);
+                throw error;
+            }
         },
+
+        // Optional: Add retry and caching
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        cacheTime: 10 * 60 * 1000, // 10 minutes
+        retry: 1,
+        retryDelay: 1000,
     });
-    return [classes, loading, refetch];
+
+    return [classes, loading, refetch, error];
 };
 
 export default useClass;

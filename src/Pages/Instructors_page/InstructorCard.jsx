@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const InstructorCard = ({ instructor }) => {
     const [activeSection, setActiveSection] = useState("about");
 
+
     const handleSectionChange = (section) => {
         setActiveSection(section);
     };
