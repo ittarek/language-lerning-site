@@ -1,105 +1,69 @@
-// import React, { useContext } from "react";
-// import { AuthContext } from "../../Provider/AuthProvider";
-// import { useQuery } from "@tanstack/react-query";
-// import { Link } from "react-router-dom";
-
-// const MyEnroll = () => {
-//   const { user, spinner } = useContext(AuthContext);
-
-//   const { data: enroll = [], refetch } = useQuery({
-//     queryKey: ["enroll", user?.email],
-//     enabled: !spinner,
-//     queryFn: async () => {
-//       const res = await fetch(
-//         `${import.meta.env.VITE_API_URL}/enrolledClass/${user?.email}`
-//       );
-
-//       console.log("enroll class", enroll);
-//       return res.json();
-//     },
-//   });
-
-//   return (
-//     <div className="w-full h-full mt-10">
-//       <h2 className="h2 pl-2 text-slate-700 ">
-//         {" "}
-//         My Enrolled Classes :{" "}
-//         <span className="text-green-800 text-3xl">{enroll.length}</span>
-//       </h2>
-//       <div className="overflow-x-auto pl-2 bg-gray-400">
-//         <table className="table">
-//           {/* head */}
-//           <thead>
-//             <tr>
-//               <th>No</th>
-//               <th>Image</th>
-//               <th>Name</th>
-//               <th>Instructor Name</th>
-//               <th>Price</th>
-             
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {enroll.map((singleClass, index) => (
-//               <tr key={singleClass._id}>
-//                 <th>{index + 1}</th>
-//                 <td>
-//                   <img
-//                     className="avatar mask mask-squircle w-12 h-12"
-//                     src={singleClass.classImage}
-//                     alt="Class Image"
-//                   />
-//                 </td>
-//                 <td>{singleClass.className}</td>
-//                 <td>{singleClass.instructorName}</td>
-//                 <td>{singleClass.amount}</td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MyEnroll;
 import React, { useContext, useMemo, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import {
     MdBook,
     MdSearch,
     MdSchool,
     MdEmojiEvents,
     MdDownload,
-    MdCalendarToday,
+    MdDateRange,
+    MdWarning,
 } from "react-icons/md";
+import moment from "moment";
 
 const MyEnroll = () => {
     const { user, spinner } = useContext(AuthContext);
+    const [axiosSecure] = useAxiosSecure();
     const [searchTerm, setSearchTerm] = useState("");
     const [sortBy, setSortBy] = useState("recent");
 
-    const { data: enroll = [], isLoading } = useQuery({
+    // ✅ Use axiosSecure instead of fetch to automatically include JWT token
+    const { data: enroll = [], isLoading, error } = useQuery({
         queryKey: ["enroll", user?.email],
         enabled: !spinner && !!user?.email,
         queryFn: async () => {
-            const res = await fetch(
-                `${import.meta.env.VITE_API_URL}/enrolledClass/${user?.email}`
-            );
+            try {
+                // This will automatically include the JWT token in headers
+                const res = await axiosSecure.get(
+                    `/enrolledClasses/${user?.email}`
+                );
+console.log("res",res);
 
-            if (!res.ok) {
-                throw new Error("Failed to fetch enrolled classes");
+
+                if (!res.data) {
+                    throw new Error("No data received");
+                }
+
+                return res.data;
+            } catch (error) {
+                console.error("Error fetching enrolled classes:", error);
+
+                if (error.response?.status === 401) {
+                    toast.error("Unauthorized. Please login again.", {
+                        position: "top-right"
+                    });
+                } else if (error.response?.status === 403) {
+                    toast.error("You don't have permission to access this resource.", {
+                        position: "top-right"
+                    });
+                } else {
+                    toast.error("Failed to load enrolled classes", {
+                        position: "top-right"
+                    });
+                }
+
+                throw error;
             }
-
-            return res.json();
         },
         onError: (error) => {
-            console.error("Error fetching enrolled classes:", error);
-            toast.error("Failed to load enrolled classes", { position: "top-right" });
+            console.error("Query error:", error);
         },
+        retry: 1, // Retry once on failure
+        retryDelay: 1000, // Wait 1 second before retry
     });
 
     // Filter and sort enrolled classes
@@ -110,8 +74,8 @@ const MyEnroll = () => {
         if (searchTerm) {
             result = result.filter(
                 (cls) =>
-                    cls.className.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    cls.instructorName.toLowerCase().includes(searchTerm.toLowerCase())
+                    cls.className?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    cls.instructorName?.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
@@ -119,12 +83,12 @@ const MyEnroll = () => {
         if (sortBy === "recent") {
             result = [...result].reverse();
         } else if (sortBy === "price-low") {
-            result = [...result].sort((a, b) => a.amount - b.amount);
+            result = [...result].sort((a, b) => (a.amount || 0) - (b.amount || 0));
         } else if (sortBy === "price-high") {
-            result = [...result].sort((a, b) => b.amount - a.amount);
+            result = [...result].sort((a, b) => (b.amount || 0) - (a.amount || 0));
         } else if (sortBy === "name") {
             result = [...result].sort((a, b) =>
-                a.className.localeCompare(b.className)
+                (a.className || "").localeCompare(b.className || "")
             );
         }
 
@@ -132,7 +96,7 @@ const MyEnroll = () => {
     }, [enroll, searchTerm, sortBy]);
 
     // Calculate total amount spent
-    const totalSpent = filteredEnroll.reduce((sum, cls) => sum + cls.amount, 0);
+    const totalSpent = filteredEnroll.reduce((sum, cls) => sum + (cls.amount || 0), 0);
 
     // Handle download certificate (placeholder)
     const handleDownloadCertificate = (className) => {
@@ -144,8 +108,11 @@ const MyEnroll = () => {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <span className="loading loading-spinner loading-lg"></span>
+            <div className="min-h-screen flex justify-center items-center bg-gray-50">
+                <div className="text-center">
+                    <span className="loading loading-spinner loading-lg text-blue-600"></span>
+                    <p className="mt-4 text-gray-600">Loading your enrolled classes...</p>
+                </div>
             </div>
         );
     }
@@ -247,6 +214,9 @@ const MyEnroll = () => {
                                                 No
                                             </th>
                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                                                Enrollment Date
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                                                 Image
                                             </th>
                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
@@ -273,28 +243,47 @@ const MyEnroll = () => {
                                                     {index + 1}
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <img
-                                                        src={singleClass.classImage}
-                                                        alt={singleClass.className}
-                                                        className="h-12 w-12 rounded-lg object-cover border border-gray-200"
-                                                    />
+                                                    <div className="flex items-center gap-2">
+                                                        <MdDateRange
+                                                            size={16}
+                                                            className="text-gray-400"
+                                                        />
+                                                        <span className="text-sm text-gray-700">
+                                                            {singleClass?.date
+                                                                ? moment(singleClass.date).format("YYYY-MM-DD")
+                                                                : "N/A"}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {singleClass?.classImage ? (
+                                                        <img
+                                                            src={singleClass.classImage}
+                                                            alt={singleClass?.className}
+                                                            className="h-12 w-12 rounded-lg object-cover border border-gray-200"
+                                                        />
+                                                    ) : (
+                                                        <div className="h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center">
+                                                            <MdBook className="text-gray-400" />
+                                                        </div>
+                                                    )}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <p className="text-sm font-medium text-gray-900">
-                                                        {singleClass.className}
+                                                        {singleClass?.className || "N/A"}
                                                     </p>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-2">
                                                         <MdSchool size={16} className="text-blue-600" />
                                                         <p className="text-sm text-gray-600">
-                                                            {singleClass.instructorName}
+                                                            {singleClass?.instructorName || "N/A"}
                                                         </p>
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <p className="text-sm font-semibold text-blue-600">
-                                                        ${singleClass.amount.toFixed(2)}
+                                                        ${(singleClass?.amount || 0).toFixed(2)}
                                                     </p>
                                                 </td>
                                                 <td className="px-6 py-4">
@@ -302,7 +291,7 @@ const MyEnroll = () => {
                                                         <button
                                                             onClick={() =>
                                                                 handleDownloadCertificate(
-                                                                    singleClass.className
+                                                                    singleClass?.className
                                                                 )
                                                             }
                                                             title="Download Certificate"
@@ -335,27 +324,38 @@ const MyEnroll = () => {
                                     <div className="p-4">
                                         {/* Header */}
                                         <div className="flex items-start gap-4 mb-4">
-                                            <img
-                                                src={singleClass.classImage}
-                                                alt={singleClass.className}
-                                                className="h-20 w-20 rounded-lg object-cover"
-                                            />
+                                            {singleClass?.classImage ? (
+                                                <img
+                                                    src={singleClass.classImage}
+                                                    alt={singleClass?.className}
+                                                    className="h-20 w-20 rounded-lg object-cover"
+                                                />
+                                            ) : (
+                                                <div className="h-20 w-20 rounded-lg bg-gray-200 flex items-center justify-center">
+                                                    <MdBook className="text-gray-400" size={24} />
+                                                </div>
+                                            )}
                                             <div className="flex-1">
                                                 <p className="text-xs text-gray-500">#{index + 1}</p>
                                                 <h3 className="text-lg font-bold text-gray-900 mb-1">
-                                                    {singleClass.className}
+                                                    {singleClass?.className || "N/A"}
                                                 </h3>
                                                 <div className="flex items-center gap-2 text-sm text-gray-600">
                                                     <MdSchool size={16} />
-                                                    {singleClass.instructorName}
+                                                    {singleClass?.instructorName || "N/A"}
                                                 </div>
+                                                <p className="text-xs text-gray-500 mt-1">
+                                                    {singleClass?.date
+                                                        ? moment(singleClass.date).format("YYYY-MM-DD")
+                                                        : "N/A"}
+                                                </p>
                                             </div>
                                         </div>
 
                                         {/* Price */}
                                         <div className="mb-4 pb-4 border-b border-gray-200">
                                             <p className="text-2xl font-bold text-blue-600">
-                                                ${singleClass.amount.toFixed(2)}
+                                                ${(singleClass?.amount || 0).toFixed(2)}
                                             </p>
                                         </div>
 
@@ -363,7 +363,7 @@ const MyEnroll = () => {
                                         <div className="flex gap-3">
                                             <button
                                                 onClick={() =>
-                                                    handleDownloadCertificate(singleClass.className)
+                                                    handleDownloadCertificate(singleClass?.className)
                                                 }
                                                 className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-colors font-medium"
                                             >
@@ -387,7 +387,9 @@ const MyEnroll = () => {
                                     <p className="text-blue-200 text-sm font-medium">
                                         Classes Enrolled
                                     </p>
-                                    <p className="text-4xl font-bold mt-2">{filteredEnroll.length}</p>
+                                    <p className="text-4xl font-bold mt-2">
+                                        {filteredEnroll.length}
+                                    </p>
                                 </div>
                                 <div>
                                     <p className="text-blue-200 text-sm font-medium">
