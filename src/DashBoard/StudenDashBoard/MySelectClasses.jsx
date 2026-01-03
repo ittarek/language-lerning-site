@@ -71,26 +71,42 @@ const MySelectClasses = () => {
             cancelButtonColor: "#6b7280",
             confirmButtonText: "Yes, Remove!",
             cancelButtonText: "Cancel",
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                fetch(`${import.meta.env.VITE_API_URL}/payment/${_id}`, {
-                    method: "DELETE",
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (data.deletedCount) {
-                            refetch();
-                            toast.success(`${className} removed successfully!`, {
-                                position: "top-right",
-                            });
-                        } else {
-                            toast.error("Failed to remove class", { position: "top-right" });
-                        }
-                    })
-                    .catch((error) => {
-                        toast.error("An error occurred", { position: "top-right" });
-                        console.error(error);
-                    });
+                try {
+                    // ✅ Use axiosSecure instead of fetch (includes JWT token)
+                    // ✅ Delete from /selectedClass/:id (not /payment/:id)
+                    const response = await axiosSecure.delete(
+                        `/selectedClass/${_id}`
+                    );
+
+                    console.log("Delete response:", response);
+
+                    if (response.data.deletedCount > 0) {
+                        refetch(); // Refresh the list
+
+                        toast.success(`${className} removed successfully!`, {
+                            position: "top-right",
+                        });
+                    } else {
+                        toast.error("Failed to remove class", { position: "top-right" });
+                    }
+                } catch (error) {
+                    console.error("Delete error:", error);
+
+                    if (error.response?.status === 404) {
+                        toast.error("Class not found", { position: "top-right" });
+                    } else if (error.response?.status === 401) {
+                        toast.error("Unauthorized. Please login again.", {
+                            position: "top-right"
+                        });
+                    } else {
+                        toast.error(
+                            error.response?.data?.message || "Failed to remove class",
+                            { position: "top-right" }
+                        );
+                    }
+                }
             }
         });
     };
