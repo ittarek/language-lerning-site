@@ -28,7 +28,7 @@ const DashBoard = () => {
     const [isInstructor, isInstructorsLoading] = useInstructors();
     const [isAdmin, isAdminLoading] = useAdmin();
 
-    // 🔥 2️⃣ UI control only (no hooks below this)
+
     if (spinner) {
         return <Spinner />;
     }
@@ -144,6 +144,20 @@ const DashBoard = () => {
                                     <span>{item.label}</span>
                                 </NavLink>
                             ))}
+                            <NavLink to="/classes" className={({ isActive }) =>
+                                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
+                                    ? "bg-white text-indigo-600 shadow-lg"
+                                    : "text-white/90 hover:bg-white/10"
+                                }`
+                            }>     <span className="text-xl">✍️</span>
+                                <span>Classes</span></NavLink>
+                            <NavLink to="/" className={({ isActive }) =>
+                                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
+                                    ? "bg-white text-indigo-600 shadow-lg"
+                                    : "text-white/90 hover:bg-white/10"
+                                }`
+                            }>     <span className="text-xl">🏠</span>
+                                <span>Home</span></NavLink>
                         </nav>
 
                         <div className="p-4 border-t border-white/10">
