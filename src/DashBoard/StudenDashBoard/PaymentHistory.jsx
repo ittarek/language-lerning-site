@@ -1,72 +1,3 @@
-// import React, { useContext } from "react";
-// import { AuthContext } from "../../Provider/AuthProvider";
-// import { useQuery } from "@tanstack/react-query";
-// import { Link } from "react-router-dom";
-// import moment from "moment/moment";
-
-// const PaymentHistory = () => {
-//   const { user, spinner } = useContext(AuthContext);
-// const date = new Date()
-//   const { data: history = [], refetch } = useQuery({
-//     queryKey: ["history", user?.email],
-//     enabled: !spinner,
-//     queryFn: async () => {
-//       const res = await fetch(
-//         `${import.meta.env.VITE_API_URL}/enrolledClass/${user?.email}`
-//       );
-
-//       console.log("enroll class", history);
-//       return res.json();
-//     },
-//   });
-
-//   return (
-//     <div className="w-full h-full mt-10">
-//       <h2 className="h2 pl-2 text-slate-700 ">
-//         {" "}
-//        Payment History
-
-//       </h2>
-//       <div className="overflow-x-auto pl-2 bg-gray-400">
-//         <table className="table">
-//           {/* head */}
-//           <thead>
-//             <tr>
-//               <th>No</th>
-//               <th>Date</th>
-//               <th>Image</th>
-//           <th>Class Name</th>
-//               <th>Transection</th>
-//               <th>Amount</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {history.map((ht, index) => (
-//               <tr key={ht._id}>
-//                 <th>{index + 1}</th>
-                
-//                 <td> {moment(ht?.date).format("YYYY-MM-DD")}</td>
-//                 <td>
-//                   <img
-//                     className="avatar mask mask-squircle w-12 h-12"
-//                     src={ht.classImage}
-//                     alt="Class Image"
-//                   />
-//                 </td>
-//                 <td>{ht.className}</td>
-//                 <td>{ht.token?.card?.id}</td>
-//                 <td>${ht.amount}</td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PaymentHistory;
-
 import React, { useContext, useMemo, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
@@ -79,45 +10,80 @@ import {
     MdPayment,
     MdCheckCircle,
     MdDateRange,
-    MdFilterList,
 } from "react-icons/md";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const PaymentHistory = () => {
     const { user, spinner } = useContext(AuthContext);
+    const [axiosSecure] = useAxiosSecure();
     const [searchTerm, setSearchTerm] = useState("");
     const [filterPeriod, setFilterPeriod] = useState("all");
     const [sortBy, setSortBy] = useState("recent");
 
+    // ✅ Fixed Query
     const { data: history = [], isLoading, error } = useQuery({
         queryKey: ["history", user?.email],
         enabled: !spinner && !!user?.email,
         queryFn: async () => {
-            const res = await fetch(
-                `${import.meta.env.VITE_API_URL}/enrolledClass/${user?.email}`
-            );
+            try {
+                // ✅ axiosSecure returns {data, status, headers, etc}
+                // We need to return res.data (the actual array)
+                const res = await axiosSecure.get(
+                    `/enrolledClasses/${user?.email}`
+                );
 
-            if (!res.ok) {
-                throw new Error("Failed to fetch payment history");
+                console.log("Payment history response:", res);
+
+                // ✅ Return res.data which is the array
+                if (!res.data || !Array.isArray(res.data)) {
+                    console.warn("Unexpected response format:", res);
+                    return [];
+                }
+
+                return res.data; // ✅ Return the data array, not the full response
+            } catch (error) {
+                console.error("Error fetching payment history:", error);
+
+                if (error.response?.status === 401) {
+                    toast.error("Unauthorized. Please login again.", {
+                        position: "top-right",
+                    });
+                } else if (error.response?.status === 403) {
+                    toast.error("You don't have permission to access this resource.", {
+                        position: "top-right",
+                    });
+                } else {
+                    toast.error("Failed to load payment history", {
+                        position: "top-right",
+                    });
+                }
+
+                throw error;
             }
-
-            return res.json();
         },
         onError: (error) => {
-            console.error("Error fetching payment history:", error);
-            toast.error("Failed to load payment history", { position: "top-right" });
+            console.error("Query error:", error);
         },
+        retry: 1,
+        retryDelay: 1000,
     });
+
+    // ✅ Debug logs
+    console.log("History data:", history);
+    console.log("History length:", history?.length);
+    console.log("Is array:", Array.isArray(history));
 
     // Filter and sort payment history
     const filteredHistory = useMemo(() => {
-        let result = history || [];
+        let result = Array.isArray(history) ? history : [];
 
         // Filter by search term
         if (searchTerm) {
             result = result.filter(
                 (payment) =>
-                    payment.className.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    (payment.token?.card?.id || "").includes(searchTerm)
+                    (payment.className?.toLowerCase() || "").includes(
+                        searchTerm.toLowerCase()
+                    ) || (payment.transactionId || "").includes(searchTerm)
             );
         }
 
@@ -148,9 +114,9 @@ const PaymentHistory = () => {
         } else if (sortBy === "oldest") {
             result = [...result];
         } else if (sortBy === "highest") {
-            result = [...result].sort((a, b) => b.amount - a.amount);
+            result = [...result].sort((a, b) => (b.amount || 0) - (a.amount || 0));
         } else if (sortBy === "lowest") {
-            result = [...result].sort((a, b) => a.amount - b.amount);
+            result = [...result].sort((a, b) => (a.amount || 0) - (b.amount || 0));
         }
 
         return result;
@@ -158,25 +124,27 @@ const PaymentHistory = () => {
 
     // Calculate statistics
     const totalAmount = filteredHistory.reduce(
-        (sum, payment) => sum + payment.amount,
+        (sum, payment) => sum + (payment.amount || 0),
         0
     );
     const totalTransactions = filteredHistory.length;
     const averageAmount =
         totalTransactions > 0 ? (totalAmount / totalTransactions).toFixed(2) : 0;
 
-    // Handle download invoice (placeholder)
+    // Handle download invoice
     const handleDownloadInvoice = (payment) => {
         toast.info(`Invoice for ${payment.className} will be downloaded`, {
             position: "top-right",
         });
-        // Add actual download logic here
     };
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <span className="loading loading-spinner loading-lg"></span>
+            <div className="flex justify-center items-center min-h-screen bg-gray-50">
+                <div className="text-center">
+                    <span className="loading loading-spinner loading-lg text-green-600"></span>
+                    <p className="mt-4 text-gray-600">Loading payment history...</p>
+                </div>
             </div>
         );
     }
@@ -234,7 +202,7 @@ const PaymentHistory = () => {
                                 />
                                 <input
                                     type="text"
-                                    placeholder="Search by class name or transaction ID..."
+                                    placeholder="Search by class name..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -329,28 +297,34 @@ const PaymentHistory = () => {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <img
-                                                        src={payment.classImage}
-                                                        alt={payment.className}
-                                                        className="h-12 w-12 rounded-lg object-cover border border-gray-200"
-                                                    />
+                                                    {payment.classImage ? (
+                                                        <img
+                                                            src={payment.classImage}
+                                                            alt={payment.className}
+                                                            className="h-12 w-12 rounded-lg object-cover border border-gray-200"
+                                                        />
+                                                    ) : (
+                                                        <div className="h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center">
+                                                            <MdPayment className="text-gray-400" />
+                                                        </div>
+                                                    )}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <p className="text-sm font-medium text-gray-900">
-                                                        {payment.className}
+                                                        {payment.className || "N/A"}
                                                     </p>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-2">
                                                         <MdCheckCircle size={16} className="text-green-600" />
                                                         <span className="text-sm text-gray-700 font-mono">
-                                                            {(payment.token?.card?.id || "****").slice(-4)}
+                                                            {(payment.transactionId || "****").slice(-4)}
                                                         </span>
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <p className="text-sm font-semibold text-green-600">
-                                                        ${payment.amount.toFixed(2)}
+                                                        ${(payment.amount || 0).toFixed(2)}
                                                     </p>
                                                 </td>
                                                 <td className="px-6 py-4">
@@ -381,21 +355,24 @@ const PaymentHistory = () => {
                                     <div className="p-4">
                                         {/* Header */}
                                         <div className="flex items-start gap-4 mb-4">
-                                            <img
-                                                src={payment.classImage}
-                                                alt={payment.className}
-                                                className="h-20 w-20 rounded-lg object-cover"
-                                            />
+                                            {payment.classImage ? (
+                                                <img
+                                                    src={payment.classImage}
+                                                    alt={payment.className}
+                                                    className="h-20 w-20 rounded-lg object-cover"
+                                                />
+                                            ) : (
+                                                <div className="h-20 w-20 rounded-lg bg-gray-200 flex items-center justify-center">
+                                                    <MdPayment className="text-gray-400" size={24} />
+                                                </div>
+                                            )}
                                             <div className="flex-1">
-                                                <p className="text-xs text-gray-500">
-                                                    #{index + 1} •{" "}
-                                                    {moment(payment?.date).format("YYYY-MM-DD")}
-                                                </p>
+                                                <p className="text-xs text-gray-500">#{index + 1}</p>
                                                 <h3 className="text-lg font-bold text-gray-900 mb-1">
-                                                    {payment.className}
+                                                    {payment.className || "N/A"}
                                                 </h3>
                                                 <p className="text-xs text-gray-600">
-                                                    Transaction: {(payment.token?.card?.id || "****").slice(-4)}
+                                                    {moment(payment?.date).format("YYYY-MM-DD")}
                                                 </p>
                                             </div>
                                         </div>
@@ -404,7 +381,7 @@ const PaymentHistory = () => {
                                         <div className="mb-4 pb-4 border-b border-gray-200">
                                             <div className="flex items-center justify-between">
                                                 <p className="text-2xl font-bold text-green-600">
-                                                    ${payment.amount.toFixed(2)}
+                                                    ${(payment.amount || 0).toFixed(2)}
                                                 </p>
                                                 <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-green-100">
                                                     <MdCheckCircle size={16} className="text-green-600" />
@@ -465,18 +442,14 @@ const PaymentHistory = () => {
                                     : "No payment history yet"}
                         </p>
                         <p className="text-gray-400 text-sm mt-2">
-                            {totalTransactions === 0
-                                ? "Start enrolling in classes to see your payment history here."
-                                : "Keep learning!"}
+                            Start enrolling in classes to see your payment history here.
                         </p>
-                        {totalTransactions === 0 && (
-                            <Link
-                                to="/classes"
-                                className="inline-block mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium"
-                            >
-                                Browse Classes
-                            </Link>
-                        )}
+                        <Link
+                            to="/classes"
+                            className="inline-block mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium"
+                        >
+                            Browse Classes
+                        </Link>
                     </div>
                 )}
             </div>
@@ -487,4 +460,3 @@ const PaymentHistory = () => {
 };
 
 export default PaymentHistory;
-

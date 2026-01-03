@@ -31,8 +31,6 @@ const MyEnroll = () => {
                 const res = await axiosSecure.get(
                     `/enrolledClasses/${user?.email}`
                 );
-console.log("res",res);
-
 
                 if (!res.data) {
                     throw new Error("No data received");
