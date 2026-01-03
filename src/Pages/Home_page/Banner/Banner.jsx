@@ -1,9 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bgImage from "../../../assets/slider/slider-4.png";
 import OptimizedImage from "../../../Components/Shared/OptimizedImage";
 import GlassNavigation from "../../../Testing/GlassNavigation";
+import { AuthContext } from "../../../Provider/AuthProvider";
+import { useContext } from "react";
 
 const Banner = () => {
+
+    const navigate = useNavigate();
+    const { user } = useContext(AuthContext); // Get current user
+    // ✅ Handle Get Started click
+    const handleGetStarted = () => {
+        if (user && user.email) {
+            // User is already logged in - go to classes
+            navigate("/classes");
+        } else {
+            // User not logged in - go to login/signup
+            navigate("/login");
+        }
+    };
     return (
         <div className=" relative overflow-hidden -mt-6 md:mt-0">
             <GlassNavigation />
@@ -70,17 +85,35 @@ const Banner = () => {
 
                         {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-                            <button className="group px-6 sm:px-8 py-3 sm:py-4 bg-white text-indigo-600 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                            {/* Get Started Button */}
+                            <button
+                                onClick={handleGetStarted}
+                                className="group px-6 sm:px-8 py-3 sm:py-4 bg-white text-indigo-600 rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                            >
                                 Get Started
-                                <svg className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                <svg
+                                    className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                    />
                                 </svg>
                             </button>
-                            <Link to="/classes">   <button className="px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-bold text-base sm:text-lg border-2 border-white/30 hover:bg-white/20 hover:scale-105 transition-all duration-300">
-                                Browse Classes
-                            </button></Link>
-                         
+
+                            {/* Browse Classes Button */}
+                            <Link to="/classes">
+                                <button className="px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-bold text-base sm:text-lg border-2 border-white/30 hover:bg-white/20 hover:scale-105 transition-all duration-300 w-full sm:w-auto">
+                                    Browse Classes
+                                </button>
+                            </Link>
                         </div>
+
                     </div>
 
                     {/* Right Image */}
@@ -98,7 +131,7 @@ const Banner = () => {
                                     alt="Language Learning"
                                     // width={1920}
                                     // height={700}
-                                    aspectRatio="16/10" 
+                                    aspectRatio="16/10"
                                     priority={true}
                                     className="absolute inset-0 w-full h-full"
                                     sizes="100vw"
@@ -106,7 +139,7 @@ const Banner = () => {
                                 />
                             </div>
 
-                    
+
 
                             {/* Floating badge on image */}
                             <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl animate-bounce-slow">

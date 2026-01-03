@@ -8,6 +8,7 @@ import PrivetRoute from "./PrivetRoute";
 import AdminROutes from "./AdminROutes";
 import { LoadingState } from "../Components/Shared/FetchStates/FetchStates";
 import RoleBasedDashboard from "./RoleBasedDashboard";
+import ClassDetails from "../Pages/Home_page/Popular_section/ClassDetails";
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import("../Pages/Home_page/Home"));
@@ -43,7 +44,7 @@ const AdminHome = lazy(() => import("../DashBoard/AdminDashBoard/AdminHome"));
 const AdminFeedBack = lazy(() => import("../DashBoard/AdminDashBoard/AdminFeedBack"));
 
 // 🔹 Reusable Loader
-const Loader = () => <div className=""><LoadingState/></div>;
+const Loader = () => <div className=""><LoadingState /></div>;
 
 export const router = createBrowserRouter([
     {
@@ -95,6 +96,11 @@ export const router = createBrowserRouter([
                     </Suspense>
                 ),
             },
+
+            {
+                path: "/class/:id",
+                element: <ClassDetails />
+            },
             {
                 path: "/blog",
                 element: (
@@ -138,141 +144,7 @@ export const router = createBrowserRouter([
         ],
     },
 
-    // {
-    //     path: "dashboard",
-    //     element: <DashBoardLayOut />,
-    //     children: [
-    //         {
-    //             path: "dashboard",
-    //             element: (
-    //                 <PrivetRoute>
-    //                     <Suspense fallback={<Loader />}>
-    //                         <DashBoard />
-    //                     </Suspense>
-    //                 </PrivetRoute>
-    //             ),
-    //         },
 
-    //         // Student
-    //         {
-    //             path: "studentHome",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <StudentHome />
-    //                 </Suspense>
-    //             ),
-    //         },
-    //         {
-    //             path: "mySelectedClasses",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <MySelectClasses />
-    //                 </Suspense>
-    //             ),
-    //         },
-    //         {
-    //             path: "myEnroll",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <MyEnroll />
-    //                 </Suspense>
-    //             ),
-    //         },
-    //         {
-    //             path: "mySelectedClasses/payment/:id",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <Payment />
-    //                 </Suspense>
-    //             ),
-    //             loader: ({ params }) =>
-    //                 fetch(`${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`),
-    //         },
-    //         {
-    //             path: "paymentHistory",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <PaymentHistory />
-    //                 </Suspense>
-    //             ),
-    //         },
-
-    //         // Instructor
-    //         {
-    //             path: "instructorHome",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <InstructorHome />
-    //                 </Suspense>
-    //             ),
-    //         },
-    //         {
-    //             path: "addClass",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <AddClass />
-    //                 </Suspense>
-    //             ),
-    //         },
-    //         {
-    //             path: "myAddedClasses",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <MyAddedClasses />
-    //                 </Suspense>
-    //             ),
-    //         },
-    //         {
-    //             path: "myAddedClasses/instructorFeedback",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <InsTructionFeedBack />
-    //                 </Suspense>
-    //             ),
-    //         },
-
-    //         // Admin
-    //         {
-    //             path: "manageClasses",
-    //             element: (
-    //                 <AdminROutes>
-    //                     <Suspense fallback={<Loader />}>
-    //                         <ManageClasses />
-    //                     </Suspense>
-    //                 </AdminROutes>
-    //             ),
-    //         },
-    //         {
-    //             path: "manageUsers",
-    //             element: (
-    //                 <AdminROutes>
-    //                     <Suspense fallback={<Loader />}>
-    //                         <ManageUsers />
-    //                     </Suspense>
-    //                 </AdminROutes>
-    //             ),
-    //         },
-    //         {
-    //             path: "adminHome",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <AdminHome />
-    //                 </Suspense>
-    //             ),
-    //         },
-    //         {
-    //             path: "manageClasses/adminFeedBack/:id",
-    //             element: (
-    //                 <Suspense fallback={<Loader />}>
-    //                     <AdminFeedBack />
-    //                 </Suspense>
-    //             ),
-    //             loader: ({ params }) =>
-    //                 fetch(`${import.meta.env.VITE_API_URL}/AllClass/${params.id}`),
-    //         },
-    //     ],
-    // },
-   
     {
         path: "dashboard",
         element: <DashBoardLayOut />,
@@ -428,5 +300,5 @@ export const router = createBrowserRouter([
             },
         ],
     },
-  
+
 ]);
