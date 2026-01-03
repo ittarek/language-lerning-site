@@ -11,6 +11,7 @@ import {
     MdSearch,
     MdShoppingCart,
     MdCheckCircle,
+    MdLock,
 } from "react-icons/md";
 
 const MySelectClasses = () => {
@@ -19,6 +20,7 @@ const MySelectClasses = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [sortBy, setSortBy] = useState("recent");
 
+    // Fetch selected classes
     const { data: classData = [], refetch, isLoading } = useQuery({
         queryKey: ["classData", user?.email],
         enabled: !spinner && !!user?.email && !!localStorage.getItem("access-token"),
@@ -29,6 +31,31 @@ const MySelectClasses = () => {
             return res.data;
         },
     });
+
+    // ✅ Fetch enrolled classes to check which ones are already enrolled
+    const { data: enrolledClasses = [] } = useQuery({
+        queryKey: ["enrolledClasses", user?.email],
+        enabled: !spinner && !!user?.email,
+        queryFn: async () => {
+            try {
+                const res = await axiosSecure.get(
+                    `/enrolledClasses/${user?.email}`
+                );
+                return res.data || [];
+            } catch (error) {
+                console.error("Error fetching enrolled classes:", error);
+                return [];
+            }
+        },
+    });
+
+    // ✅ Check if a class is already enrolled
+    const isClassEnrolled = (className) => {
+        return enrolledClasses.some(
+            (enrolled) =>
+                enrolled.className?.toLowerCase() === className?.toLowerCase()
+        );
+    };
 
     // Filter and sort classes
     const filterClass = useMemo(() => {
@@ -57,8 +84,10 @@ const MySelectClasses = () => {
         return result;
     }, [classData, user?.email, searchTerm, sortBy]);
 
-    // Calculate total price
-    const totalPrice = filterClass.reduce((sum, cls) => sum + cls.price, 0);
+    // Calculate total price (only for non-enrolled classes)
+    const totalPrice = filterClass
+        .filter((cls) => !isClassEnrolled(cls.class_name))
+        .reduce((sum, cls) => sum + cls.price, 0);
 
     // Delete class
     const handleDelete = (_id, className) => {
@@ -74,8 +103,6 @@ const MySelectClasses = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    // ✅ Use axiosSecure instead of fetch (includes JWT token)
-                    // ✅ Delete from /selectedClass/:id (not /payment/:id)
                     const response = await axiosSecure.delete(
                         `/selectedClass/${_id}`
                     );
@@ -83,7 +110,7 @@ const MySelectClasses = () => {
                     console.log("Delete response:", response);
 
                     if (response.data.deletedCount > 0) {
-                        refetch(); // Refresh the list
+                        refetch();
 
                         toast.success(`${className} removed successfully!`, {
                             position: "top-right",
@@ -98,7 +125,7 @@ const MySelectClasses = () => {
                         toast.error("Class not found", { position: "top-right" });
                     } else if (error.response?.status === 401) {
                         toast.error("Unauthorized. Please login again.", {
-                            position: "top-right"
+                            position: "top-right",
                         });
                     } else {
                         toast.error(
@@ -107,6 +134,23 @@ const MySelectClasses = () => {
                         );
                     }
                 }
+            }
+        });
+    };
+
+    // Handle already enrolled class click
+    const handleAlreadyEnrolled = (className) => {
+        Swal.fire({
+            title: "Already Enrolled",
+            text: `You are already enrolled in "${className}". Visit your enrolled classes to view course details.`,
+            icon: "info",
+            confirmButtonColor: "#3b82f6",
+            confirmButtonText: "Go to My Classes",
+            showCancelButton: true,
+            cancelButtonText: "Stay Here",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/dashboard/myEnroll";
             }
         });
     };
@@ -147,7 +191,7 @@ const MySelectClasses = () => {
                             </div>
                             <div>
                                 <p className="text-purple-200 text-sm font-medium">
-                                    Total Cost
+                                    Total Cost (Pending)
                                 </p>
                                 <p className="text-4xl font-bold mt-2">${totalPrice.toFixed(2)}</p>
                             </div>
@@ -221,49 +265,223 @@ const MySelectClasses = () => {
                                                 Price
                                             </th>
                                             <th className="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase">
+                                                Status
+                                            </th>
+                                            <th className="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase">
                                                 Actions
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {filterClass.map((singleClass, index) => (
-                                            <tr
-                                                key={singleClass._id}
-                                                className="hover:bg-gray-50 transition-colors"
-                                            >
-                                                <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                                                    {index + 1}
-                                                </td>
-                                                <td className="px-6 py-4">
+                                        {filterClass.map((singleClass, index) => {
+                                            const enrolled = isClassEnrolled(singleClass.class_name);
+
+                                            return (
+                                                <tr
+                                                    key={singleClass._id}
+                                                    className={`transition-colors ${enrolled
+                                                            ? "bg-gray-100 opacity-60"
+                                                            : "hover:bg-gray-50"
+                                                        }`}
+                                                >
+                                                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                                                        {index + 1}
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div
+                                                            className={`relative ${enrolled ? "opacity-50" : ""
+                                                                }`}
+                                                        >
+                                                            <img
+                                                                src={singleClass.class_imgUrl}
+                                                                alt={singleClass.class_name}
+                                                                className="h-12 w-12 rounded-lg object-cover border border-gray-200"
+                                                            />
+                                                            {enrolled && (
+                                                                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-lg">
+                                                                    <MdCheckCircle
+                                                                        size={20}
+                                                                        className="text-white"
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <p className="text-sm font-medium text-gray-900">
+                                                            {singleClass.class_name}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <p className="text-sm text-gray-600">
+                                                            {singleClass.instructor_name}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <p className="text-sm font-semibold text-purple-600">
+                                                            ${singleClass.price.toFixed(2)}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center">
+                                                        {enrolled ? (
+                                                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-semibold">
+                                                                <MdCheckCircle size={16} />
+                                                                Enrolled
+                                                            </span>
+                                                        ) : (
+                                                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold">
+                                                                Pending
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <div className="flex gap-2 justify-center">
+                                                            {enrolled ? (
+                                                                <>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            handleAlreadyEnrolled(
+                                                                                singleClass.class_name
+                                                                            )
+                                                                        }
+                                                                        title="Already Enrolled"
+                                                                        className="p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors flex items-center gap-1"
+                                                                    >
+                                                                        <MdLock size={18} />
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            handleDelete(
+                                                                                singleClass._id,
+                                                                                singleClass.class_name
+                                                                            )
+                                                                        }
+                                                                        title="Remove from Selection"
+                                                                        className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+                                                                    >
+                                                                        <MdDelete size={18} />
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <Link
+                                                                        to={`payment/${singleClass._id}`}
+                                                                        title="Proceed to Payment"
+                                                                        className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-colors"
+                                                                    >
+                                                                        <MdPayment size={18} />
+                                                                    </Link>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            handleDelete(
+                                                                                singleClass._id,
+                                                                                singleClass.class_name
+                                                                            )
+                                                                        }
+                                                                        title="Remove from Selection"
+                                                                        className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+                                                                    >
+                                                                        <MdDelete size={18} />
+                                                                    </button>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* Mobile View - Cards */}
+                        <div className="md:hidden space-y-4">
+                            {filterClass.map((singleClass, index) => {
+                                const enrolled = isClassEnrolled(singleClass.class_name);
+
+                                return (
+                                    <div
+                                        key={singleClass._id}
+                                        className={`bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow ${enrolled ? "opacity-60 border-l-4 border-l-green-500" : ""
+                                            }`}
+                                    >
+                                        <div className="p-4">
+                                            {/* Header */}
+                                            <div className="flex items-start gap-4 mb-4">
+                                                <div className="relative">
                                                     <img
                                                         src={singleClass.class_imgUrl}
                                                         alt={singleClass.class_name}
-                                                        className="h-12 w-12 rounded-lg object-cover border border-gray-200"
+                                                        className="h-20 w-20 rounded-lg object-cover"
                                                     />
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <p className="text-sm font-medium text-gray-900">
+                                                    {enrolled && (
+                                                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-lg">
+                                                            <MdCheckCircle
+                                                                size={24}
+                                                                className="text-white"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="text-xs text-gray-500">#{index + 1}</p>
+                                                    <h3 className="text-lg font-bold text-gray-900 mb-1">
                                                         {singleClass.class_name}
-                                                    </p>
-                                                </td>
-                                                <td className="px-6 py-4">
+                                                    </h3>
                                                     <p className="text-sm text-gray-600">
                                                         {singleClass.instructor_name}
                                                     </p>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <p className="text-sm font-semibold text-purple-600">
-                                                        ${singleClass.price.toFixed(2)}
-                                                    </p>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex gap-2 justify-center">
+                                                    {enrolled && (
+                                                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs font-semibold mt-2">
+                                                            <MdCheckCircle size={14} />
+                                                            Enrolled
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Price */}
+                                            <div className="mb-4 pb-4 border-b border-gray-200">
+                                                <p className="text-2xl font-bold text-purple-600">
+                                                    ${singleClass.price.toFixed(2)}
+                                                </p>
+                                            </div>
+
+                                            {/* Actions */}
+                                            <div className="flex gap-3">
+                                                {enrolled ? (
+                                                    <>
+                                                        <button
+                                                            onClick={() =>
+                                                                handleAlreadyEnrolled(singleClass.class_name)
+                                                            }
+                                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors font-medium"
+                                                        >
+                                                            <MdLock size={18} />
+                                                            Enrolled
+                                                        </button>
+                                                        <button
+                                                            onClick={() =>
+                                                                handleDelete(
+                                                                    singleClass._id,
+                                                                    singleClass.class_name
+                                                                )
+                                                            }
+                                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors font-medium"
+                                                        >
+                                                            <MdDelete size={18} />
+                                                            Remove
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <>
                                                         <Link
                                                             to={`payment/${singleClass._id}`}
-                                                            title="Proceed to Payment"
-                                                            className="p-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-colors"
+                                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-colors font-medium"
                                                         >
                                                             <MdPayment size={18} />
+                                                            Pay Now
                                                         </Link>
                                                         <button
                                                             onClick={() =>
@@ -272,75 +490,18 @@ const MySelectClasses = () => {
                                                                     singleClass.class_name
                                                                 )
                                                             }
-                                                            title="Remove from Selection"
-                                                            className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+                                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors font-medium"
                                                         >
                                                             <MdDelete size={18} />
+                                                            Remove
                                                         </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        {/* Mobile View - Cards */}
-                        <div className="md:hidden space-y-4">
-                            {filterClass.map((singleClass, index) => (
-                                <div
-                                    key={singleClass._id}
-                                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                                >
-                                    <div className="p-4">
-                                        {/* Header */}
-                                        <div className="flex items-start gap-4 mb-4">
-                                            <img
-                                                src={singleClass.class_imgUrl}
-                                                alt={singleClass.class_name}
-                                                className="h-20 w-20 rounded-lg object-cover"
-                                            />
-                                            <div className="flex-1">
-                                                <p className="text-xs text-gray-500">#{index + 1}</p>
-                                                <h3 className="text-lg font-bold text-gray-900 mb-1">
-                                                    {singleClass.class_name}
-                                                </h3>
-                                                <p className="text-sm text-gray-600">
-                                                    {singleClass.instructor_name}
-                                                </p>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
-
-                                        {/* Price */}
-                                        <div className="mb-4 pb-4 border-b border-gray-200">
-                                            <p className="text-2xl font-bold text-purple-600">
-                                                ${singleClass.price.toFixed(2)}
-                                            </p>
-                                        </div>
-
-                                        {/* Actions */}
-                                        <div className="flex gap-3">
-                                            <Link
-                                                to={`payment/${singleClass._id}`}
-                                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-200 transition-colors font-medium"
-                                            >
-                                                <MdPayment size={18} />
-                                                Pay Now
-                                            </Link>
-                                            <button
-                                                onClick={() =>
-                                                    handleDelete(singleClass._id, singleClass.class_name)
-                                                }
-                                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors font-medium"
-                                            >
-                                                <MdDelete size={18} />
-                                                Remove
-                                            </button>
-                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
 
                         {/* Summary Footer */}
@@ -348,8 +509,10 @@ const MySelectClasses = () => {
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <div>
                                     <p className="text-gray-600 text-sm font-medium">
-                                        Total Cost for {filterClass.length}{" "}
-                                        {filterClass.length === 1 ? "class" : "classes"}
+                                        Pending Payment for {filterClass.filter((cls) => !isClassEnrolled(cls.class_name)).length}{" "}
+                                        {filterClass.filter((cls) => !isClassEnrolled(cls.class_name)).length === 1
+                                            ? "class"
+                                            : "classes"}
                                     </p>
                                     <p className="text-3xl font-bold text-purple-600 mt-2">
                                         ${totalPrice.toFixed(2)}
