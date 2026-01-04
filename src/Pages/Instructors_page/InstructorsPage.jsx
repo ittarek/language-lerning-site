@@ -4,7 +4,7 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import Cover from "../../Components/Cover";
 import { Helmet } from "react-helmet-async";
 import useClass from "../../Hooks/useClass";
-import InstructorCard from "./InstructorCard";
+import InstructorCard from "./InstructorsPageCard";
 import { LoadingState } from "../../Components/Shared/FetchStates/FetchStates";
 
 const Instructors = () => {

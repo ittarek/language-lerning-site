@@ -9,7 +9,7 @@ import { LoadingState } from "../../Components/Shared/FetchStates/FetchStates";
 // Lazy imports
 const AboutUs = lazy(() => import("./AboutUs/AboutUs"));
 const Popular_classes = lazy(() => import("./Popular_section/Popular_classes"));
-const Teachers = lazy(() => import("./Teachers/Teachers"));
+const Teachers = lazy(() => import("./Instructor/Instructor"));
 const Event = lazy(() => import("../../Components/Event/Event"));
 const StartingCourse = lazy(() => import("./StartingCourse"));
 const PlanPricing = lazy(() => import("./PlanPricing"));

@@ -3,7 +3,7 @@ import Feature4BgImg from "../../assets/features/feature4_bg.png";
 import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const InstructorCard = ({ instructor }) => {
+const InstructorsPageCard = ({ instructor }) => {
     const [activeSection, setActiveSection] = useState("about");
 
 
@@ -236,4 +236,4 @@ const InstructorCard = ({ instructor }) => {
     );
 };
 
-export default InstructorCard;
+export default InstructorsPageCard;

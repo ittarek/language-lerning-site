@@ -9,12 +9,13 @@ import AdminROutes from "./AdminROutes";
 import { LoadingState } from "../Components/Shared/FetchStates/FetchStates";
 import RoleBasedDashboard from "./RoleBasedDashboard";
 import ClassDetails from "../Pages/Home_page/Popular_section/ClassDetails";
+import { InstructorDetails } from "../Pages/Home_page/Instructor/InstructorDetails";
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import("../Pages/Home_page/Home"));
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Register = lazy(() => import("../Pages/Register/Register"));
-const Instructors = lazy(() => import("../Pages/Instructors_page/Instructors"));
+const Instructors = lazy(() => import("../Pages/Instructors_page/InstructorsPage"));
 const Classes = lazy(() => import("../Pages/Classes/Classes"));
 const Blog = lazy(() => import("../Pages/Blog/Blog"));
 const BlogDetail = lazy(() => import("../Pages/Blog/BlogDetail"));
@@ -87,6 +88,11 @@ export const router = createBrowserRouter([
                         <Instructors />
                     </Suspense>
                 ),
+            },
+            {
+                path: "/instructor/:id",
+                element: <InstructorDetails/>
+
             },
             {
                 path: "/classes",
