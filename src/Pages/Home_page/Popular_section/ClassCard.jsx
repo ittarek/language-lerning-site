@@ -32,7 +32,6 @@ const ClassCard = ({ singleClass }) => {
         status,
         instructor_bg_img,
     } = singleClass;
-console.log("singleClass",singleClass);
 
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [isHovered, setIsHovered] = useState(false);

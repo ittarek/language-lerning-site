@@ -10,7 +10,7 @@ import useFetchData from "../../../Hooks/useFetchTeacher";
 import { EmptyState } from "../../../Components/Shared/FetchStates/EmptyState";
 import OptimizedImage from "../../../Components/Shared/OptimizedImage";
 
-const Teachers = () => {
+const Instructor = () => {
     // TanStack query using for data fetch
     const {
         data: topInstructors = [],
@@ -20,6 +20,7 @@ const Teachers = () => {
         refetch,
         isFetching
     } = useFetchData('/TopInstructors', 'topInstructors');
+    console.log(topInstructors);
 
     // Loading State
     if (isLoading) {
@@ -159,4 +160,4 @@ const Teachers = () => {
     );
 };
 
-export default Teachers;
+export default Instructor;
