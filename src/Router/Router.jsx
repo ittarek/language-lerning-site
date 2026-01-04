@@ -9,7 +9,8 @@ import AdminROutes from "./AdminROutes";
 import { LoadingState } from "../Components/Shared/FetchStates/FetchStates";
 import RoleBasedDashboard from "./RoleBasedDashboard";
 import ClassDetails from "../Pages/Home_page/Popular_section/ClassDetails";
-import { InstructorDetails } from "../Pages/Home_page/Instructor/InstructorDetails";
+import InstructorDetails from "../Pages/Home_page/Instructor/InstructorDetails";
+
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import("../Pages/Home_page/Home"));

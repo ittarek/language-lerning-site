@@ -28,6 +28,9 @@ import {
   FaFire,
   FaLanguage,
 } from 'react-icons/fa';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { AuthContext } from '../../../Provider/AuthProvider';
+import Container from '../../../Components/Container';
 
 const InstructorDetails = () => {
   const { id } = useParams();
