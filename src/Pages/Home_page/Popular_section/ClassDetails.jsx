@@ -1,5 +1,3 @@
-
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -286,7 +284,7 @@ const ClassDetails = () => {
             </Helmet>
 
             {/* Hero Section with Video Preview */}
-            <div className="relative h-[500px] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 overflow-hidden">
+            <div className="relative h-[500px] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 overflow-hidden py-2">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0">
                     <img
@@ -302,7 +300,7 @@ const ClassDetails = () => {
                     {/* Back Button */}
                     <button
                         onClick={() => navigate(-1)}
-                        className="absolute top-8 left-4 flex items-center gap-2 text-white hover:text-indigo-300 font-semibold transition bg-black/30 backdrop-blur-sm px-4 py-2 rounded-lg"
+                        className="absolute top-14 left-4 flex items-center gap-2 text-white hover:text-indigo-300 font-semibold transition bg-black/30 backdrop-blur-sm px-4 py-2 rounded-lg"
                     >
                         <FaArrowLeft />
                         Back
@@ -377,7 +375,7 @@ const ClassDetails = () => {
             </div>
 
             <Container className="py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto my-2">
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* Tabs Navigation */}
