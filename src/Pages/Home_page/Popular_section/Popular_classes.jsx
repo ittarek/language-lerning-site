@@ -13,15 +13,15 @@ import useFetchData from "../../../Hooks/useFetchTeacher";
 const Popular_classes = () => {
     // TanStack query using for data fetch
     const {
-        data: classes = [],
-        isLoading,
-        isError,
-        error,
-        refetch,
-        isFetching
-    } = useFetchData('/TopClasses', 'topClasses', {
-        staleTime: 3 * 60 * 1000, // Custom stale time: 3 minutes
-        refetchOnWindowFocus: true, // Enable refetch on focus
+      data: classes = [],
+      isLoading,
+      isError,
+      error,
+      refetch,
+      isFetching,
+    } = useFetchData('/classes/top', 'topClasses', {
+      staleTime: 3 * 60 * 1000, // Custom stale time: 3 minutes
+      refetchOnWindowFocus: true, // Enable refetch on focus
     });
 
     if (isLoading) {

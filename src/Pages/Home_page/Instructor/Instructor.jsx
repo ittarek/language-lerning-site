@@ -18,7 +18,7 @@ const Instructor = () => {
     error,
     refetch,
     isFetching,
-  } = useFetchData('/TopInstructors', 'topInstructors');
+  } = useFetchData('/classes/top-instructors', 'topInstructors');
 
   // Loading State
   if (isLoading) {

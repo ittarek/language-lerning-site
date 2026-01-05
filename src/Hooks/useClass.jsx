@@ -1,46 +1,43 @@
-import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
-import { AuthContext } from "../Provider/AuthProvider";
-
+import { useQuery } from '@tanstack/react-query';
+import { useContext } from 'react';
+import { AuthContext } from '../Provider/AuthProvider';
 const useClass = () => {
-    const { spinner } = useContext(AuthContext);
+  const { spinner } = useContext(AuthContext);
 
-    const {
-        data: classes = [],
-        isLoading: loading,
-        refetch,
-        error,
-    } = useQuery({
-        queryKey: ["classes"],
+  const {
+    data: classes = [],
+    isLoading: loading,
+    refetch,
+    error,
+  } = useQuery({
+    queryKey: ['classes'],
+    enabled: !spinner,
 
-        // ✅ FIXED: Query should run when spinner is FALSE (loading is complete)
-        enabled: !spinner,
+    queryFn: async () => {
+      try {
+        // ✅ VITE_API_URL এর সাথে /classes যোগ করুন
+        const apiUrl = `${import.meta.env.VITE_API_URL}/classes`;
 
-        queryFn: async () => {
-            try {
-                const res = await fetch(
-                    `${import.meta.env.VITE_API_URL}/AllClasses`
-                );
+        // console.log('📡 Fetching from:', apiUrl);
 
-                if (!res.ok) {
-                    throw new Error(`Failed to fetch classes: ${res.status}`);
-                }
+        const res = await fetch(apiUrl);
 
-                return res.json();
-            } catch (error) {
-                console.error("Error fetching classes:", error);
-                throw error;
-            }
-        },
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        // Optional: Add retry and caching
-        staleTime: 5 * 60 * 1000, // 5 minutes
-        cacheTime: 10 * 60 * 1000, // 10 minutes
-        retry: 1,
-        retryDelay: 1000,
-    });
+        const data = await res.json();
+        // console.log('✅ Classes:', data);
+        return data;
+      } catch (error) {
+        console.error('❌ Error:', error);
+        throw error;
+      }
+    },
 
-    return [classes, loading, refetch, error];
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
+
+  return [classes, loading, refetch, error];
 };
 
 export default useClass;
