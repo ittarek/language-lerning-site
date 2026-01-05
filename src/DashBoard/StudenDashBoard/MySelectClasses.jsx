@@ -38,9 +38,7 @@ const MySelectClasses = () => {
         enabled: !spinner && !!user?.email,
         queryFn: async () => {
             try {
-                const res = await axiosSecure.get(
-                    `/enrolledClasses/${user?.email}`
-                );
+                const res = await axiosSecure.get(`/enrollments/${user?.email}`);
                 return res.data || [];
             } catch (error) {
                 console.error("Error fetching enrolled classes:", error);

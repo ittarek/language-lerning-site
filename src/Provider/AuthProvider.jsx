@@ -70,14 +70,14 @@ const AuthProvider = ({ children }) => {
           // ✅ FIXED: Use correct API endpoint with /api/auth prefix
           const jwtUrl = `${import.meta.env.VITE_API_URL}/auth/jwt`;
 
-          console.log('🔑 Requesting JWT from:', jwtUrl);
+          // console.log('🔑 Requesting JWT from:', jwtUrl);
 
           const response = await axios.post(jwtUrl, {
             email: currentUser.email,
           });
 
           if (response.data.token) {
-            console.log('✅ JWT Token received');
+            // console.log('✅ JWT Token received');
             localStorage.setItem('access-token', response.data.token);
           } else {
             console.warn('⚠️ No token in response');

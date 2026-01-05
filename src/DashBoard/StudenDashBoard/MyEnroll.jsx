@@ -28,9 +28,7 @@ const MyEnroll = () => {
         queryFn: async () => {
             try {
                 // This will automatically include the JWT token in headers
-                const res = await axiosSecure.get(
-                    `/enrolledClasses/${user?.email}`
-                );
+                const res = await axiosSecure.get(`/enrollments/${user?.email}`);
 
                 if (!res.data) {
                     throw new Error("No data received");
