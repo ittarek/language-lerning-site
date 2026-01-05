@@ -6,87 +6,17 @@ import OptimizedImage from '../../Components/Shared/OptimizedImage';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { MdNotifications, MdArrowForward, MdInfo } from 'react-icons/md';
-
-const courseData = [
-  {
-    id: 1,
-    name: 'Language',
-    title: 'Principles of Written English, Part 2',
-    img: 'https://images.unsplash.com/photo-1555431189-0fabf2667795?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
-    price: 40,
-    details:
-      'Master the principles of written English with comprehensive lessons, exercises, and real-world examples.',
-    startDate: '2024-02-15',
-    duration: '8 weeks',
-    level: 'Beginner',
-  },
-  {
-    id: 2,
-    name: 'Computer',
-    title: 'Introduction to Computer Science',
-    img: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
-    price: 100,
-    details:
-      'Learn the fundamentals of computer science including algorithms, data structures, and programming concepts.',
-    startDate: '2024-02-20',
-    duration: '10 weeks',
-    level: 'Beginner',
-  },
-  {
-    id: 3,
-    name: 'Medicine',
-    title: 'Introduction to Biomedical Imaging',
-    img: 'https://images.unsplash.com/photo-1614294168453-84a363686839?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    price: 400,
-    details:
-      'Explore the latest techniques in biomedical imaging and their clinical applications.',
-    startDate: '2024-03-01',
-    duration: '12 weeks',
-    level: 'Advanced',
-  },
-  {
-    id: 4,
-    name: 'Marketing',
-    title: 'Entrepreneurship 101: Who is your customer?',
-    img: 'https://plus.unsplash.com/premium_photo-1661414415246-3e502e2fb241?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    price: 40,
-    details:
-      'Learn how to identify and understand your target customer for successful entrepreneurship.',
-    startDate: '2024-02-25',
-    duration: '6 weeks',
-    level: 'Beginner',
-  },
-  {
-    id: 5,
-    name: 'Social',
-    title: 'Principles of Written Social, Part 2',
-    img: 'https://plus.unsplash.com/premium_photo-1678914045640-55a120a8f849?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    price: 'Free',
-    details: 'Understand social dynamics and written communication in the modern world.',
-    startDate: '2024-03-05',
-    duration: '4 weeks',
-    level: 'Beginner',
-  },
-  {
-    id: 6,
-    name: 'Digital Marketing',
-    title: 'Principles of Digital Marketing, Part 2',
-    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1415&q=80',
-    price: 40,
-    details:
-      'Master digital marketing strategies, SEO, social media marketing, and content creation.',
-    startDate: '2024-03-10',
-    duration: '8 weeks',
-    level: 'Intermediate',
-  },
-];
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { courseData } from './courseData';
 
 const StartingCourse = () => {
   const navigate = useNavigate();
   const [notifiedCourses, setNotifiedCourses] = useState(new Set());
+  const [loading, setLoading] = useState(false);
+  const [axiosSecure] = useAxiosSecure();
 
-  // ✅ Notify Me Button Handler
-  const handleNotifyMe = course => {
+  // ✅ Notify Me Button Handler - with email sending
+  const handleNotifyMe = async course => {
     if (notifiedCourses.has(course.id)) {
       toast.info("You're already notified for this course!", {
         position: 'top-right',
@@ -112,20 +42,56 @@ const StartingCourse = () => {
           return 'Please enter a valid email';
         }
       },
-    }).then(result => {
+    }).then(async result => {
       if (result.isConfirmed) {
-        setNotifiedCourses(prev => new Set(prev).add(course.id));
-        toast.success(
-          `Notification enabled for "${course.title}"! We'll email you at ${result.value}`,
-          {
-            position: 'top-right',
+        setLoading(true);
+
+        try {
+          // Send email via backend
+          const response = await axiosSecure.post('/send-notification-email', {
+            email: result.value,
+            courseTitle: course.title,
+            courseId: course.id,
+            startDate: course.startDate,
+            coursePrice: course.price,
+          });
+
+          if (response.data.success) {
+            // Update UI state
+            setNotifiedCourses(prev => new Set(prev).add(course.id));
+
+            toast.success(
+              `Notification enabled! We've sent a confirmation email to ${result.value}`,
+              {
+                position: 'top-right',
+              }
+            );
+          } else {
+            toast.error('Failed to send notification. Please try again.', {
+              position: 'top-right',
+            });
           }
-        );
+        } catch (error) {
+          console.error('Error sending notification:', error);
+          toast.error(
+            error.response?.data?.message || 'Failed to send notification email',
+            {
+              position: 'top-right',
+            }
+          );
+        } finally {
+          setLoading(false);
+        }
       }
     });
   };
 
-  // ✅ Learn More Button Handler
+  // ✅ View Details Button Handler - Navigate to details page
+  const handleViewDetails = course => {
+    navigate(`/coming-soon-course/${course.id}`);
+  };
+
+  // ✅ Learn More Button Handler (Old - Optional)
   const handleLearnMore = course => {
     Swal.fire({
       title: course.title,
@@ -144,14 +110,12 @@ const StartingCourse = () => {
         </div>
       `,
       confirmButtonColor: '#4f46e5',
-      confirmButtonText: 'Interested',
+      confirmButtonText: 'View Full Details',
       showCancelButton: true,
       cancelButtonText: 'Close',
     }).then(result => {
       if (result.isConfirmed) {
-        toast.info("We've noted your interest! You'll hear from us soon.", {
-          position: 'top-right',
-        });
+        navigate(`/coming-soon-course/${course.id}`);
       }
     });
   };
@@ -315,17 +279,24 @@ const StartingCourse = () => {
                   <div className="flex gap-3 pt-4 text-sm">
                     <button
                       onClick={() => handleNotifyMe(course)}
+                      disabled={loading || notifiedCourses.has(course.id)}
                       className={`flex-1 p-2 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
                         notifiedCourses.has(course.id)
-                          ? 'bg-green-100 text-green-600 border-2 border-green-600'
+                          ? 'bg-green-100 text-green-600 border-2 border-green-600 cursor-not-allowed'
+                          : loading
+                          ? 'bg-gray-400 text-white cursor-not-allowed'
                           : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:shadow-indigo-500/50 hover:scale-[1.02]'
                       }`}>
                       <MdNotifications size={18} />
-                      {notifiedCourses.has(course.id) ? 'Notified' : 'Notify Me'}
+                      {loading
+                        ? 'Sending...'
+                        : notifiedCourses.has(course.id)
+                        ? 'Notified'
+                        : 'Notify Me'}
                     </button>
                     <button
-                      onClick={() => handleLearnMore(course)}
-                      className="p-2 bg-white border-2 border-indigo-600 text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all duration-300">
+                      onClick={() => handleViewDetails(course)}
+                      className="p-2 bg-white border-2 border-indigo-600 text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all duration-300 flex items-center justify-center">
                       <MdInfo size={18} />
                     </button>
                   </div>

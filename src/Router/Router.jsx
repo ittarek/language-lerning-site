@@ -10,6 +10,7 @@ import { LoadingState } from "../Components/Shared/FetchStates/FetchStates";
 import RoleBasedDashboard from "./RoleBasedDashboard";
 import ClassDetails from "../Pages/Home_page/Popular_section/ClassDetails";
 import InstructorDetails from "../Pages/Home_page/Instructor/InstructorDetails";
+import ComingSoonCourseDetails from "../Pages/Home_page/ComingSoonCourseDetails";
 
 
 // 🔹 Public Pages (Lazy)
@@ -107,7 +108,11 @@ export const router = createBrowserRouter([
             {
                 path: "/class/:id",
                 element: <ClassDetails />
-            },
+          },
+            {
+  path: '/coming-soon-course/:id',
+  element: <ComingSoonCourseDetails />
+},
             {
                 path: "/blog",
                 element: (
