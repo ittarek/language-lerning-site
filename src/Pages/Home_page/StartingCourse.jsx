@@ -48,7 +48,7 @@ const StartingCourse = () => {
 
         try {
           // Send email via backend
-          const response = await axiosSecure.post('/send-notification-email', {
+          const response = await axiosSecure.post('/email/send-notification', {
             email: result.value,
             courseTitle: course.title,
             courseId: course.id,

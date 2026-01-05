@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         try {
           // ✅ FIXED: Use correct API endpoint with /api/auth prefix
-          const jwtUrl = `${import.meta.env.VITE_API_URL}/JWT_URL`;
+          const jwtUrl = `${import.meta.env.VITE_API_URL}/auth/jwt`;
 
           console.log('🔑 Requesting JWT from:', jwtUrl);
 
