@@ -1,5 +1,6 @@
 // src/Hooks/useFetchData.js
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+import { getApiUrl } from '../config/api/Config';
 
 /**
  * Reusable custom hook for fetching data with error handling
@@ -8,33 +9,35 @@ import { useQuery } from "@tanstack/react-query";
  * @param {object} options - Additional React Query options
  */
 const useFetchData = (endpoint, queryKey, options = {}) => {
-    const apiUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, '') ;
+  const API_URL = getApiUrl();
+  const apiUrl = API_URL;
 
-    return useQuery({
-        queryKey: [queryKey],
-        queryFn: async () => {
-            const url = `${apiUrl}${endpoint}`;
-            // console.log(`🔍 Fetching from: ${url}`);
+  return useQuery({
+    queryKey: [queryKey],
+    queryFn: async () => {
+      const url = `${apiUrl}${endpoint}`;
+      // console.log(`🔍 Fetching from: ${url}`);
 
-            const response = await fetch(url);
+      const response = await fetch(url);
 
-            if (!response.ok) {
-                const errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-                console.error('❌ Fetch error:', errorMessage);
-                throw new Error(errorMessage);
-            }
 
-            const data = await response.json();
-            // console.log(`✅ Fetched ${data.length || 0} items from ${endpoint}`);
+      if (!response.ok) {
+        const errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+        console.error('❌ Fetch error:', errorMessage);
+        throw new Error(errorMessage);
+      }
 
-            return data;
-        },
-        staleTime: 5 * 60 * 1000, // 5 minutes
-        cacheTime: 10 * 60 * 1000, // 10 minutes
-        retry: 2, // Retry 2 times on failure
-        refetchOnWindowFocus: false,
-        ...options, // Override defaults if needed
-    });
+      const data = await response.json();
+      // console.log(`✅ Fetched ${data.length || 0} items from ${endpoint}`);
+
+      return data;
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+    retry: 2, // Retry 2 times on failure
+    refetchOnWindowFocus: false,
+    ...options, // Override defaults if needed
+  });
 };
 
 export default useFetchData;

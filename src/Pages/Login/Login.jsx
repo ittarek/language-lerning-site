@@ -31,7 +31,7 @@ const Login = () => {
 
         try {
             const result = await login(data.email, data.password);
-            console.log(result.user);
+            // console.log(result.user);
 
             Swal.fire({
                 position: "top-end",

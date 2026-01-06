@@ -6,15 +6,13 @@ import { router } from "./Router/Router.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import AuthProvider from "./Provider/AuthProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { initializeApiUrl } from "./config/api/Config.js";
 const queryClient = new QueryClient();
-// useEffect(() => {
-//     // Load analytics after page is interactive
-//     if (typeof window !== 'undefined') {
-//         setTimeout(() => {
-//             // Initialize analytics
-//         }, 3000);
-//     }
-// }, []);
+
+
+
+// Initialize API URL on app start
+await initializeApiUrl();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

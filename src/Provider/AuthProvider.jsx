@@ -12,6 +12,7 @@ import {
 import { useState, useEffect } from 'react';
 import app from './../Firbase/Firebase.config';
 import axios from 'axios';
+import { getApiUrl } from '../config/api/Config';
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -67,8 +68,9 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser) {
         try {
+          const API_URL = getApiUrl();
           // ✅ FIXED: Use correct API endpoint with /api/auth prefix
-          const jwtUrl = `${import.meta.env.VITE_API_URL}/auth/jwt`;
+          const jwtUrl = `${API_URL}/auth/jwt`;
 
           // console.log('🔑 Requesting JWT from:', jwtUrl);
 

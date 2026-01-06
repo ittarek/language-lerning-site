@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
+import { getApiUrl } from '../config/api/Config';
 const useClass = () => {
   const { spinner } = useContext(AuthContext);
 
@@ -16,7 +17,8 @@ const useClass = () => {
     queryFn: async () => {
       try {
         // ✅ VITE_API_URL এর সাথে /classes যোগ করুন
-        const apiUrl = `${import.meta.env.VITE_API_URL}/classes`;
+        const API_URL = getApiUrl();
+        const apiUrl = `${API_URL}/classes`;
 
         // console.log('📡 Fetching from:', apiUrl);
 
