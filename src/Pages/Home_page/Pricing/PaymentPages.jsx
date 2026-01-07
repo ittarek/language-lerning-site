@@ -1,19 +1,15 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import Container from '../../Components/Container';
-import SectionTitle from '../../Components/SectionTitle';
-import { AuthContext } from '../../Provider/AuthProvider';
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import Container from '../Components/Container';
+import SectionTitle from '../Components/SectionTitle';
 
-const planing = [
+const plans = [
   {
     id: 'monthly',
     name: 'Monthly',
     price: 29,
     originalPrice: 49,
     details: 'Perfect for trying out our platform',
-    stripePriceId: 'price_monthly_123', // Your Stripe Price ID
     features: [
       'Access to all courses',
       'Lifetime updates',
@@ -28,7 +24,6 @@ const planing = [
     price: 199,
     originalPrice: 348,
     details: 'Best value for serious learners',
-    stripePriceId: 'price_yearly_456', // Your Stripe Price ID
     features: [
       'Access to all courses',
       'Lifetime updates',
@@ -45,7 +40,6 @@ const planing = [
     price: 499,
     originalPrice: 999,
     details: 'One-time payment, unlimited access forever',
-    stripePriceId: 'price_lifetime_789', // Your Stripe Price ID
     features: [
       'Access to all courses',
       'Lifetime updates',
@@ -59,125 +53,14 @@ const planing = [
   },
 ];
 
-const PlanPricing = () => {
-  const [loadingPlan, setLoadingPlan] = useState(null);
-  const { user } = useContext(AuthContext);
+const PricingPage = () => {
   const navigate = useNavigate();
-  const [axiosSecure] = useAxiosSecure();
 
-  // Handle subscription/purchase
-  const handlePurchase = async plan => {
-    // Check if user is logged in
-    if (!user) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Login Required',
-        text: 'Please login to purchase a plan',
-        showCancelButton: true,
-        confirmButtonColor: '#4f46e5',
-        confirmButtonText: 'Go to Login',
-        cancelButtonText: 'Cancel',
-      }).then(result => {
-        if (result.isConfirmed) {
-          navigate('/login', { state: { from: '/pricing' } });
-        }
-      });
-      return;
-    }
-
-    setLoadingPlan(plan.id);
-
-    try {
-      // Create payment intent or checkout session
-      const response = await axiosSecure.post('/create-checkout-session', {
-        planId: plan.id,
-        planName: plan.name,
-        price: plan.price,
-        stripePriceId: plan.stripePriceId,
-        userId: user.uid,
-        userEmail: user.email,
-        userName: user.displayName || 'User',
-      });
-
-      if (response.data.success) {
-        // Option 1: Redirect to Stripe Checkout
-        if (response.data.checkoutUrl) {
-          window.location.href = response.data.checkoutUrl;
-        }
-
-        // Option 2: Navigate to internal payment page
-        else if (response.data.sessionId) {
-          navigate('/checkout', {
-            state: {
-              sessionId: response.data.sessionId,
-              plan: plan,
-            },
-          });
-        }
-      }
-    } catch (error) {
-      console.error('Purchase error:', error);
-
-      const errorMessage = error.response?.data?.message || 'Failed to process payment';
-
-      Swal.fire({
-        icon: 'error',
-        title: 'Purchase Failed',
-        text: errorMessage,
-        confirmButtonColor: '#4f46e5',
-      });
-    } finally {
-      setLoadingPlan(null);
-    }
-  };
-
-  // Handle trial start
-  const handleStartTrial = async plan => {
-    if (!user) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Login Required',
-        text: 'Please login to start your free trial',
-        showCancelButton: true,
-        confirmButtonColor: '#4f46e5',
-        confirmButtonText: 'Go to Login',
-      }).then(result => {
-        if (result.isConfirmed) {
-          navigate('/login');
-        }
-      });
-      return;
-    }
-
-    setLoadingPlan(plan.id);
-
-    try {
-      const response = await axiosSecure.post('/start-trial', {
-        planId: plan.id,
-        userId: user.uid,
-        userEmail: user.email,
-      });
-
-      if (response.data.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Trial Started!',
-          text: 'Your 7-day free trial has begun. Enjoy full access!',
-          confirmButtonColor: '#4f46e5',
-        }).then(() => {
-          navigate('/dashboard');
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Trial Failed',
-        text: error.response?.data?.message || 'Unable to start trial',
-        confirmButtonColor: '#4f46e5',
-      });
-    } finally {
-      setLoadingPlan(null);
-    }
+  const handlePlanSelect = plan => {
+    // Store selected plan in sessionStorage
+    sessionStorage.setItem('selectedPlan', JSON.stringify(plan));
+    // Navigate to checkout
+    navigate('/checkout');
   };
 
   return (
@@ -203,13 +86,9 @@ const PlanPricing = () => {
           }
         />
 
-        {/* Pricing Cards */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:mt-24">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6">
-            {planing.map((plan, index) => {
-              const isPopular = plan.recommended;
-              const isLoading = loadingPlan === plan.id;
-
+            {plans.map(plan => {
               const colors = {
                 Yearly: {
                   gradient: 'from-orange-500 to-red-500',
@@ -230,15 +109,15 @@ const PlanPricing = () => {
                   button: 'from-indigo-600 to-purple-600',
                 },
               };
-
               const color = colors[plan.name] || colors.default;
 
               return (
                 <div
                   key={plan.id}
-                  className={`relative group ${isPopular ? 'lg:scale-105 lg:z-10' : ''}`}>
-                  {/* Popular Badge */}
-                  {isPopular && (
+                  className={`relative group ${
+                    plan.recommended ? 'lg:scale-105 lg:z-10' : ''
+                  }`}>
+                  {plan.recommended && (
                     <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 z-20">
                       <div
                         className={`bg-gradient-to-r ${color.gradient} text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2 animate-pulse`}>
@@ -250,20 +129,16 @@ const PlanPricing = () => {
                     </div>
                   )}
 
-                  {/* Card */}
                   <div
                     className={`relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border-2 ${
                       color.border
                     } ${
-                      isPopular ? 'border-orange-300' : ''
+                      plan.recommended ? 'border-orange-300' : ''
                     } group-hover:-translate-y-2`}>
-                    {/* Decorative Background */}
                     <div
                       className={`absolute top-0 left-0 right-0 h-40 ${color.bg} opacity-50`}></div>
 
-                    {/* Content */}
                     <div className="relative p-8 space-y-6">
-                      {/* Plan Name */}
                       <div className="text-center space-y-2">
                         <div
                           className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${color.gradient} text-white shadow-lg`}>
@@ -300,7 +175,6 @@ const PlanPricing = () => {
                         </h3>
                       </div>
 
-                      {/* Price */}
                       <div className="text-center py-6">
                         <div className="flex items-start justify-center gap-1">
                           <span className="text-3xl font-bold text-gray-900 mt-2">$</span>
@@ -315,8 +189,6 @@ const PlanPricing = () => {
                             ? 'per year'
                             : 'per month'}
                         </p>
-
-                        {/* Original Price & Discount */}
                         {plan.originalPrice && plan.originalPrice > plan.price && (
                           <div className="mt-3 space-y-1">
                             <p className="text-gray-400 line-through text-sm">
@@ -341,12 +213,10 @@ const PlanPricing = () => {
                         )}
                       </div>
 
-                      {/* Description */}
                       <p className="text-center text-gray-600 text-base px-4">
                         {plan.details}
                       </p>
 
-                      {/* Features */}
                       <div className="space-y-3 pt-4">
                         {plan.features.map((feature, idx) => (
                           <div
@@ -367,79 +237,38 @@ const PlanPricing = () => {
                                 />
                               </svg>
                             </div>
-                            <span
-                              className={`text-sm ${
-                                idx >= 4 && plan.name === 'Yearly'
-                                  ? 'font-semibold text-orange-600'
-                                  : ''
-                              }`}>
-                              {feature}
-                            </span>
+                            <span className="text-sm">{feature}</span>
                           </div>
                         ))}
                       </div>
 
-                      {/* CTA Buttons */}
                       <div className="space-y-3 mt-8">
-                        {/* Main Purchase Button */}
                         <button
-                          onClick={() => handlePurchase(plan)}
-                          disabled={isLoading}
-                          className={`w-full py-4 bg-gradient-to-r ${color.button} text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group/btn disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none`}>
-                          {isLoading ? (
-                            <>
-                              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                <circle
-                                  className="opacity-25"
-                                  cx="12"
-                                  cy="12"
-                                  r="10"
-                                  stroke="currentColor"
-                                  strokeWidth="4"
-                                  fill="none"
-                                />
-                                <path
-                                  className="opacity-75"
-                                  fill="currentColor"
-                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                />
-                              </svg>
-                              Processing...
-                            </>
-                          ) : (
-                            <>
-                              Get Started
-                              <svg
-                                className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                />
-                              </svg>
-                            </>
-                          )}
+                          onClick={() => handlePlanSelect(plan)}
+                          className={`w-full py-4 bg-gradient-to-r ${color.button} text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group/btn`}>
+                          Get Started
+                          <svg
+                            className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
+                          </svg>
                         </button>
-
-                        {/* Free Trial Button (only for Monthly plan) */}
                         {plan.name === 'Monthly' && (
-                          <button
-                            onClick={() => handleStartTrial(plan)}
-                            disabled={isLoading}
-                            className="w-full py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed">
+                          <button className="w-full py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all">
                             Start 7-Day Free Trial
                           </button>
                         )}
                       </div>
                     </div>
-
-                    {/* Corner Decoration */}
                     <div
-                      className={`absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-br ${color.gradient} opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity duration-500`}></div>
+                      className={`absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-br ${color.gradient} opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity`}></div>
                   </div>
                 </div>
               );
@@ -447,48 +276,23 @@ const PlanPricing = () => {
           </div>
         </div>
 
-        {/* Bottom Info */}
         <div className="text-center mt-16 space-y-6">
           <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-600">
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span>No hidden fees</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span>Cancel anytime</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span>30-day money back</span>
-            </div>
+            {['No hidden fees', 'Cancel anytime', '30-day money back'].map(text => (
+              <div key={text} className="flex items-center gap-2">
+                <svg
+                  className="w-5 h-5 text-green-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20">
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>{text}</span>
+              </div>
+            ))}
           </div>
           <p className="text-gray-500 text-sm">
             Have questions?{' '}
@@ -504,4 +308,4 @@ const PlanPricing = () => {
   );
 };
 
-export default PlanPricing;
+export default PricingPage;

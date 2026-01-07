@@ -11,6 +11,10 @@ import RoleBasedDashboard from './RoleBasedDashboard';
 import ClassDetails from '../Pages/Home_page/Popular_section/ClassDetails';
 import InstructorDetails from '../Pages/Home_page/Instructor/InstructorDetails';
 import ComingSoonCourseDetails from '../Pages/Home_page/ComingSoonCourseDetails';
+import PricingPage from '../Pages/Home_page/Pricing/PricingPage';
+import ProcessingPage from '../Pages/Home_page/Pricing/ProcessingPage';
+import SuccessPage from '../Pages/Home_page/Pricing/SuccessPage';
+import CheckoutPage from '../Pages/Home_page/Pricing/CheckoutPage';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -113,6 +117,21 @@ export const router = createBrowserRouter([
         ),
       },
 
+  
+
+      {
+        path: '/checkout',
+        element: <CheckoutPage />,
+      },
+
+      {
+        path: '/processing',
+        element: <ProcessingPage />,
+      },
+      {
+        path: '/success',
+        element: <SuccessPage />,
+      },
       {
         path: '/class/:id',
         element: <ClassDetails />,
