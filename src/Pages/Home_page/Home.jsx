@@ -3,7 +3,6 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import Container from '../../Components/Container';
 import Banner from './Banner/Banner';
 import { LoadingState } from '../../Components/Shared/FetchStates/LoadingState';
-import PaymentSystem from './Pricing/PaymentSystem';
 import PricingPage from './Pricing/PricingPage';
 
 // Lazy imports
@@ -12,7 +11,6 @@ const Popular_classes = lazy(() => import('./Popular_section/Popular_classes'));
 const Teachers = lazy(() => import('./Instructor/Instructor'));
 const Event = lazy(() => import('../../Components/Event/Event'));
 const StartingCourse = lazy(() => import('./StartingCourse'));
-const PlanPricing = lazy(() => import('./Pricing/PlanPricing'));
 const TradingArticle = lazy(() => import('./TradingArticle'));
 
 // Lazy Section Wrapper
@@ -56,33 +54,43 @@ const Home = () => {
         <title>Learning | Home</title>
       </Helmet>
 
-      {/* <Banner /> */}
+      <Banner />
 
       <Container>
-        {/* <LazySection><Popular_classes /></LazySection> */}
-
-        {/* <LazySection><Teachers /></LazySection> */}
-
         <LazySection>
-          {/* <section id="events"><Event /></section> */}
+          <Popular_classes />
         </LazySection>
 
         <LazySection>
-          {/* <section id="starting_course"><StartingCourse /></section> */}
+          <Teachers />
+        </LazySection>
+
+        <LazySection>
+          <section id="events">
+            <Event />
+          </section>
+        </LazySection>
+
+        <LazySection>
+          <section id="starting_course">
+            <StartingCourse />
+          </section>
         </LazySection>
 
         <LazySection>
           <section id="pricing">
-            {/* <PlanPricing /> */}
             <PricingPage />
-            {/* <PaymentSystem /> */}
           </section>
         </LazySection>
 
-        {/* <LazySection><TradingArticle /></LazySection> */}
+        <LazySection>
+          <TradingArticle />
+        </LazySection>
 
         <LazySection>
-          {/* <section id="about"><AboutUs /></section> */}
+          <section id="about">
+            <AboutUs />
+          </section>
         </LazySection>
       </Container>
     </main>
