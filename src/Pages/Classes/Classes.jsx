@@ -48,8 +48,12 @@ const Classes = () => {
               ) : approvedClass.length > 0 ? (
                 /* ✅ Success State - Classes Found */
                 <div className="grid lg:grid-cols-4 md:grid-cols-2 mt-11 gap-10">
-                  {approvedClass.map(classes => (
-                    <ClassCArd key={classes._id} classes={classes} refetch={refetch} />
+                  {approvedClass.map((classes, index) => (
+                    <ClassCArd
+                      key={`${classes._id}-${index}`}
+                      classes={classes}
+                      refetch={refetch}
+                    />
                   ))}
                 </div>
               ) : (
