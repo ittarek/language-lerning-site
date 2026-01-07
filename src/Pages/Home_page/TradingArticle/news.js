@@ -1,0 +1,103 @@
+export const news = [
+  {
+    id: 1,
+    title: '10 Effective Tips for Learning a New Language Fast',
+    date: 'Dec 20, 2024',
+    details:
+      'Discover proven strategies that can help you master a new language in record time. From immersion techniques to digital tools.',
+    comments: 24,
+    views: '1.2k',
+    img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500',
+    category: 'Language Learning',
+    tags: ['Education', 'Tips', 'Guide'],
+    trending: true,
+    slug: 'learn-language-fast',
+  },
+  {
+    id: 2,
+    title: 'The Science Behind Language Acquisition in Adults',
+    date: 'Dec 18, 2024',
+    details:
+      'Explore the neurological processes that occur when adults learn new languages and how to optimize your learning potential.',
+    comments: 18,
+    views: '980',
+    img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500',
+    category: 'Research',
+    tags: ['Education', 'Science'],
+    trending: false,
+    slug: 'language-acquisition-adults',
+  },
+  {
+    id: 3,
+    title: 'Why Cultural Immersion is Key to Language Mastery',
+    date: 'Dec 15, 2024',
+    details:
+      "Understanding culture is just as important as learning grammar. Here's why immersion makes all the difference.",
+    comments: 31,
+    views: '1.8k',
+    img: 'https://images.unsplash.com/photo-1763656448109-033f71551cad?q=80&w=1170',
+    category: 'Culture',
+    tags: ['Guide', 'Tips'],
+    trending: true,
+    slug: 'cultural-immersion-language',
+  },
+  {
+    id: 4,
+    title: 'Top Digital Tools Every Language Learner Should Use',
+    date: 'Dec 12, 2024',
+    details:
+      'From AI-powered apps to virtual reality experiences, discover the best technology for accelerated language learning.',
+    comments: 42,
+    views: '2.4k',
+    img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500',
+    category: 'Technology',
+    tags: ['Tools', 'AI', 'Education'],
+    trending: false,
+    slug: 'digital-tools-language',
+  },
+
+  /* 🔥 NEW OBJECTS */
+
+  {
+    id: 5,
+    title: 'How Daily Practice Builds Long-Term Language Memory',
+    date: 'Dec 10, 2024',
+    details:
+      'Consistent daily practice strengthens long-term memory and helps learners retain vocabulary and grammar more effectively.',
+    comments: 14,
+    views: '860',
+    img: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500',
+    category: 'Practice',
+    tags: ['Routine', 'Memory', 'Tips'],
+    trending: false,
+    slug: 'daily-language-practice',
+  },
+  {
+    id: 6,
+    title: 'Common Mistakes Language Learners Should Avoid',
+    date: 'Dec 08, 2024',
+    details:
+      'Many learners struggle due to common mistakes like overthinking grammar or avoiding speaking. Learn how to fix them.',
+    comments: 29,
+    views: '1.5k',
+    img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500',
+    category: 'Mistakes',
+    tags: ['Beginner', 'Guide', 'Tips'],
+    trending: true,
+    slug: 'language-learning-mistakes',
+  },
+  {
+    id: 7,
+    title: 'How AI is Transforming Language Learning in 2025',
+    date: 'Dec 05, 2024',
+    details:
+      'Artificial Intelligence is reshaping how people learn languages through personalized lessons and real-time feedback.',
+    comments: 36,
+    views: '2.9k',
+    img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500',
+    category: 'AI & Future',
+    tags: ['AI', 'Future', 'Technology'],
+    trending: true,
+    slug: 'ai-language-learning-2025',
+  },
+];

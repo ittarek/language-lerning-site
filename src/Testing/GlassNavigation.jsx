@@ -37,6 +37,12 @@ const [bgColor , setBgColor] =  useState("black")
             label: 'Pricing',
             icon: '💰',
             sectionId: 'pricing'
+        },
+        {
+            id: 'article',
+            label: 'Article',
+            icon: '📰',
+            sectionId: 'article'
         }
 
     ];

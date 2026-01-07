@@ -15,7 +15,8 @@ import PricingPage from '../Pages/Home_page/Pricing/PricingPage';
 import ProcessingPage from '../Pages/Home_page/Pricing/ProcessingPage';
 import SuccessPage from '../Pages/Home_page/Pricing/SuccessPage';
 import CheckoutPage from '../Pages/Home_page/Pricing/CheckoutPage';
-import { TradingArticleDetails } from '../Pages/Home_page/TradingArticle/TradingArticleDetails';
+import TradingArticleDetails from '../Pages/Home_page/TradingArticle/TradingArticleDetails';
+import WishlistSystem from '../Pages/Home_page/WishlistSystem/WishlistSystem';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -144,7 +145,7 @@ export const router = createBrowserRouter([
         element: <ComingSoonCourseDetails />,
       },
       {
-        path: '/TradingArticle-article-details',
+        path: '/trending-article/:slug',
         element: (
           <Suspense fallback={<Loader />}>
             <TradingArticleDetails />
@@ -180,6 +181,14 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <NewsDetail />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/wishlist',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <WishlistSystem />
           </Suspense>
         ),
       },

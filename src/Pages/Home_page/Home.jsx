@@ -38,7 +38,7 @@ const LazySection = ({ children, className = '' }) => {
 
   return (
     <div ref={ref} className={className}>
-      {isVisible ? (
+      {!isVisible ? (
         <Suspense fallback={<LoadingState />}>{children}</Suspense>
       ) : (
         <div className="py-12"></div> // Placeholder
@@ -57,41 +57,45 @@ const Home = () => {
       <Banner />
 
       <Container>
-        <LazySection>
-          <Popular_classes />
-        </LazySection>
+        {/* <LazySection> */}
+        <Popular_classes />
+        {/* </LazySection> */}
 
-        <LazySection>
-          <Teachers />
-        </LazySection>
+        {/* <LazySection> */}
+        <Teachers />
+        {/* </LazySection> */}
 
-        <LazySection>
-          <section id="events">
-            <Event />
-          </section>
-        </LazySection>
+        {/* <LazySection> */}
+        <section id="events">
+          <Event />
+        </section>
+        {/* </LazySection> */}
 
-        <LazySection>
-          <section id="starting_course">
-            <StartingCourse />
-          </section>
-        </LazySection>
+        {/* <LazySection> */}
+        <section id="starting_course">
+          <StartingCourse />
+        </section>
+        {/* </LazySection> */}
 
-        <LazySection>
-          <section id="pricing">
-            <PricingPage />
-          </section>
-        </LazySection>
+        {/* <LazySection> */}
+        <section id="pricing">
+          <PricingPage />
+        </section>
+        {/* </LazySection> */}
 
-        <LazySection>
-          <TradingArticle />
-        </LazySection>
+        {/* <LazySection> */}
+        <section id="article">
+          {' '}
+          <TradingArticle />{' '}
+        </section>
 
-        <LazySection>
-          <section id="about">
-            <AboutUs />
-          </section>
-        </LazySection>
+        {/* </LazySection> */}
+
+        {/* <LazySection> */}
+        <section id="about">
+          <AboutUs />
+        </section>
+        {/* </LazySection> */}
       </Container>
     </main>
   );

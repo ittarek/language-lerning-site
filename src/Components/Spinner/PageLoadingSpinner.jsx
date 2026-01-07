@@ -22,7 +22,7 @@ const PageLoadingSpinner = () => {
         {/* Loading Text */}
         <div className="space-y-2">
           <h3 className="text-xl font-bold text-gray-800">Learning...</h3>
-          <p className="text-sm text-gray-600">Preparing your courses</p>
+          <p className="text-sm text-gray-600">Preparing your Content</p>
         </div>
 
         {/* Animated dots */}
