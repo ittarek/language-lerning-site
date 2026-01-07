@@ -146,7 +146,7 @@ const CheckoutPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <button
-          onClick={() => navigate('/pricing')}
+          onClick={() => navigate('/')}
           className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 mb-8 font-semibold transition">
           <FaArrowLeft className="w-5 h-5" />
           Back to Plans
