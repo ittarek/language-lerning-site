@@ -1,12 +1,12 @@
-import Container from "../../Components/Container";
-import Feature4BgImg from "../../assets/features/feature4_bg.png";
-import { FaChalkboardTeacher } from "react-icons/fa";
-import Cover from "../../Components/Cover";
-import { Helmet } from "react-helmet-async";
-import useClass from "../../Hooks/useClass";
-import InstructorCard from "./InstructorsPageCard";
-import { LoadingState } from "../../Components/Shared/FetchStates/FetchStates";
-import { useMemo } from "react";
+import Container from '../../Components/Container';
+import Feature4BgImg from '../../assets/features/feature4_bg.png';
+import { FaChalkboardTeacher } from 'react-icons/fa';
+import Cover from '../../Components/Cover';
+import { Helmet } from 'react-helmet-async';
+import useClass from '../../Hooks/useClass';
+import InstructorCard from './InstructorsPageCard';
+import { LoadingState } from '../../Components/Shared/FetchStates/LoadingState';
+import { useMemo } from 'react';
 
 const Instructors = () => {
   // ✅ Get loading, refetch, and error states

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SectionTitle from '../../../Components/SectionTitle';
 import Container from '../../../Components/Container';
 import { ErrorState } from '../../../Components/Shared/FetchStates/ErrorState';
-import { LoadingState } from '../../../Components/Shared/FetchStates/FetchStates';
+import { LoadingState } from '../../../Components/Shared/FetchStates/LoadingState';
 import useFetchData from '../../../Hooks/useFetchTeacher';
 import { EmptyState } from '../../../Components/Shared/FetchStates/EmptyState';
 import OptimizedImage from '../../../Components/Shared/OptimizedImage';

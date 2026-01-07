@@ -4,7 +4,7 @@ import ClassCArd from './ClassCArd';
 import useClass from '../../Hooks/useClass';
 import SliderClass from './SliderClass';
 import { MdSchool } from 'react-icons/md';
-import { LoadingState } from '../../Components/Shared/FetchStates/FetchStates';
+import { LoadingState } from '../../Components/Shared/FetchStates/LoadingState';
 
 const Classes = () => {
   // ✅ Get loading state and error from hook
