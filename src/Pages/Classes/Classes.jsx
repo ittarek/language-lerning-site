@@ -1,10 +1,10 @@
 import Container from '../../Components/Container';
 import { Helmet } from 'react-helmet-async';
-import ClassCArd from './ClassCArd';
 import useClass from '../../Hooks/useClass';
 import SliderClass from './SliderClass';
 import { MdSchool } from 'react-icons/md';
 import { LoadingState } from '../../Components/Shared/FetchStates/LoadingState';
+import ClassCard from './ClassCard';
 
 const Classes = () => {
   // ✅ Get loading state and error from hook
@@ -47,9 +47,9 @@ const Classes = () => {
                 </div>
               ) : approvedClass.length > 0 ? (
                 /* ✅ Success State - Classes Found */
-                <div className="grid lg:grid-cols-4 md:grid-cols-2 mt-11 gap-10">
+                <div className="grid lg:grid-cols-4 md:grid-cols-2 mt-11 gap-10 max-w-7xl mx-auto">
                   {approvedClass.map((classes, index) => (
-                    <ClassCArd
+                    <ClassCard
                       key={`${classes._id}-${index}`}
                       classes={classes}
                       refetch={refetch}

@@ -209,7 +209,7 @@ const ClassCard = ({ classes, refetch }) => {
 
     return (
         <div
-            className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 ${!isAvailable ? 'opacity-75' : ''
+            className={`group relative bg-white rounded-2xl  shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 ${!isAvailable ? 'opacity-75' : ''
                 } ${isDisabled ? '' : 'hover:border-indigo-200'
                 }`}
         >
