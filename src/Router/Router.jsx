@@ -15,6 +15,7 @@ import PricingPage from '../Pages/Home_page/Pricing/PricingPage';
 import ProcessingPage from '../Pages/Home_page/Pricing/ProcessingPage';
 import SuccessPage from '../Pages/Home_page/Pricing/SuccessPage';
 import CheckoutPage from '../Pages/Home_page/Pricing/CheckoutPage';
+import { TradingArticleDetails } from '../Pages/Home_page/TradingArticle/TradingArticleDetails';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -117,11 +118,13 @@ export const router = createBrowserRouter([
         ),
       },
 
-  
-
       {
         path: '/checkout',
-        element: <CheckoutPage />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <CheckoutPage />
+          </Suspense>
+        ),
       },
 
       {
@@ -139,6 +142,14 @@ export const router = createBrowserRouter([
       {
         path: '/coming-soon-course/:id',
         element: <ComingSoonCourseDetails />,
+      },
+      {
+        path: '/TradingArticle-article-details',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TradingArticleDetails />
+          </Suspense>
+        ),
       },
       {
         path: '/blog',

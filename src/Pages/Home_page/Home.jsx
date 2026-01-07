@@ -11,7 +11,7 @@ const Popular_classes = lazy(() => import('./Popular_section/Popular_classes'));
 const Teachers = lazy(() => import('./Instructor/Instructor'));
 const Event = lazy(() => import('../../Components/Event/Event'));
 const StartingCourse = lazy(() => import('./StartingCourse'));
-const TradingArticle = lazy(() => import('./TradingArticle'));
+const TradingArticle = lazy(() => import('./TradingArticle/TradingArticle'));
 
 // Lazy Section Wrapper
 const LazySection = ({ children, className = '' }) => {
