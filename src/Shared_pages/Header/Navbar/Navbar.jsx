@@ -28,14 +28,15 @@ const Navbar = () => {
         });
     };
 
-    const navItems = [
-        { path: "/", label: "Home" },
-        { path: "/instructors", label: "Instructors" },
-        { path: "/classes", label: "Classes" },
-        { path: "/blog", label: "Blog" },
-        { path: "/news", label: "News" },
-        { path: "/wishlist", label: "Wishlist" },
-    ];
+const navItems = [
+  { path: '/', label: 'Home' },
+  { path: '/instructors', label: 'Instructors' },
+  { path: '/classes', label: 'Classes' },
+  { path: '/blog', label: 'Blog' },
+  { path: '/news', label: 'News' },
+  ...(user ? [{ path: '/wishlist', label: 'Wishlist' }] : []),
+];
+
 
     return (
         <>
@@ -48,7 +49,7 @@ const Navbar = () => {
                         {/* Logo */}
                         <Link to="/" className="flex-shrink-0">
                             <img
-                                className=" w-36 md:w-auto md:h-14"
+                                className=" w-36 md:w-56 md:h-14"
                                 src={logo}
                                 alt="Logo"
                             />

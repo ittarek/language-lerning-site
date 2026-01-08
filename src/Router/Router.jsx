@@ -17,6 +17,9 @@ import SuccessPage from '../Pages/Home_page/Pricing/SuccessPage';
 import CheckoutPage from '../Pages/Home_page/Pricing/CheckoutPage';
 import TradingArticleDetails from '../Pages/Home_page/TradingArticle/TradingArticleDetails';
 import WishlistSystem from '../Pages/Home_page/WishlistSystem/WishlistSystem';
+import ContactSalesPage from '../Pages/Home_page/Pricing/ContactSalesPage';
+import { CourseExplorerPage } from '../Pages/Home_page/AboutUs/CourseExplorerPage';
+import { DetailedAboutPage } from '../Pages/Home_page/AboutUs/DetailedAboutPage';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -137,6 +140,14 @@ export const router = createBrowserRouter([
         element: <SuccessPage />,
       },
       {
+        path: '/contact-sales',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <ContactSalesPage />
+          </Suspense>
+        ),
+      },
+      {
         path: '/class/:id',
         element: <ClassDetails />,
       },
@@ -197,6 +208,22 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <EventDetail />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/CourseExplorerPage',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <CourseExplorerPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/ContactUs',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <DetailedAboutPage />
           </Suspense>
         ),
       },

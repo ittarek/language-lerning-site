@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const plans = [
@@ -54,10 +53,10 @@ const plans = [
 export default function PricingPage() {
   const navigate = useNavigate();
 
-const handlePlanSelect = plan => {
-  sessionStorage.setItem('selectedPlan', JSON.stringify(plan));
-  navigate('/checkout');
-};
+  const handlePlanSelect = plan => {
+    sessionStorage.setItem('selectedPlan', JSON.stringify(plan));
+    navigate('/checkout');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-20 px-4">
@@ -244,24 +243,24 @@ const handlePlanSelect = plan => {
 
                     <div className="space-y-3 mt-8">
                       {/* <Link to="/checkout"> */}
-   
-                        <button
-                          onClick={() => handlePlanSelect(plan)}
-                          className={`w-full py-4 bg-gradient-to-r ${color.button} text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group/btn`}>
-                          Get Started
-                          <svg
-                            className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M13 7l5 5m0 0l-5 5m5-5H6"
-                            />
-                          </svg>
-                        </button>
+
+                      <button
+                        onClick={() => handlePlanSelect(plan)}
+                        className={`w-full py-4 bg-gradient-to-r ${color.button} text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group/btn`}>
+                        Get Started
+                        <svg
+                          className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 7l5 5m0 0l-5 5m5-5H6"
+                          />
+                        </svg>
+                      </button>
                       {/* </Link> */}
                       {plan.name === 'Monthly' && (
                         <button className="w-full py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all">
@@ -299,11 +298,11 @@ const handlePlanSelect = plan => {
           </div>
           <p className="text-gray-500 text-sm">
             Have questions?{' '}
-            <a
-              href="#"
+            <Link
+              to="/contact-sales"
               className="text-indigo-600 hover:text-indigo-700 font-semibold underline">
               Contact our sales team
-            </a>
+            </Link>
           </p>
         </div>
       </div>

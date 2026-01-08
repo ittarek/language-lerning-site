@@ -122,7 +122,7 @@ const InstructorDetails = () => {
         </button>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 max-w-7xl mx-auto">
           {/* Left Column - Instructor Info */}
           <div className="lg:col-span-1">
             {/* Profile Card */}
