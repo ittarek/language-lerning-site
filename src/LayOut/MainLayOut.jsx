@@ -5,10 +5,13 @@ import { useContext, useEffect } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import PageLoadingSpinner from '../Components/Spinner/PageLoadingSpinner';
 import AOS from 'aos';
+import { ScrollToTop } from '../Components/Shared/ScrollToTop';
 
 const MainLayOut = () => {
   const { spinner } = useContext(AuthContext);
   const navigation = useNavigation();
+  const pathName = window.location.pathname;
+  console.log('path', pathName);
 
   // Show loading spinner when:
   // 1. Auth is loading (spinner = true)
@@ -23,6 +26,7 @@ const MainLayOut = () => {
   }, []);
   return (
     <>
+      {pathName !== '/' && <ScrollToTop />}
       <Navbar />
       <div className="md:min-h-[calc(100vh-140px)]">
         {isLoading ? <PageLoadingSpinner /> : <Outlet />}
