@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaCheckCircle, FaEnvelope, FaTimes } from 'react-icons/fa';
+import { SubmitButton } from '../../../Components/ui/Button';
 
 export default function NewsletterCTA() {
   const [email, setEmail] = useState('');
@@ -36,7 +37,7 @@ export default function NewsletterCTA() {
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email }),
       });
 
       // Save to localStorage as backup (optional)
@@ -127,19 +128,15 @@ export default function NewsletterCTA() {
                   disabled={isSubmitting}
                 />
               </div>
-              <button
+              <SubmitButton
                 onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="px-8 py-4 bg-white text-red-600 rounded-full font-bold hover:bg-gray-100 transition-all shadow-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-red-600"></div>
-                    Subscribing...
-                  </>
-                ) : (
-                  'Subscribe'
-                )}
-              </button>
+                isLoading={isSubmitting}
+                width={false}
+                text="Subscribe"
+                loadingText="Subscribing..."
+                variant='white'
+                className="px-8 py-4  rounded-full hover:bg-gray-100 "
+              />
             </div>
 
             {/* Error Message */}

@@ -1,4 +1,3 @@
-import { FaArrowAltCircleDown, FaLongArrowAltDown } from 'react-icons/fa';
 import { ViewDetailsButton } from '../../../Components/ui/Button';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 
