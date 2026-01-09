@@ -7,6 +7,7 @@ import useClass from '../../Hooks/useClass';
 import InstructorCard from './InstructorsPageCard';
 import { LoadingState } from '../../Components/Shared/FetchStates/LoadingState';
 import { useMemo } from 'react';
+import { OutlineButton } from '../../Components/ui/Button';
 
 const Instructors = () => {
   // ✅ Get loading, refetch, and error states
@@ -37,8 +38,17 @@ const Instructors = () => {
       <Container>
         <div className="relative">
           {/* Cover Section */}
-          <Cover image={Feature4BgImg} title="Meet Our Expert Instructors" />
-
+          {/* <Cover image={Feature4BgImg} title="Meet Our Expert Instructors" /> */}
+          <Cover
+            image={Feature4BgImg}
+            title="Meet Our Expert Instructors"
+            subtitle="Professional • Reliable • Innovative"
+            overlayOpacity={58}
+            height="50vh"
+            strength={-240}>
+            {/* <button className="btn btn-primary btn-lg">Get Started</button>
+            <button className="btn btn-outline btn-lg">Contact Us</button> */}
+          </Cover>
           {/* Instructors Grid */}
           <div className="py-16">
             {/* ✅ Loading State */}
@@ -55,11 +65,11 @@ const Instructors = () => {
                   <p className="text-red-500 text-sm mb-4">
                     {error.message || 'Something went wrong'}
                   </p>
-                  <button
+                  <OutlineButton
                     onClick={() => refetch()}
-                    className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
-                    Try Again
-                  </button>
+                    text="Try Again"
+                    className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 "
+                  />
                 </div>
               </div>
             ) : uniqueInstructors.length > 0 ? (

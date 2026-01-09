@@ -14,9 +14,13 @@ import { AuthContext } from '../../../Provider/AuthProvider';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import Mood from './Mood';
-import GlassNavigation from '../../../Testing/GlassNavigation';
 import DynamicDashboardLink from './DynamicDashboardLink';
-import { DesktopNavigation } from '../../../Components/ui/Button';
+import MobileNavBtn, {
+  DesktopNavigation,
+  OutlineButton,
+  SubmitButton,
+} from '../../../Components/ui/Button';
+import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 
 const Navbar = () => {
   const { user, loggedOut } = useContext(AuthContext);
@@ -62,12 +66,12 @@ const Navbar = () => {
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
               {/* Search Button */}
-              <button
+              <OutlineButton
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-2  border-0 "
                 aria-label="Search">
                 <FaSearch className="text-gray-600 text-xl" />
-              </button>
+              </OutlineButton>
 
               {/* Theme Toggle */}
               <div className="hidden md:block">
@@ -108,16 +112,16 @@ const Navbar = () => {
                   <button
                     id="MyTool"
                     onMouseEnter={handleTooltip}
-                    className="flex items-center space-x-2 focus:outline-none">
+                    className="flex items-center space-x-2 focus:outline-none hover:!none">
                     <div className="w-10 h-10 rounded-full border-2 border-indigo-600 overflow-hidden hover:border-purple-600 transition-colors">
-                      <img
+                      <OptimizedImage
                         src={user?.photoURL || 'https://via.placeholder.com/150'}
                         alt="Profile"
-                        className="w-full h-full object-cover"
+                        aspectRatio="1/1"
+                        // className="w-full h-full object-cover"
                       />
                     </div>
                   </button>
-
                   {/* Dropdown Menu */}
                   <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
                     <div className="py-2">
@@ -137,42 +141,33 @@ const Navbar = () => {
                         </span>
                       </Link>
                       <DynamicDashboardLink />
-                      {/* <Link
-                                                to="/dashboard"
-                                                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                                            >
-                                                Dashboard
-                                            </Link> */}
-
                       <div className="border-t border-gray-100 mt-2 pt-2">
-                        <button
+                        <OutlineButton
                           onClick={handleLogOut}
-                          className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                          Logout
-                        </button>
+                          text="Logout"
+                          fullWidth={true}
+                          className="text-sm text-red-600 hover:bg-red-500 transition-colors"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
               ) : (
                 <Link to="/login">
-                  <button className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg">
-                    Login
-                  </button>
+                  <SubmitButton text="Login" className="px-6 py-2.5 rounded-lg" />
                 </Link>
               )}
 
               {/* Mobile Menu Button */}
-              <button
+              <MobileNavBtn
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                aria-label="Menu">
-                {isMenuOpen ? (
-                  <FaTimes className="text-gray-600 text-2xl" />
-                ) : (
-                  <FaBars className="text-gray-600 text-2xl" />
-                )}
-              </button>
+                isActive={isMenuOpen}
+                icon={<FaBars className="text-gray-600" />}
+                activeIcon={<FaTimes className="text-gray-600" />}
+                size="text-2xl"
+                hoverBg="hover:bg-gray-100"
+                ariaLabel="Menu"
+              />
             </div>
           </div>
         </div>

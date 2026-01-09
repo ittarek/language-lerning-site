@@ -10,7 +10,12 @@ import {
   FaLinkedin,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import { TabButton } from '../../Components/ui/Button';
+const tabs = [
+  { label: 'ABOUT', value: 'about' },
+  { label: 'EXPERIENCE', value: 'experience' },
+  { label: 'CONTACT', value: 'contact' },
+];
 const InstructorsPageCard = ({ instructor }) => {
   const [activeSection, setActiveSection] = useState('about');
 
@@ -224,33 +229,15 @@ const InstructorsPageCard = ({ instructor }) => {
 
         {/* Buttons */}
         <div className="flex bg-white mt-auto sticky bottom-0 left-0">
-          <button
-            onClick={() => handleSectionChange('about')}
-            className={`flex-1 select-none bg-transparent text-[13px] border-0 py-[15px] px-1.5 cursor-pointer transition-all duration-300 font-medium outline-none border-b-[3px] ${
-              activeSection === 'about'
-                ? 'text-[#2b2c48] border-b-[#8a84ff] bg-gradient-to-b from-transparent via-[rgba(207,204,255,0.2)] to-[rgba(211,226,255,0.4)]'
-                : 'text-[#5c5c6d] border-transparent hover:text-[#2b2c48] hover:border-b-[#8a84ff] hover:bg-gradient-to-b hover:from-transparent hover:via-[rgba(207,204,255,0.2)] hover:to-[rgba(211,226,255,0.4)]'
-            }`}>
-            ABOUT
-          </button>
-          <button
-            onClick={() => handleSectionChange('experience')}
-            className={`flex-1 select-none bg-transparent text-[13px] border-0 py-[15px] px-1.5 cursor-pointer transition-all duration-300 font-medium outline-none border-b-[3px] ${
-              activeSection === 'experience'
-                ? 'text-[#2b2c48] border-b-[#8a84ff] bg-gradient-to-b from-transparent via-[rgba(207,204,255,0.2)] to-[rgba(211,226,255,0.4)]'
-                : 'text-[#5c5c6d] border-transparent hover:text-[#2b2c48] hover:border-b-[#8a84ff] hover:bg-gradient-to-b hover:from-transparent hover:via-[rgba(207,204,255,0.2)] hover:to-[rgba(211,226,255,0.4)]'
-            }`}>
-            EXPERIENCE
-          </button>
-          <button
-            onClick={() => handleSectionChange('contact')}
-            className={`flex-1 select-none bg-transparent text-[13px] border-0 py-[15px] px-1.5 cursor-pointer transition-all duration-300 font-medium outline-none border-b-[3px] ${
-              activeSection === 'contact'
-                ? 'text-[#2b2c48] border-b-[#8a84ff] bg-gradient-to-b from-transparent via-[rgba(207,204,255,0.2)] to-[rgba(211,226,255,0.4)]'
-                : 'text-[#5c5c6d] border-transparent hover:text-[#2b2c48] hover:border-b-[#8a84ff] hover:bg-gradient-to-b hover:from-transparent hover:via-[rgba(207,204,255,0.2)] hover:to-[rgba(211,226,255,0.4)]'
-            }`}>
-            CONTACT
-          </button>
+          {tabs.map(tab => (
+            <TabButton
+              key={tab.value}
+              label={tab.label}
+              value={tab.value}
+              activeValue={activeSection}
+              onClick={handleSectionChange}
+            />
+          ))}
         </div>
       </div>
 

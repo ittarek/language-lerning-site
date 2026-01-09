@@ -332,7 +332,47 @@ export const SubmitButton = ({
   );
 };
 
+// social btn
+export const SocialButton = ({
+  onClick,
+  icon,
+  size = 'w-10 h-10',
+  bg = 'bg-white/20',
+  hoverBg = 'hover:bg-white/30',
+  textColor = 'text-white',
+  className = '',
+  ariaLabel = 'social-button',
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`${size} ${bg} ${hoverBg} ${textColor} ${className} rounded-full backdrop-blur-sm flex items-center justify-center transition-all`}
+      aria-label={ariaLabel}>
+      {icon}
+    </button>
+  );
+};
+// tab btn
 
+export const TabButton = ({ label, value, activeValue, onClick, className = '' }) => {
+  const isActive = activeValue === value;
+
+  return (
+    <button
+      onClick={() => onClick(value)}
+      className={`
+        flex-1 select-none text-[13px] border-0 py-[15px] px-1.5 cursor-pointer transition-all duration-300 font-medium outline-none border-b-[3px]
+        ${
+          isActive
+            ? 'text-[#2b2c48] border-b-[#8a84ff] bg-gradient-to-b from-transparent via-[rgba(207,204,255,0.2)] to-[rgba(211,226,255,0.4)]'
+            : 'text-[#5c5c6d] border-transparent hover:text-[#2b2c48] hover:border-b-[#8a84ff] hover:bg-gradient-to-b hover:from-transparent hover:via-[rgba(207,204,255,0.2)] hover:to-[rgba(211,226,255,0.4)]'
+        }
+        ${className}
+      `}>
+      {label}
+    </button>
+  );
+};
 
 // ============================================
 // OUTLINE BUTTON
@@ -368,6 +408,33 @@ export const OutlineButton = ({
 
   return to ? <Link to={to}>{button}</Link> : button;
 };
+
+// mobile nav btn
+const MobileNavBtn = ({
+  onClick,
+  icon,
+  activeIcon,
+  isActive = false,
+  size = 'text-2xl',
+  hoverBg = 'hover:bg-gray-100',
+  className = '',
+  ariaLabel = 'button',
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`p-2 rounded-lg transition-colors md:hidden ${hoverBg} ${className}`}
+      aria-label={ariaLabel}>
+      {isActive && activeIcon ? (
+        <span className={`${size}`}>{activeIcon}</span>
+      ) : (
+        <span className={`${size}`}>{icon}</span>
+      )}
+    </button>
+  );
+};
+
+export default MobileNavBtn;
 // ============================================
 // CTA BUTTONS (Banner)
 // ============================================

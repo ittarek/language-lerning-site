@@ -13,12 +13,7 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
       icon: '🏠', // Fallback emoji if no icon provided
       sectionId: 'home',
     },
-    {
-      id: 'about',
-      label: 'About',
-      icon: '📋',
-      sectionId: 'about',
-    },
+
     {
       id: 'events',
       label: 'Events',
@@ -42,6 +37,12 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
       label: 'Article',
       icon: '📰',
       sectionId: 'article',
+    },
+    {
+      id: 'about',
+      label: 'About',
+      icon: '📋',
+      sectionId: 'about',
     },
   ];
 
