@@ -317,12 +317,13 @@ const StartingCourse = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <button
+          <ViewDetailsButton
             onClick={handleViewAllCourses}
-            className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-indigo-500/50 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 mx-auto">
-            View All Upcoming Courses
-            <MdArrowForward size={20} />
-          </button>
+            width={false}
+            text="View All Upcoming Courses "
+            size={20}
+            className="px-8 py-4  rounded-full mx-auto"
+          />
         </div>
       </div>
     </Container>
