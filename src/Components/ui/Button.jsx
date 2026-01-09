@@ -1,39 +1,114 @@
 import { BsArrowRight } from 'react-icons/bs';
+import { MdBlock } from 'react-icons/md';
 import { Link, NavLink } from 'react-router-dom';
 
 // ============================================
 // VIEW DETAILS BUTTON (Gradient Primary)
 // ============================================
+
 export const ViewDetailsButton = ({
+  data,
   _id,
   to,
-  text = 'Button Text',
-  className = '',
+  text = 'View Details',
+  icon: Icon = BsArrowRight,
+  size = 20,
   showIcon = true,
-  fullWidth = true,
-  sate,
-}) => (
-  <Link to={to || `/class/${_id}`} sate={sate}>
+  onClick,
+  width = true,
+  className = '',
+  notifiedCourses,
+  loading = false,
+  disabled = false,
+  state,
+  showBlockIconOnHover = true,
+  blockIcon: BlockIcon = MdBlock,
+  content = '',
+  ...rest
+}) => {
+  const isNotified = notifiedCourses && data && notifiedCourses.has(data.id);
+  const isDisabled = disabled || loading || isNotified;
+
+  const getButtonStyles = () => {
+    if (isNotified) {
+      return 'bg-green-100 text-green-600 border-2 border-green-600 cursor-not-allowed group';
+    }
+    if (loading) {
+      return 'bg-gray-400 text-white cursor-not-allowed';
+    }
+    return 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:shadow-indigo-500/50 hover:scale-[1.02] group';
+  };
+
+  const ButtonComponent = (
     <button
-      className={`${fullWidth ? 'w-full' : ''} btn-gradient-primary group ${className}`}>
-      <span>{text}</span>
-      {showIcon && (
-        <svg
-          className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M13 7l5 5m0 0l-5 5m5-5H6"
+      type="button"
+      onClick={!isDisabled ? onClick : undefined}
+      disabled={isDisabled}
+      className={`${
+        content == 'coming-soon-course-notify-button' ? '' : 'flex-row-reverse'
+      } 
+        flex items-center justify-center gap-2
+        p-2 font-bold rounded-xl
+        transition-all duration-300 relative overflow-hidden
+        ${width ? 'w-full' : 'flex-1'}
+        ${getButtonStyles()}
+        ${isDisabled ? 'pointer-events-none' : ''}
+        ${className}
+      `}
+      {...rest}>
+      {/* Icon Container with Swap Effect */}
+      <div className="relative flex items-center justify-center">
+        {showIcon && Icon && (
+          <Icon
+            size={size}
+            className={`
+              transition-all duration-300
+              ${
+                isNotified && showBlockIconOnHover
+                  ? 'group-hover:scale-0 group-hover:rotate-90'
+                  : ''
+              }
+            `}
           />
-        </svg>
-      )}
+        )}
+
+        {/* Block Icon - Shows on Hover */}
+        {isNotified && showBlockIconOnHover && BlockIcon && (
+          <BlockIcon
+            size={size}
+            className="
+              absolute 
+              scale-0 rotate-90
+              group-hover:scale-100 group-hover:rotate-0
+              transition-all duration-300 
+              text-red-600
+            "
+          />
+        )}
+      </div>
+
+      <span>{text}</span>
     </button>
-  </Link>
-);
+  );
+
+  if (isDisabled || (!to && !_id)) {
+    return ButtonComponent;
+  }
+
+  if (to || _id) {
+    return (
+      <Link
+        to={to || `/class/${_id}`}
+        state={state}
+        className={width ? 'w-full block' : 'inline-block'}>
+        {ButtonComponent}
+      </Link>
+    );
+  }
+
+  return ButtonComponent;
+};
+// export default ViewDetailsButton;
 export const SeeAllButton = ({
   to,
   text = 'See All',
@@ -130,14 +205,11 @@ export const StartLearningButton = ({ to = '/courses', className = '' }) => (
 // Desktop Navigation Component
 export const DesktopNavigation = ({ navItems }) => (
   <div className="hidden lg:flex items-center space-x-1">
-    {navItems.map((item) => (
+    {navItems.map(item => (
       <NavLink
         key={item.path}
         to={item.path}
-        className={({ isActive }) =>
-          isActive ? "nav-link-active" : "nav-link"
-        }
-      >
+        className={({ isActive }) => (isActive ? 'nav-link-active' : 'nav-link')}>
         {item.label}
       </NavLink>
     ))}

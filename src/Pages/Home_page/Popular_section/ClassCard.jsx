@@ -186,7 +186,7 @@ const ClassCard = ({ singleClass }) => {
 
         {/* View Details Button */}
 
-        <ViewDetailsButton _id={_id} text='View Details'/>
+        <ViewDetailsButton _id={_id} text='View Details' fullWidth={true} className='rounded-lg'/>
       </div>
 
       {/* Hover effect border */}

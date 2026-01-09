@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import { MdNotifications, MdArrowForward, MdInfo } from 'react-icons/md';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { courseData } from './courseData';
+import { ViewDetailsButton } from '../../Components/ui/Button';
+import { BsFillKanbanFill } from 'react-icons/bs';
 
 const StartingCourse = () => {
   const navigate = useNavigate();
@@ -277,23 +279,27 @@ const StartingCourse = () => {
 
                   {/* Action Buttons */}
                   <div className="flex gap-3 pt-4 text-sm">
-                    <button
+                    <ViewDetailsButton
+                      text={
+                        loading
+                          ? 'Sending...'
+                          : notifiedCourses.has(course.id)
+                          ? 'Notified'
+                          : 'Notify Me'
+                      }
+                      icon={MdNotifications}
+                      size={18}
+                      blockIcon={BsFillKanbanFill}
                       onClick={() => handleNotifyMe(course)}
                       disabled={loading || notifiedCourses.has(course.id)}
-                      className={`flex-1 p-2 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
-                        notifiedCourses.has(course.id)
-                          ? 'bg-green-100 text-green-600 border-2 border-green-600 cursor-not-allowed'
-                          : loading
-                          ? 'bg-gray-400 text-white cursor-not-allowed'
-                          : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:shadow-indigo-500/50 hover:scale-[1.02]'
-                      }`}>
-                      <MdNotifications size={18} />
-                      {loading
-                        ? 'Sending...'
-                        : notifiedCourses.has(course.id)
-                        ? 'Notified'
-                        : 'Notify Me'}
-                    </button>
+                      notifiedCourses={notifiedCourses}
+                      width={false}
+                      loading={loading}
+                      data={course}
+                      className="rounded-xl"
+                      content="coming-soon-course-notify-button"
+                    />
+          
                     <button
                       onClick={() => handleViewDetails(course)}
                       className="p-2 bg-white border-2 border-indigo-600 text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all duration-300 flex items-center justify-center">

@@ -127,7 +127,7 @@ const Instructor = () => {
                   <div className="border-t border-gray-200 my-4"></div>
 
                   {/* View Profile Button */}
-                  <ViewDetailsButton _id={instructor._id} text="View Profile" />
+                  <ViewDetailsButton _id={instructor._id} text="View Profile" fullWidth={true} className='rounded-lg' />
                 </div>
               </div>
 

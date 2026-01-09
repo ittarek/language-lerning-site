@@ -319,11 +319,12 @@ const Events = () => {
                             <div className="text-2xl font-bold text-indigo-600">
                               {event.price}
                             </div>
-                            <ViewDetailsButton
+                            <ViewDetailsButton className='rounded-lg'
                               _id={event.id}
                               sate={event}
                               text="Details"
                               to={`/events/${event.id}`}
+                              width={false}
                             />
                           </div>
                         </div>
@@ -400,16 +401,17 @@ const Events = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between w-full  border-t absolute bottom-0 left-0  bg-white px-2 py-1">
+                      <div className="flex items-center justify-between w-full  border-t absolute bottom-0 left-0  bg-white px-2 py-3">
                         <div className="text-xl font-bold text-indigo-600">
                           {event.price}
                         </div>
 
-                        <ViewDetailsButton
+                        <ViewDetailsButton className='rounded-lg'
                           _id={event.id}
                           sate={event}
                           text="View Details"
                           to={`/events/${event.id}`}
+                          width={false}
                         />
                       </div>
                     </div>
