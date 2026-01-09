@@ -1,4 +1,8 @@
-export const TradingArticleHeader = ({showAll, setShowAll}) => {
+import { FaArrowAltCircleDown, FaLongArrowAltDown } from 'react-icons/fa';
+import { ViewDetailsButton } from '../../../Components/ui/Button';
+import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
+
+export const TradingArticleHeader = ({ showAll, setShowAll }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -23,11 +27,16 @@ export const TradingArticleHeader = ({showAll, setShowAll}) => {
             Stay updated with the latest insights and stories
           </p>
         </div>
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="px-6 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-full font-semibold">
-          {showAll ? 'Show Less' : 'View All Articles'}
-        </button>
+        <div className="">
+          <ViewDetailsButton
+            onClick={() => setShowAll(!showAll)}
+            text={showAll ? 'Show Less' : 'View All Articles'}
+            width={false}
+            icon={showAll ? <BsArrowUp /> : <BsArrowDown />}
+            className={`px-6 py-3 bg-gradient-to-r from-red-600 to-orange-600 `}
+          />
+        </div>
+
       </div>
     </div>
   );
