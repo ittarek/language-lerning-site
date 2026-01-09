@@ -1,5 +1,5 @@
 import { BsArrowRight } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 // ============================================
 // VIEW DETAILS BUTTON (Gradient Primary)
@@ -126,7 +126,22 @@ export const EnrollButton = ({ _id, className = '', onClick }) => (
 export const StartLearningButton = ({ to = '/courses', className = '' }) => (
   <GradientButton to={to} text="Start Learning" className={className} />
 );
-
+// Desktop Navigation Component
+export const DesktopNavigation = ({ navItems }) => (
+  <div className="hidden lg:flex items-center space-x-1">
+    {navItems.map((item) => (
+      <NavLink
+        key={item.path}
+        to={item.path}
+        className={({ isActive }) =>
+          isActive ? "nav-link-active" : "nav-link"
+        }
+      >
+        {item.label}
+      </NavLink>
+    ))}
+  </div>
+);
 // ============================================
 // SUBMIT BUTTON (with loading state)
 // ============================================
