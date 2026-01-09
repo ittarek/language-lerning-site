@@ -220,54 +220,118 @@ export const DesktopNavigation = ({ navItems }) => (
   </div>
 );
 // ============================================
-// SUBMIT BUTTON (with loading state)
+// ============================================
+// SUBMIT BUTTON (Fully Flexible & Safe)
 // ============================================
 export const SubmitButton = ({
   isLoading = false,
+  isSubscribed = false,
   text = 'Submit',
   loadingText = 'Submitting...',
-  className = '',
+  subscribedText = 'Subscribed!',
   onClick,
-  variant = 'gradient', 
+  type = 'submit',
+  variant = 'gradient', // gradient | white | custom
   width = true,
-}) => (
-  <button
-    onClick={onClick}
-    disabled={isLoading}
-    className={`
-      ${width ? 'w-full' : ''}
-      px-6 py-3 rounded-full font-semibold text-lg
-      ${variant === 'gradient' ? 'btn-gradient-primary' : ''}
-      ${variant === 'white' ? 'bg-white text-red-600' : ''}
-      flex items-center justify-center gap-2
-      ${className}
-      ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}
-    `}>
-    {isLoading ? (
-      <>
-        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-            fill="none"
-          />
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-          />
-        </svg>
-        <span>{loadingText}</span>
-      </>
-    ) : (
-      <span>{text}</span>
-    )}
-  </button>
-);
+  className = '',
+  icon,
+  loadingIcon,
+  subscribedIcon,
+  disabled = false,
+}) => {
+  const isDisabled = isLoading || isSubscribed || disabled;
+
+  // base style
+  const baseStyle = `
+    ${width ? 'w-full' : ''}
+    px-6 py-3 rounded-full font-bold
+    flex items-center justify-center gap-2
+    transition-all duration-300
+  `;
+
+  // variant style (only when NOT subscribed)
+  const variantStyle =
+    !isSubscribed &&
+    (variant === 'gradient'
+      ? 'btn-gradient-primary text-white'
+      : variant === 'white'
+      ? 'bg-white text-indigo-600 hover:bg-gray-100'
+      : '');
+
+  // subscribed style (highest priority)
+  const subscribedStyle = isSubscribed
+    ? 'bg-green-500 text-white cursor-not-allowed'
+    : '';
+
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={isDisabled}
+      className={`
+        ${baseStyle}
+        ${variantStyle}
+        ${subscribedStyle}
+        ${!isDisabled ? 'hover:shadow-xl hover:scale-105' : 'opacity-80'}
+        ${className}
+      `}>
+      {/* Loading */}
+      {isLoading && (
+        <>
+          {loadingIcon ?? (
+            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
+            </svg>
+          )}
+          <span>{loadingText}</span>
+        </>
+      )}
+
+      {/* Subscribed */}
+      {!isLoading && isSubscribed && (
+        <>
+          {subscribedIcon ?? (
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          )}
+          <span>{subscribedText}</span>
+        </>
+      )}
+
+      {/* Normal */}
+      {!isLoading && !isSubscribed && (
+        <>
+          <span>{text}</span>
+          {icon && <span>{icon}</span>}
+        </>
+      )}
+    </button>
+  );
+};
+
 
 
 // ============================================
