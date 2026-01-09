@@ -11,8 +11,9 @@ export const ViewDetailsButton = ({
   className = '',
   showIcon = true,
   fullWidth = true,
+  sate,
 }) => (
-  <Link to={to || `/class/${_id}`}>
+  <Link to={to || `/class/${_id}`} sate={sate}>
     <button
       className={`${fullWidth ? 'w-full' : ''} btn-gradient-primary group ${className}`}>
       <span>{text}</span>

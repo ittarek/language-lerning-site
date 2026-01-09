@@ -15,6 +15,7 @@ import Container from '../Container';
 import FilterSection from '../Shared/FilterSection/FilterSection';
 import OptimizedImage from '../Shared/OptimizedImage';
 import { EventsSectionHeader, GradientSectionHeader } from '../ui/SectionHeaders';
+import { ViewDetailsButton } from '../ui/Button';
 
 const Events = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -248,9 +249,9 @@ const Events = () => {
                   {featuredEvents.map(event => (
                     <div
                       key={event.id}
-                      className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 group">
-                      <div className="grid md:grid-cols-2">
-                        <div className="relative h-64 md:h-auto overflow-hidden">
+                      className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 group ">
+                      <div className="grid md:grid-cols-2 ">
+                        <div className=" h-64 md:h-auto overflow-hidden">
                           <OptimizedImage
                             src={event.image}
                             alt={event.title}
@@ -277,7 +278,7 @@ const Events = () => {
                           </div>
                         </div>
 
-                        <div className="p-6 flex flex-col">
+                        <div className="p-6 flex flex-col  ">
                           <span className="text-indigo-600 font-semibold text-sm mb-2">
                             {event.category}
                           </span>
@@ -314,18 +315,16 @@ const Events = () => {
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between pt-4 border-t">
+                          <div className="flex items-center justify-between pt-4 border-t ">
                             <div className="text-2xl font-bold text-indigo-600">
                               {event.price}
                             </div>
-                            <Link to={`/events/${event.id}`} state={{ event }}>
-                              <button className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all group/btn">
-                                <span className="flex items-center gap-2">
-                                  Details
-                                  <FaArrowRight className="group-hover/btn:translate-x-1 transition-transform" />
-                                </span>
-                              </button>
-                            </Link>
+                            <ViewDetailsButton
+                              _id={event.id}
+                              sate={event}
+                              text="Details"
+                              to={`/events/${event.id}`}
+                            />
                           </div>
                         </div>
                       </div>
@@ -348,11 +347,11 @@ const Events = () => {
             </div>
 
             {upcomingEvents.length > 0 ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">
                 {upcomingEvents.map(event => (
                   <div
                     key={event.id}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group">
+                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group relative">
                     <div className="relative h-48 overflow-hidden">
                       <OptimizedImage
                         src={event.image}
@@ -401,15 +400,17 @@ const Events = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t">
+                      <div className="flex items-center justify-between w-full  border-t absolute bottom-0 left-0  bg-white px-2 py-1">
                         <div className="text-xl font-bold text-indigo-600">
                           {event.price}
                         </div>
-                        <Link to={`/events/${event.id}`} state={{ event }}>
-                          <button className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-all text-sm">
-                            View Details
-                          </button>
-                        </Link>
+
+                        <ViewDetailsButton
+                          _id={event.id}
+                          sate={event}
+                          text="View Details"
+                          to={`/events/${event.id}`}
+                        />
                       </div>
                     </div>
                   </div>
@@ -428,7 +429,7 @@ const Events = () => {
         </div>
       </Container>
       {/* CTA Section */}
-      <div className="max-w-7xl mx-auto  rounded-xl bg-gradient-to-r from-gray-950 via-purple-800 to-gray-900   py-20">
+      <div className="hidden max-w-7xl mx-auto  rounded-xl bg-gradient-to-r from-gray-950 via-purple-800 to-gray-900   py-20">
         <Container>
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold text-white mb-4">
