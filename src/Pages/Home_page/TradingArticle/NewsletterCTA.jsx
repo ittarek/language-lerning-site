@@ -134,7 +134,7 @@ export default function NewsletterCTA() {
                 width={false}
                 text="Subscribe"
                 loadingText="Subscribing..."
-                variant='white'
+                variant="white"
                 className="px-8 py-4  rounded-full hover:bg-gray-100 "
               />
             </div>

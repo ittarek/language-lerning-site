@@ -1,4 +1,5 @@
 import { BsArrowRight } from 'react-icons/bs';
+import { FaHeart } from 'react-icons/fa';
 import { MdBlock } from 'react-icons/md';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -46,11 +47,11 @@ export const ViewDetailsButton = ({
       disabled={isDisabled}
       className={`  ${
         content == 'coming-soon-course-notify-button' ? '' : 'flex-row-reverse'
-      } 
+      } ${content == 'wishlist' ? 'flex-row-reverse' : ''}
         flex items-center justify-center gap-2
         p-2 font-bold rounded-xl
         transition-all duration-300 relative overflow-hidden
-        ${width ? 'w-full' : 'flex-1'}
+        ${width ? 'w-full' : ''}
         ${getButtonStyles()}
         ${isDisabled ? 'pointer-events-none' : ''}
         ${className}
@@ -140,6 +141,121 @@ export const SeeAllButton = ({
     </button>
   </Link>
 );
+export const WishlistButton = ({
+  onClick,
+  count = 0,
+  text = 'My Wishlist',
+  icon: Icon = FaHeart,
+  showBadge = true,
+  showIcon = true,
+  className = '',
+  variant = 'gradient', // gradient | outline | solid
+  fullWidth = false,
+}) => {
+  const variants = {
+    gradient:
+      'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white',
+    outline: 'border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white',
+    solid: 'bg-red-500 hover:bg-red-600 text-white',
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className={`
+        relative flex items-center justify-center gap-3 
+        px-6 py-3 rounded-xl font-semibold 
+        transition-all duration-300 transform hover:scale-105 
+        shadow-lg hover:shadow-xl
+        ${fullWidth ? 'w-full' : ''}
+        ${variants[variant]}
+        ${className}
+      `}>
+      {showIcon && Icon && <Icon className="w-5 h-5" />}
+      <span>{text}</span>
+
+      {/* Badge Counter */}
+      {showBadge && count > 0 && (
+        <span className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 min-w-[28px] h-7 rounded-full flex items-center justify-center text-sm font-bold animate-bounce px-2">
+          {count > 99 ? '99+' : count}
+        </span>
+      )}
+    </button>
+  );
+};
+
+
+// ============================================
+// TAB BUTTON (With Badge & Active State)
+// ============================================
+export const TabButtonWithBadge = ({
+  label,
+  icon: Icon,
+  count = 0,
+  isActive = false,
+  onClick,
+  showBadge = true,
+  showIcon = true,
+  className = '',
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`
+        flex items-center gap-2 px-6 py-3 rounded-xl 
+        font-semibold transition-all duration-300 whitespace-nowrap
+        ${isActive
+          ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg scale-105'
+          : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300'
+        }
+        ${className}
+      `}
+    >
+      {showIcon && Icon && <Icon className="w-5 h-5" />}
+      <span>{label}</span>
+      
+      {/* Badge Counter */}
+      {showBadge && count > 0 && (
+        <span
+          className={`
+            px-2 py-1 rounded-full text-xs font-bold min-w-[24px] text-center
+            ${isActive
+              ? 'bg-white text-blue-600'
+              : 'bg-blue-100 text-blue-600'
+            }
+          `}
+        >
+          {count > 99 ? '99+' : count}
+        </span>
+      )}
+    </button>
+  );
+};
+
+// ============================================
+// TAB BUTTON GROUP (Wrapper for multiple tabs)
+// ============================================
+export const TabButtonGroup = ({ 
+  tabs, 
+  activeTab, 
+  onTabChange, 
+  className = '' 
+}) => {
+  return (
+    <div className={`flex gap-4 overflow-x-auto pb-4 scrollbar-hide ${className}`}>
+      {tabs.map((tab) => (
+        <TabButtonWithBadge
+          key={tab.id}
+          label={tab.label}
+          icon={tab.icon}
+          count={tab.count}
+          isActive={activeTab === tab.id}
+          onClick={() => onTabChange(tab.id)}
+        />
+      ))}
+    </div>
+  );
+};
 
 // ============================================
 // GRADIENT PRIMARY BUTTON (Generic)
@@ -385,7 +501,36 @@ export const OutlineButton = ({
   onClick,
   className = '',
   fullWidth = false,
+  variant = 'outline', // নতুন prop → 'outline' | 'ghost' | 'text'
 }) => {
+  const baseClasses = `
+    inline-flex items-center justify-center
+    font-medium rounded-md
+    transition-colors duration-200
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/40
+    ${fullWidth ? 'w-full' : ''}
+    ${className}
+  `;
+
+  const variants = {
+    outline: `
+      border border-primary text-primary
+      hover:bg-primary hover:text-white
+      active:bg-primary/90
+    `,
+    ghost: `
+      bg-transparent text-primary 
+      hover:bg-primary/10 hover:text-primary
+      active:bg-primary/20
+    `,
+    text: `
+      bg-transparent border-none text-primary 
+      hover:text-primary/80
+      active:text-primary/70
+      px-3 py-2
+    `,
+  };
+
   const buttonInner = (
     <>
       <span>{children || text}</span>
@@ -396,12 +541,7 @@ export const OutlineButton = ({
   const button = (
     <button
       onClick={onClick}
-      className={`
-        ${fullWidth ? 'w-full' : ''}
-        btn-outline-primary
-        inline-flex items-center justify-center
-        ${className}
-      `}>
+      className={`${baseClasses} ${variants[variant] || variants.outline}`}>
       {buttonInner}
     </button>
   );

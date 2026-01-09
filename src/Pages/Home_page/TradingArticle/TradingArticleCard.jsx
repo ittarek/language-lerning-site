@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 import { Link } from 'react-router-dom';
 import { Tags } from './Tags';
+import { OutlineButton, SocialButton } from '../../../Components/ui/Button';
 
 export const TradingArticleCard = ({ article, index }) => {
-    const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const { title, date, details, comments, views, img, category, tags, trending, slug } =
     article;
   const handleShare = () => {
@@ -25,7 +26,6 @@ export const TradingArticleCard = ({ article, index }) => {
       });
     }
   };
-
 
   // page load হলে check করবে item আগেই wishlist এ আছে কিনা
   useEffect(() => {
@@ -148,59 +148,68 @@ export const TradingArticleCard = ({ article, index }) => {
           <div className="flex items-center justify-between pt-4 border-t border-gray-100">
             <Link to={`/trending-article/${slug}`} state={{ article }}>
               {' '}
-              <button className="group/btn flex items-center gap-2 text-red-600 font-semibold hover:text-red-700 transition-colors">
-                Read More
-                <svg
-                  className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </button>
+              <OutlineButton
+                text="Read More"
+                variant="text"
+                className="  text-red-600 font-semibold hover:!text-red-700 border-0"
+                icon={
+                  <svg
+                    className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                }
+              />
             </Link>
 
             <div className="flex items-center gap-2 z-10">
-              <button
+              <SocialButton
+                className="  hover:!bg-gray-200 "
                 onClick={handleShare}
-                className="p-4  hover:bg-gray-100 rounded-full transition-colors group/share cursor-pointer">
-                <svg
-                  className="w-5 h-5 text-gray-400 group-hover/share:text-red-600 transition-colors"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                  />
-                </svg>
-              </button>
+                icon={
+                  <svg
+                    className="w-5 h-5 text-gray-400 group-hover/share:text-red-600 transition-colors"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                    />
+                  </svg>
+                }
+              />
+
               {/* Wishlist Button */}
-              <button
+              <SocialButton
                 onClick={handleWishlist}
-                className="p-4 cursor-pointer hover:bg-gray-100 rounded-full transition-colors group/bookmark">
-                <svg
-                  className={`w-5 h-5 transition-colors  ${
-                    isWishlisted ? 'text-red-600' : 'text-gray-400'
-                  } group-hover/bookmark:text-red-600`}
-                  fill={isWishlisted ? 'currentColor' : 'none'}
-                  stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                  />
-                </svg>
-              </button>
+                className="  hover:!bg-gray-200 "
+                icon={
+                  <svg
+                    className={`w-5 h-5 transition-colors  ${
+                      isWishlisted ? 'text-red-600' : 'text-gray-400'
+                    } group-hover/bookmark:text-red-600`}
+                    fill={isWishlisted ? 'currentColor' : 'none'}
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                    />
+                  </svg>
+                }
+              />
             </div>
           </div>
         </div>

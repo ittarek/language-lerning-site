@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   FaHeart,
   FaBook,
@@ -7,9 +7,6 @@ import {
   FaShareAlt,
   FaExternalLinkAlt,
   FaSearch,
-  FaTimes,
-  FaCheckCircle,
-  FaInfoCircle,
   FaUser,
   FaClock,
   FaStar,
@@ -17,32 +14,16 @@ import {
   FaUsers,
   FaEye,
   FaBookOpen,
-
 } from 'react-icons/fa';
 import { MdTrendingUp } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// Custom Toast Component
-const Toast = ({ message, type, onClose }) => {
-  useEffect(() => {
-    const timer = setTimeout(onClose, 3000);
-    return () => clearTimeout(timer);
-  }, [onClose]);
-
-  const bgColor = type === 'success' ? 'bg-green-500' : 'bg-blue-500';
-  const Icon = type === 'success' ? FaCheckCircle : FaInfoCircle;
-
-  return (
-    <div
-      className={`fixed top-20 right-4 ${bgColor} text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 z-50 animate-slide-in`}>
-      <Icon className="w-5 h-5" />
-      <span className="font-medium">{message}</span>
-      <button onClick={onClose} className="ml-2 hover:bg-white/20 rounded-full p-1">
-        <FaTimes className="w-4 h-4" />
-      </button>
-    </div>
-  );
-};
+import {
+  SocialButton,
+  TabButtonGroup,
+  ViewDetailsButton,
+  WishlistButton,
+} from '../../../Components/ui/Button';
 
 // Mock data for demonstration
 const mockData = {
@@ -187,7 +168,6 @@ const WishlistSystem = () => {
   const [wishlistItems, setWishlistItems] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [showWishlist, setShowWishlist] = useState(false);
-  // const [toast, setToast] = useState(null);
 
   useEffect(() => {
     // Load wishlist from localStorage
@@ -236,11 +216,36 @@ const WishlistSystem = () => {
   };
 
   const tabs = [
-    { id: 'classes', label: 'Classes', icon: FaBookOpen },
-    { id: 'news', label: 'News', icon: FaNewspaper },
-    { id: 'blogs', label: 'Blogs', icon: FaBookOpen },
-    { id: 'articles', label: 'Trending Articles', icon: MdTrendingUp },
-    { id: 'events', label: 'Events', icon: FaCalendarAlt },
+    {
+      id: 'classes',
+      label: 'Classes',
+      icon: FaBookOpen,
+      count: wishlistItems.classes?.length || 0,
+    },
+    {
+      id: 'news',
+      label: 'News',
+      icon: FaNewspaper,
+      count: wishlistItems.news?.length || 0,
+    },
+    {
+      id: 'blogs',
+      label: 'Blogs',
+      icon: FaBookOpen,
+      count: wishlistItems.blogs?.length || 0,
+    },
+    {
+      id: 'articles',
+      label: 'Trending Articles',
+      icon: MdTrendingUp,
+      count: wishlistItems.articles?.length || 0,
+    },
+    {
+      id: 'events',
+      label: 'Events',
+      icon: FaCalendarAlt,
+      count: wishlistItems.events?.length || 0,
+    },
   ];
 
   const filteredItems = () => {
@@ -257,7 +262,7 @@ const WishlistSystem = () => {
     return (
       <div
         key={item.id}
-        className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+        className="group relative bg-white h-[45vh] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
         <div className="relative h-48 overflow-hidden">
           <img
             src={item.image}
@@ -330,7 +335,7 @@ const WishlistSystem = () => {
                 </span>
                 {item.trending && (
                   <span className="flex items-center gap-1 text-orange-500 font-semibold">
-                    <FaBook className="w-4 h-4" /> Trending
+                    <MdTrendingUp className="w-4 h-4" /> Trending
                   </span>
                 )}
               </div>
@@ -353,13 +358,15 @@ const WishlistSystem = () => {
             </div>
           )}
 
-          <div className="flex gap-2 mt-4">
-            <button className="flex-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 font-medium flex items-center justify-center gap-2">
-              <FaExternalLinkAlt className="w-4 h-4" /> View
-            </button>
-            <button className="p-2 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:text-blue-500 transition-all duration-300">
-              <FaShareAlt className="w-5 h-5" />
-            </button>
+          <div className="flex gap-2 absolute bottom-2 w-full left-0 px-3">
+            <ViewDetailsButton text="View" icon={FaExternalLinkAlt} showIcon={true} />
+            <SocialButton
+              icon={<FaShareAlt className="w-5 h-5" />}
+              className="p-2 border-2 border-gray-200 rounded-lg hover:border-blue-500"
+              textColor="text-gray-600 hover:text-blue-500"
+              bg="bg-transparent"
+              hoverBg="hover:bg-blue-50"
+            />
           </div>
         </div>
       </div>
@@ -377,11 +384,11 @@ const WishlistSystem = () => {
           <p className="text-gray-600 mb-8">
             Please login to access your wishlist and save your favorite items.
           </p>
-          <button
+          <ViewDetailsButton
             onClick={() => setIsLoggedIn(true)}
-            className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105">
-            Login Now
-          </button>
+            text="Login Now"
+            showIcon={false}
+          />
         </div>
       </div>
     );
@@ -389,24 +396,21 @@ const WishlistSystem = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {toast && (
-        <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
-      )}
+      {/* Toast Container - Correctly Placed */}
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <style>{`
-        @keyframes slide-in {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-        .animate-slide-in {
-          animation: slide-in 0.3s ease-out;
-        }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }
@@ -429,17 +433,11 @@ const WishlistSystem = () => {
             </div>
 
             {isLoggedIn && (
-              <button
+              <WishlistButton
                 onClick={() => setShowWishlist(!showWishlist)}
-                className="relative flex items-center gap-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-red-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <FaHeart className="w-5 h-5" />
-                <span>My Wishlist</span>
-                {getTotalWishlistCount() > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold animate-bounce">
-                    {getTotalWishlistCount()}
-                  </span>
-                )}
-              </button>
+                count={getTotalWishlistCount()}
+                text="My Wishlist"
+              />
             )}
           </div>
         </div>
@@ -474,33 +472,11 @@ const WishlistSystem = () => {
           </div>
 
           <div className="flex gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
-            {tabs.map(tab => {
-              const Icon = tab.icon;
-              const count = wishlistItems[tab.id]?.length || 0;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 whitespace-nowrap ${
-                    activeTab === tab.id
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg scale-105'
-                      : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200'
-                  }`}>
-                  <Icon className="w-5 h-5" />
-                  <span>{tab.label}</span>
-                  {count > 0 && (
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-bold ${
-                        activeTab === tab.id
-                          ? 'bg-white text-blue-600'
-                          : 'bg-blue-100 text-blue-600'
-                      }`}>
-                      {count}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+            <TabButtonGroup
+              tabs={tabs}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+            />
           </div>
 
           {filteredItems().length > 0 ? (
@@ -516,11 +492,13 @@ const WishlistSystem = () => {
                 No items in this category
               </h3>
               <p className="text-gray-600 mb-6">Start adding items to your wishlist!</p>
-              <button
+              <ViewDetailsButton
                 onClick={() => setShowWishlist(false)}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
-                Browse Items
-              </button>
+                text="Browse Items"
+                showIcon={false}
+                width={false}
+                className="mx-auto"
+              />
             </div>
           )}
         </div>

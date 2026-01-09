@@ -17,8 +17,7 @@ import {
   FaSearch,
 } from 'react-icons/fa';
 import { news } from './news';
-
-
+import { SocialButton } from '../../../Components/ui/Button';
 
 const TradingArticleDetails = () => {
   const { slug } = useParams();
@@ -127,15 +126,9 @@ const TradingArticleDetails = () => {
           {/* share */}
           <div className="flex items-center gap-4 mt-8">
             <FaShare />
-            <button onClick={() => handleShare('facebook')}>
-              <FaFacebook />
-            </button>
-            <button onClick={() => handleShare('twitter')}>
-              <FaTwitter />
-            </button>
-            <button onClick={() => handleShare('linkedin')}>
-              <FaLinkedin />
-            </button>
+            <SocialButton onClick={() => handleShare('facebook')} icon={<FaFacebook />} />
+            <SocialButton onClick={() => handleShare('twitter')} icon={<FaTwitter />} />
+            <SocialButton onClick={() => handleShare('linkedin')} icon={<FaLinkedin />} />
           </div>
         </div>
       </div>
