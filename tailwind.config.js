@@ -77,23 +77,32 @@ export default {
 
       // Custom colors (optional)
       colors: {
-        primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
+        // Brand Primary Colors
+        brand: {
+          primary: '#6366f1', // indigo-500
+          'primary-dark': '#4f46e5', // indigo-600
+          'primary-darker': '#4338ca', // indigo-700
+          secondary: '#a855f7', // purple-500
+          'secondary-dark': '#9333ea', // purple-600
+          'secondary-darker': '#7e22ce', // purple-700
         },
+      },
+      backgroundImage: {
+        // Button Gradients
+        'gradient-primary': 'linear-gradient(to right, #6366f1, #a855f7)',
+        'gradient-primary-hover': 'linear-gradient(to right, #4338ca, #7e22ce)',
+
+        // Section Header Gradients
+        'gradient-hero': 'linear-gradient(to bottom right, #030712, #6b21a8, #111827)',
+        'gradient-dark': 'linear-gradient(135deg, #1f2937, #4c1d95)',
+
+        // Card Gradients
+        'gradient-card': 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
       },
     },
   },
 
-  plugins: [require('daisyui')],
+  // plugins: [require('daisyui')],
 
   daisyui: {
     themes: ['light'], // ✅ শুধু একটা theme (smaller bundle)

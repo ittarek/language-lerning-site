@@ -14,6 +14,7 @@ import {
 } from 'react-icons/fa';
 import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 import StarRatings from 'react-star-ratings';
+import { ViewDetailsButton } from '../../../Components/ui/Button';
 
 const ClassCard = ({ singleClass }) => {
   const {
@@ -68,13 +69,12 @@ const ClassCard = ({ singleClass }) => {
         <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
           {/* Price and Category badge */}
 
-            {category && (
-              <div className="bg-white/90 backdrop-blur-sm text-indigo-600 px-3 py-1 mt-11 rounded-full font-semibold text-xs shadow-lg flex items-center gap-1 w-fit">
-                <FaLanguage size={12} />
-                {category}
-              </div>
-            )}
-
+          {category && (
+            <div className="bg-white/90 backdrop-blur-sm text-indigo-600 px-3 py-1 mt-11 rounded-full font-semibold text-xs shadow-lg flex items-center gap-1 w-fit">
+              <FaLanguage size={12} />
+              {category}
+            </div>
+          )}
 
           {/* Bookmark button */}
           <button
@@ -185,23 +185,8 @@ const ClassCard = ({ singleClass }) => {
         <div className="border-t border-gray-200"></div>
 
         {/* View Details Button */}
-        <Link to={`/class/${_id}`}>
-          <button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] flex items-center justify-center gap-2 group">
-            <span>View Details</span>
-            <svg
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </button>
-        </Link>
+
+        <ViewDetailsButton _id={_id} text='View Details'/>
       </div>
 
       {/* Hover effect border */}

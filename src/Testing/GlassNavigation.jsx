@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { FaDollarSign, FaPhabricator } from 'react-icons/fa';
+
 
 const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
     const [activeSection, setActiveSection] = useState('home');

@@ -8,6 +8,7 @@ import { LoadingState } from '../../../Components/Shared/FetchStates/LoadingStat
 import useFetchData from '../../../Hooks/useFetchTeacher';
 import { EmptyState } from '../../../Components/Shared/FetchStates/EmptyState';
 import OptimizedImage from '../../../Components/Shared/OptimizedImage';
+import { GradientButton, SeeAllButton, ViewDetailsButton } from '../../../Components/ui/Button';
 
 const Instructor = () => {
   // TanStack query using for data fetch
@@ -126,12 +127,7 @@ const Instructor = () => {
                   <div className="border-t border-gray-200 my-4"></div>
 
                   {/* View Profile Button */}
-                  <Link to={`/instructor/${instructor._id}`}>
-                    <button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] flex items-center justify-center gap-2 group/btn">
-                      <span>View Profile</span>
-                      <BsArrowRight className="text-xl group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
-                  </Link>
+                  <ViewDetailsButton _id={instructor._id} text="View Profile" />
                 </div>
               </div>
 
@@ -143,12 +139,8 @@ const Instructor = () => {
 
         {/* See All Button */}
         <div className="flex justify-center mt-12">
-          <Link to="/instructors">
-            <button className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3">
-              <span>See All Instructors</span>
-              <BsArrowRight className="text-2xl group-hover:translate-x-2 transition-transform" />
-            </button>
-          </Link>
+          <SeeAllButton to="/instructors" text="See All Instructors" />
+    
         </div>
       </div>
     </Container>

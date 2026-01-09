@@ -9,6 +9,7 @@ import { EmptyState } from '../../../Components/Shared/FetchStates/EmptyState';
 import { ErrorState } from '../../../Components/Shared/FetchStates/ErrorState';
 import { LoadingState } from '../../../Components/Shared/FetchStates/LoadingState';
 import useFetchData from '../../../Hooks/useFetchTeacher';
+import { SeeAllButton } from '../../../Components/ui/Button';
 
 const Popular_classes = () => {
   // TanStack query using for data fetch
@@ -71,12 +72,7 @@ const Popular_classes = () => {
 
         {/* See All Button */}
         <div className="flex justify-center mt-12">
-          <Link to="/classes">
-            <button className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3">
-              <span>See All Classes</span>
-              <BsArrowRight className="text-2xl group-hover:translate-x-2 transition-transform" />
-            </button>
-          </Link>
+          <SeeAllButton to="/classes" text="See All Classes" />
         </div>
       </div>
     </Container>

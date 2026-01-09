@@ -2,5 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-/* =========== base style ========= */
+@layer components {
+  /* ============================================
+     PRIMARY GRADIENT BUTTONS
+     ============================================ */
+  
+  .btn-gradient-primary {
+    @apply bg-gradient-primary hover:bg-gradient-primary-hover text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] flex items-center justify-center gap-2;
+  }
 
+  .btn-gradient-primary-sm {
+    @apply bg-gradient-primary hover:bg-gradient-primary-hover text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300;
+  }
+
+  /* ============================================
+     NAVBAR LINK STYLES
+     ============================================ */
+  
+  .nav-link {
+    @apply px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-gray-700 hover:bg-gray-100;
+  }
+
+  .nav-link-active {
+    @apply px-4 py-2 rounded-lg font-semibold transition-all duration-300 bg-gradient-primary text-white;
+  }
+
+  /* ============================================
+     CTA BUTTONS (Banner Buttons)
+     ============================================ */
+  
+  .btn-cta-primary {
+    @apply px-6 sm:px-8 py-3 sm:py-4 bg-white text-brand-primary rounded-full font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2;
+  }
+
+  .btn-cta-secondary {
+    @apply px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-bold text-base sm:text-lg border-2 border-white/30 hover:bg-white/20 hover:scale-105 transition-all duration-300;
+  }
+
+  /* ============================================
+     SECTION HEADERS
+     ============================================ */
+  
+  .section-header-gradient {
+    @apply bg-gradient-hero py-20 rounded-t-xl;
+  }
+
+  .section-header-dark {
+    @apply bg-gradient-dark py-16 rounded-xl;
+  }
+
+  /* ============================================
+     BADGE/TAG STYLES
+     ============================================ */
+  
+  .badge-white {
+    @apply flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full text-white font-semibold;
+  }
+
+  /* ============================================
+     OUTLINE BUTTONS
+     ============================================ */
+  
+  .btn-outline-primary {
+    @apply px-6 py-3 border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white rounded-lg font-semibold transition-all duration-300;
+  }
+
+  /* ============================================
+     GLASS NAVIGATION (for your floating nav)
+     ============================================ */
+  
+  .nav-glass-active {
+    @apply bg-white/20 text-black shadow-lg;
+  }
+
+  .nav-glass-inactive {
+    @apply bg-transparent text-white hover:bg-white/10 hover:text-white;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-primary bg-clip-text text-transparent;
+  }
+  
+  .shadow-gradient {
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+  }
+}
