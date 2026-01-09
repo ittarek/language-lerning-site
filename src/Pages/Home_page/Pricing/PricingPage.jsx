@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { OutlineButton, ViewDetailsButton } from '../../../Components/ui/Button';
 
 const plans = [
   {
@@ -102,7 +103,7 @@ export default function PricingPage() {
                 gradient: 'from-blue-500 to-cyan-500',
                 bg: 'bg-gradient-to-br from-blue-50 to-cyan-50',
                 border: 'border-blue-200',
-                button: 'from-blue-600 to-cyan-600',
+                button: '!from-blue-600 !to-cyan-600',
               },
               default: {
                 gradient: 'from-indigo-500 to-purple-500',
@@ -242,30 +243,32 @@ export default function PricingPage() {
                     </div>
 
                     <div className="space-y-3 mt-8">
-                      {/* <Link to="/checkout"> */}
-
-                      <button
+                      <ViewDetailsButton
+                        text="Get Started"
                         onClick={() => handlePlanSelect(plan)}
-                        className={`w-full py-4 bg-gradient-to-r ${color.button} text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group/btn`}>
-                        Get Started
-                        <svg
-                          className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M13 7l5 5m0 0l-5 5m5-5H6"
-                          />
-                        </svg>
-                      </button>
-                      {/* </Link> */}
+                        icon={
+                          <svg
+                            className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
+                          </svg>
+                        }
+                        className={`w-full py-4 bg-gradient-to-r ${color.button} text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group/btn`}
+                      />
+
                       {plan.name === 'Monthly' && (
-                        <button className="w-full py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all">
-                          Start 7-Day Free Trial
-                        </button>
+                        <OutlineButton
+                          fullWidth={true}
+                          text="Start 7-Day Free Trial"
+                          className="border-2 border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50 hover:text-gray-700"
+                        />
                       )}
                     </div>
                   </div>

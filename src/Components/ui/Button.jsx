@@ -36,7 +36,7 @@ export const ViewDetailsButton = ({
     if (loading) {
       return 'bg-gray-400 text-white cursor-not-allowed';
     }
-    return 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:shadow-indigo-500/50 hover:scale-[1.02] group';
+    return 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:shadow-indigo-500/50 hover:scale-[1.02] group/btn transition-transform';
   };
 
   const ButtonComponent = (
@@ -44,7 +44,7 @@ export const ViewDetailsButton = ({
       type="button"
       onClick={!isDisabled ? onClick : undefined}
       disabled={isDisabled}
-      className={`${
+      className={`  ${
         content == 'coming-soon-course-notify-button' ? '' : 'flex-row-reverse'
       } 
         flex items-center justify-center gap-2
@@ -58,10 +58,12 @@ export const ViewDetailsButton = ({
       {...rest}>
       {/* Icon Container with Swap Effect */}
       <div className="relative flex items-center justify-center">
-        {showIcon && Icon && (
-          <Icon
-            size={size}
-            className={`
+        {showIcon &&
+          Icon &&
+          (typeof Icon === 'function' ? (
+            <Icon
+              size={size}
+              className={`
               transition-all duration-300
               ${
                 isNotified && showBlockIconOnHover
@@ -69,8 +71,10 @@ export const ViewDetailsButton = ({
                   : ''
               }
             `}
-          />
-        )}
+            />
+          ) : (
+            Icon
+          ))}
 
         {/* Block Icon - Shows on Hover */}
         {isNotified && showBlockIconOnHover && BlockIcon && (
@@ -263,22 +267,34 @@ export const SubmitButton = ({
 export const OutlineButton = ({
   children,
   text,
+  icon,
   to,
   onClick,
   className = '',
   fullWidth = false,
 }) => {
-  const buttonContent = (
+  const buttonInner = (
+    <>
+      <span>{children || text}</span>
+      {icon && <span className="ml-2 flex items-center">{icon}</span>}
+    </>
+  );
+
+  const button = (
     <button
       onClick={onClick}
-      className={`${fullWidth ? 'w-full' : ''} btn-outline-primary ${className}`}>
-      {children || text}
+      className={`
+        ${fullWidth ? 'w-full' : ''}
+        btn-outline-primary
+        inline-flex items-center justify-center
+        ${className}
+      `}>
+      {buttonInner}
     </button>
   );
 
-  return to ? <Link to={to}>{buttonContent}</Link> : buttonContent;
+  return to ? <Link to={to}>{button}</Link> : button;
 };
-
 // ============================================
 // CTA BUTTONS (Banner)
 // ============================================

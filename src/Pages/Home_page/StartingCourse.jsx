@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { MdNotifications, MdArrowForward, MdInfo } from 'react-icons/md';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { courseData } from './courseData';
-import { ViewDetailsButton } from '../../Components/ui/Button';
+import { OutlineButton, ViewDetailsButton } from '../../Components/ui/Button';
 import { BsFillKanbanFill } from 'react-icons/bs';
 
 const StartingCourse = () => {
@@ -299,12 +299,12 @@ const StartingCourse = () => {
                       className="rounded-xl"
                       content="coming-soon-course-notify-button"
                     />
-          
-                    <button
+                    <OutlineButton
+                      icon={<MdInfo />}
+                      size={18}
                       onClick={() => handleViewDetails(course)}
-                      className="p-2 bg-white border-2 border-indigo-600 text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all duration-300 flex items-center justify-center">
-                      <MdInfo size={18} />
-                    </button>
+                      className=""
+                    />
                   </div>
                 </div>
 
