@@ -8,7 +8,11 @@ import { toast } from 'react-toastify';
 import { MdNotifications, MdArrowForward, MdInfo } from 'react-icons/md';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { courseData } from './courseData';
-import { OutlineButton, ViewDetailsButton } from '../../Components/ui/Button';
+import {
+  OutlineButton,
+  SocialButton,
+  ViewDetailsButton,
+} from '../../Components/ui/Button';
 import { BsFillKanbanFill } from 'react-icons/bs';
 
 const StartingCourse = () => {
@@ -278,7 +282,7 @@ const StartingCourse = () => {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-3 pt-4 text-sm">
+                  <div className="flex  gap-3 pt-4 text-sm">
                     <ViewDetailsButton
                       text={
                         loading
@@ -293,17 +297,19 @@ const StartingCourse = () => {
                       onClick={() => handleNotifyMe(course)}
                       disabled={loading || notifiedCourses.has(course.id)}
                       notifiedCourses={notifiedCourses}
-                      width={false}
+                      // width={false}
                       loading={loading}
                       data={course}
                       className="rounded-xl"
                       content="coming-soon-course-notify-button"
                     />
                     <OutlineButton
-                      icon={<MdInfo />}
-                      size={18}
                       onClick={() => handleViewDetails(course)}
-                      className=""
+                      icon={<MdInfo className="!-ml-2" />}
+                      size={18}
+                      fullWidth={false}
+                      className="px-3  border-indigo-500 hover:bg-indigo-500"
+                      tooltip="View Course Details"
                     />
                   </div>
                 </div>

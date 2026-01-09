@@ -184,7 +184,6 @@ export const WishlistButton = ({
   );
 };
 
-
 // ============================================
 // TAB BUTTON (With Badge & Active State)
 // ============================================
@@ -204,27 +203,23 @@ export const TabButtonWithBadge = ({
       className={`
         flex items-center gap-2 px-6 py-3 rounded-xl 
         font-semibold transition-all duration-300 whitespace-nowrap
-        ${isActive
-          ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg scale-105'
-          : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300'
+        ${
+          isActive
+            ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg scale-105'
+            : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300'
         }
         ${className}
-      `}
-    >
+      `}>
       {showIcon && Icon && <Icon className="w-5 h-5" />}
       <span>{label}</span>
-      
+
       {/* Badge Counter */}
       {showBadge && count > 0 && (
         <span
           className={`
             px-2 py-1 rounded-full text-xs font-bold min-w-[24px] text-center
-            ${isActive
-              ? 'bg-white text-blue-600'
-              : 'bg-blue-100 text-blue-600'
-            }
-          `}
-        >
+            ${isActive ? 'bg-white text-blue-600' : 'bg-blue-100 text-blue-600'}
+          `}>
           {count > 99 ? '99+' : count}
         </span>
       )}
@@ -235,15 +230,10 @@ export const TabButtonWithBadge = ({
 // ============================================
 // TAB BUTTON GROUP (Wrapper for multiple tabs)
 // ============================================
-export const TabButtonGroup = ({ 
-  tabs, 
-  activeTab, 
-  onTabChange, 
-  className = '' 
-}) => {
+export const TabButtonGroup = ({ tabs, activeTab, onTabChange, className = '' }) => {
   return (
     <div className={`flex gap-4 overflow-x-auto pb-4 scrollbar-hide ${className}`}>
-      {tabs.map((tab) => (
+      {tabs.map(tab => (
         <TabButtonWithBadge
           key={tab.id}
           label={tab.label}
@@ -501,11 +491,12 @@ export const OutlineButton = ({
   onClick,
   className = '',
   fullWidth = false,
+  tooltip = '',
   variant = 'outline', // নতুন prop → 'outline' | 'ghost' | 'text'
 }) => {
   const baseClasses = `
     inline-flex items-center justify-center
-    font-medium rounded-md
+    font-medium rounded-md group 
     transition-colors duration-200
     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/40
     ${fullWidth ? 'w-full' : ''}
@@ -541,7 +532,8 @@ export const OutlineButton = ({
   const button = (
     <button
       onClick={onClick}
-      className={`${baseClasses} ${variants[variant] || variants.outline}`}>
+      className={`${baseClasses} ${variants[variant] || variants.outline}`}
+      title={tooltip}>
       {buttonInner}
     </button>
   );

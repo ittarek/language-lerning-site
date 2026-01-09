@@ -93,7 +93,8 @@ export default {
         'gradient-primary-hover': 'linear-gradient(to right, #4338ca, #7e22ce)',
 
         // Section Header Gradients
-        'gradient-hero': 'linear-gradient(to bottom right, #030712, #6b21a8, #111827)',
+        'gradient-hero': 'linear-gradient(to bottom right, #020617, #64748B, #831843)',
+
         'gradient-dark': 'linear-gradient(135deg, #1f2937, #4c1d95)',
 
         // Card Gradients

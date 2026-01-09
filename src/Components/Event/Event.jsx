@@ -208,11 +208,7 @@ const Events = () => {
         <title>Language Learner | Events</title>
       </Helmet>
       {/* Hero Section */}
-      <EventsSectionHeader
-        title="Language Learning Events"
-        description="Join our community events, workshops, and practice sessions to accelerate your language learning journey"
-        eventsCount={events.length}
-      />
+      <EventsSectionHeader eventsCount={events.length} />
 
       {/* Filters */}
       <FilterSection
@@ -319,7 +315,8 @@ const Events = () => {
                             <div className="text-2xl font-bold text-indigo-600">
                               {event.price}
                             </div>
-                            <ViewDetailsButton className='rounded-lg'
+                            <ViewDetailsButton
+                              className="rounded-lg"
                               _id={event.id}
                               sate={event}
                               text="Details"
@@ -406,7 +403,8 @@ const Events = () => {
                           {event.price}
                         </div>
 
-                        <ViewDetailsButton className='rounded-lg'
+                        <ViewDetailsButton
+                          className="rounded-lg"
                           _id={event.id}
                           sate={event}
                           text="View Details"
