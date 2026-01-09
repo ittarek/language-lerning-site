@@ -11,7 +11,7 @@ const MainLayOut = () => {
   const { spinner } = useContext(AuthContext);
   const navigation = useNavigation();
   const pathName = window.location.pathname;
-  console.log('path', pathName);
+
 
   // Show loading spinner when:
   // 1. Auth is loading (spinner = true)
