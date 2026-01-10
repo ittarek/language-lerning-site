@@ -28,7 +28,9 @@ const Instructors = () => {
 
     return Array.from(instructorMap.values());
   }, [classes]);
-
+  const sortedInstructors = [...classes].sort((a, b) => {
+    return new Date(b.updated_at) - new Date(a.updated_at);
+  });
   return (
     <>
       <Helmet>
@@ -72,10 +74,10 @@ const Instructors = () => {
                   />
                 </div>
               </div>
-            ) : uniqueInstructors.length > 0 ? (
+            ) : sortedInstructors.length > 0 ? (
               /* ✅ Success State - Instructors Found */
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                {uniqueInstructors.map((instructor, index) => (
+                {sortedInstructors.map((instructor, index) => (
                   <InstructorCard
                     key={instructor.instructor_email || instructor._id}
                     instructor={instructor}
