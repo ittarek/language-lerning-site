@@ -28,9 +28,7 @@ const PaymentHistory = () => {
             try {
                 // ✅ axiosSecure returns {data, status, headers, etc}
                 // We need to return res.data (the actual array)
-                const res = await axiosSecure.get(
-                    `/enrolledClasses/${user?.email}`
-                );
+                const res = await axiosSecure.get(`/enrollments/${user?.email}`);
 
                 console.log("Payment history response:", res);
 
@@ -68,10 +66,6 @@ const PaymentHistory = () => {
         retryDelay: 1000,
     });
 
-    // ✅ Debug logs
-    console.log("History data:", history);
-    console.log("History length:", history?.length);
-    console.log("Is array:", Array.isArray(history));
 
     // Filter and sort payment history
     const filteredHistory = useMemo(() => {
