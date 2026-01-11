@@ -90,7 +90,7 @@ export default function PricingPage() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 items-center">
           {plans.map(plan => {
             const colors = {
               Yearly: {
@@ -117,7 +117,7 @@ export default function PricingPage() {
             return (
               <div
                 key={plan.id}
-                className={`relative group ${
+                className={`relative group  ${
                   plan.recommended ? 'lg:scale-105 lg:z-10' : ''
                 }`}>
                 {plan.recommended && (
