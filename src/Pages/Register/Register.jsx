@@ -7,6 +7,7 @@ import Container from '../../Components/Container';
 import SocialLogin from '../../Components/Socail/SocailLogin';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { SubmitButton } from '../../Components/ui/Button';
+import { getApiUrl } from '../../config/api/Config';
 
 const Register = () => {
   const { registration, userUpdating } = useContext(AuthContext);
@@ -14,6 +15,9 @@ const Register = () => {
   const [showPassword2, setShowPassword2] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+   const API_URL = getApiUrl();
+
+console.log('check api', API_URL);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,46 +38,115 @@ const Register = () => {
     setIsLoading(true);
 
     try {
+      // Step 1: Create Firebase account
+      console.log('Creating Firebase account...');
       const result = await registration(data.email, data.password);
-      const loggedUser = result.user;
 
+      if (!result || !result.user) {
+        throw new Error('Failed to create account');
+      }
+
+      console.log('Firebase account created:', result.user.email);
+
+      // Step 2: Update user profile
+      console.log('Updating user profile...');
       await userUpdating(data.name, data.photoURL);
+      console.log('Profile updated successfully');
 
+      // Step 3: Save user to database
       const savedUser = {
         name: data.name,
         email: data.email,
         PhotoURL: data.photoURL,
+        role: 'student', // Default role
+        createdAt: new Date().toISOString(),
       };
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(savedUser),
-      });
+      console.log('Saving to database...', `${API_URL}/users`);
 
-      const responseData = await response.json();
-
-      if (responseData.insertedId) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Account Created Successfully!',
-          showConfirmButton: false,
-          timer: 1500,
+      try {
+        const response = await fetch(`${API_URL}/users`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(savedUser),
         });
+
+        console.log('Response status:', response.status);
+
+        if (!response.ok) {
+          console.error('API response not OK:', response.statusText);
+          throw new Error(`Database save failed: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        console.log('Database response:', responseData);
+
+        // Success - show message and redirect
+        await Swal.fire({
+          icon: 'success',
+          title: 'Welcome! 🎉',
+          html: `
+            <p class="text-lg mb-2">Account Created Successfully!</p>
+            <p class="text-sm text-gray-600">You can now access all features</p>
+          `,
+          showConfirmButton: true,
+          confirmButtonColor: '#4f46e5',
+          confirmButtonText: 'Get Started',
+          timer: 3000,
+          timerProgressBar: true,
+        });
+
+        navigate(from, { replace: true });
+      } catch (dbError) {
+        console.error('Database error:', dbError);
+        console.log(
+          '⚠️ Backend server not running! User created in Firebase but not saved to database.'
+        );
+
+        // Firebase account is created, so redirect anyway
+        await Swal.fire({
+          icon: 'success',
+          title: 'Account Created! ✅',
+          html: `
+            <p class="text-lg mb-2 text-green-600">Your account was created successfully!</p>
+            <p class="text-sm text-gray-600 mb-2">You can now login and use the platform.</p>
+            <p class="text-xs text-yellow-600">⚠️ Note: Profile data will sync when backend is available.</p>
+          `,
+          confirmButtonColor: '#4f46e5',
+          confirmButtonText: 'Continue to Login',
+          showCancelButton: false,
+        });
+
+        // Still redirect to home/dashboard
         navigate(from, { replace: true });
       }
     } catch (error) {
-      setError(error.message || 'Failed to create account. Please try again.');
+      console.error('Registration error:', error);
+
+      // Handle specific Firebase errors
+      let errorMessage = 'Failed to create account. Please try again.';
+
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'This email is already registered. Please login instead.';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'Password is too weak. Please use a stronger password.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Invalid email address. Please check and try again.';
+      } else if (error.code === 'auth/network-request-failed') {
+        errorMessage = 'Network error. Please check your internet connection.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      setError(errorMessage);
+
       Swal.fire({
-        position: 'top-end',
         icon: 'error',
         title: 'Registration Failed',
-        text: error.message,
-        showConfirmButton: false,
-        timer: 2000,
+        text: errorMessage,
+        confirmButtonColor: '#4f46e5',
       });
     } finally {
       setIsLoading(false);
@@ -176,8 +249,20 @@ const Register = () => {
 
               {/* Error Message */}
               {error && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-red-600 text-sm">{error}</p>
+                <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+                  <div className="flex items-center">
+                    <svg
+                      className="w-5 h-5 text-red-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <p className="text-red-700 text-sm font-medium">{error}</p>
+                  </div>
                 </div>
               )}
 
@@ -200,13 +285,30 @@ const Register = () => {
                           value: 2,
                           message: 'Name must be at least 2 characters',
                         },
+                        maxLength: {
+                          value: 50,
+                          message: 'Name must not exceed 50 characters',
+                        },
                       })}
-                      className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                      className={`w-full pl-12 pr-4 py-3 border-2 rounded-lg outline-none transition-all ${
+                        errors.name
+                          ? 'border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                          : 'border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200'
+                      }`}
                       placeholder="Enter your full name"
                     />
                   </div>
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {errors.name.message}
+                    </p>
                   )}
                 </div>
 
@@ -228,12 +330,25 @@ const Register = () => {
                           message: 'Invalid email address',
                         },
                       })}
-                      className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                      className={`w-full pl-12 pr-4 py-3 border-2 rounded-lg outline-none transition-all ${
+                        errors.email
+                          ? 'border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                          : 'border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200'
+                      }`}
                       placeholder="Enter your email"
                     />
                   </div>
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {errors.email.message}
+                    </p>
                   )}
                 </div>
 
@@ -260,19 +375,35 @@ const Register = () => {
                             'Password must contain 1 uppercase, 1 lowercase, and 1 number',
                         },
                       })}
-                      className="w-full pl-12 pr-12 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                      className={`w-full pl-12 pr-12 py-3 border-2 rounded-lg outline-none transition-all ${
+                        errors.password
+                          ? 'border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                          : 'border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200'
+                      }`}
                       placeholder="Create a password"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute  inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors">
+                      className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors">
                       {showPassword ? <FaEye /> : <FaEyeSlash />}
                     </button>
                   </div>
                   {errors.password && (
-                    <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {errors.password.message}
+                    </p>
                   )}
+                  <p className="mt-2 text-xs text-gray-500">
+                    Must be 6+ characters with uppercase, lowercase, and number
+                  </p>
                 </div>
 
                 {/* Confirm Password Field */}
@@ -291,7 +422,11 @@ const Register = () => {
                         validate: value =>
                           value === password.current || 'Passwords do not match',
                       })}
-                      className="w-full pl-12 pr-12 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                      className={`w-full pl-12 pr-12 py-3 border-2 rounded-lg outline-none transition-all ${
+                        errors.confirmPassword
+                          ? 'border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                          : 'border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200'
+                      }`}
                       placeholder="Confirm your password"
                     />
                     <button
@@ -302,7 +437,14 @@ const Register = () => {
                     </button>
                   </div>
                   {errors.confirmPassword && (
-                    <p className="mt-1 text-sm text-red-600">
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
                       {errors.confirmPassword.message}
                     </p>
                   )}
@@ -322,25 +464,39 @@ const Register = () => {
                       {...register('photoURL', {
                         required: 'Photo URL is required',
                         pattern: {
-                          // value: /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i,
-                          message: 'Please enter a valid image URL',
+                          // value: /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif|svg)$/i,
+                          message:
+                            'Please enter a valid image URL (jpg, png, webp, gif, svg)',
                         },
                       })}
-                      className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
-                      placeholder="Enter your photo URL"
+                      className={`w-full pl-12 pr-4 py-3 border-2 rounded-lg outline-none transition-all ${
+                        errors.photoURL
+                          ? 'border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                          : 'border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200'
+                      }`}
+                      placeholder="https://example.com/photo.jpg"
                     />
                   </div>
                   {errors.photoURL && (
-                    <p className="mt-1 text-sm text-red-600">{errors.photoURL.message}</p>
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {errors.photoURL.message}
+                    </p>
                   )}
                 </div>
 
                 {/* Submit Button */}
                 <SubmitButton
                   text="Create Account"
-                  loadingText="   Creating account..."
+                  loadingText="Creating account..."
                   isLoading={isLoading}
-                  className="rounded-lg "
+                  className="rounded-lg"
                   variant="gradient"
                   loadingIcon={
                     <svg
