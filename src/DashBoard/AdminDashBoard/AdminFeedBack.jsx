@@ -2,9 +2,11 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import useClass from "../../Hooks/useClass";
+import { getApiUrl } from "../../config/api/Config";
 const AdminFeedBack = () => {
 
-          const [classes] = useClass()
+  const [classes] = useClass()
+     const API_URL = getApiUrl();
           // console.log(classes);
   const notify = () => {
     toast("This Button is Disabled !!!", {
@@ -16,13 +18,13 @@ const AdminFeedBack = () => {
     const form = e.target;
     const feedBack = form.feedBack.value;
     console.log("feedback", feedBack);
-    fetch(`${import.meta.env.VITE_API_URL}/adminFeedBack`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
+    fetch(`${API_URL}/adminFeedBack`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify(feedBack),
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         // console.log(data);
       });
   };

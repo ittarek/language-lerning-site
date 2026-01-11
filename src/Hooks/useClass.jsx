@@ -16,7 +16,6 @@ const useClass = () => {
 
     queryFn: async () => {
       try {
-        // ✅ VITE_API_URL এর সাথে /classes যোগ করুন
         const API_URL = getApiUrl();
         const apiUrl = `${API_URL}/classes`;
 

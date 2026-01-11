@@ -6,13 +6,11 @@ import { AuthContext } from '../Provider/AuthProvider';
 import PageLoadingSpinner from '../Components/Spinner/PageLoadingSpinner';
 import AOS from 'aos';
 import { ScrollToTop } from '../Components/Shared/ScrollToTop';
-import useSmartApiUrl from '../Hooks/useSmartApiUrl';
 
 const MainLayOut = () => {
   const { spinner } = useContext(AuthContext);
   const navigation = useNavigation();
   const pathName = window.location.pathname;
-useSmartApiUrl()
 
   // Show loading spinner when:
   // 1. Auth is loading (spinner = true)

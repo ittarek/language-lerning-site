@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import { MdCheckCircle, MdCancel, MdEdit, MdFeedback } from "react-icons/md";
+import { getApiUrl } from "../../config/api/Config";
 
 const ManageClasses = () => {
     const [classes, , refetch] = useClass();
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("all");
     const [sortBy, setSortBy] = useState("recent");
-
+     const API_URL = getApiUrl();
     // Filter and search logic
     const filteredClasses = useMemo(() => {
         let result = classes;
@@ -50,27 +51,24 @@ const ManageClasses = () => {
             cancelButtonText: "Cancel",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(
-                    `${import.meta.env.VITE_API_URL}/AllClasses/approved/${myClass._id}`,
-                    {
-                        method: "PATCH",
+                fetch(`${API_URL}/AllClasses/approved/${myClass._id}`, {
+                  method: 'PATCH',
+                })
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data.modifiedCount) {
+                      refetch();
+                      toast.success('Class approved successfully!', {
+                        position: 'top-right',
+                      });
                     }
-                )
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (data.modifiedCount) {
-                            refetch();
-                            toast.success("Class approved successfully!", {
-                                position: "top-right",
-                            });
-                        }
-                    })
-                    .catch((error) => {
-                        toast.error("Failed to approve class", {
-                            position: "top-right",
-                        });
-                        console.error(error);
+                  })
+                  .catch(error => {
+                    toast.error('Failed to approve class', {
+                      position: 'top-right',
                     });
+                    console.error(error);
+                  });
             }
         });
     };
@@ -88,7 +86,7 @@ const ManageClasses = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(
-                    `${import.meta.env.VITE_API_URL}/AllClasses/denied/${myClass._id}`,
+                    `${API_URL}/AllClasses/denied/${myClass._id}`,
                     {
                         method: "PATCH",
                     }

@@ -20,6 +20,7 @@ import WishlistSystem from '../Pages/Home_page/WishlistSystem/WishlistSystem';
 import ContactSalesPage from '../Pages/Home_page/Pricing/ContactSalesPage';
 import { CourseExplorerPage } from '../Pages/Home_page/AboutUs/CourseExplorerPage';
 import { DetailedAboutPage } from '../Pages/Home_page/AboutUs/DetailedAboutPage';
+import { getApiUrl } from '../config/api/Config';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -66,7 +67,7 @@ const Loader = () => (
     <LoadingState />
   </div>
 );
-
+const API_URL = getApiUrl();
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -274,8 +275,7 @@ export const router = createBrowserRouter([
             <Payment />
           </Suspense>
         ),
-        loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_URL}/getSelectedClass/${params.id}`),
+        loader: ({ params }) => fetch(`${API_URL}/getSelectedClass/${params.id}`),
       },
       {
         path: 'paymentHistory',
@@ -368,8 +368,7 @@ export const router = createBrowserRouter([
             </Suspense>
           </AdminROutes>
         ),
-        loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_URL}/AllClass/${params.id}`),
+        loader: ({ params }) => fetch(`${API_URL}/AllClass/${params.id}`),
       },
 
       // Original dashboard (optional)

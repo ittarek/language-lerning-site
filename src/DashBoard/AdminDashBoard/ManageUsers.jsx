@@ -4,13 +4,14 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useState, useMemo } from "react";
 import { MdAdminPanelSettings, MdSchool, MdSearch } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
+import { getApiUrl } from "../../config/api/Config";
 
 const ManageUsers = () => {
     const [axiosSecure] = useAxiosSecure();
     const [searchTerm, setSearchTerm] = useState("");
     const [filterRole, setFilterRole] = useState("all");
     const [sortBy, setSortBy] = useState("recent");
-
+   const API_URL = getApiUrl();
     const { data: users = [], refetch, isLoading } = useQuery(["users"], async () => {
         const res = await axiosSecure.get("/users");
         return res.data;
@@ -55,7 +56,7 @@ const ManageUsers = () => {
             cancelButtonText: "Cancel",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`${import.meta.env.VITE_API_URL}/users/admin/${user._id}`, {
+                fetch(`${API_URL}/users/admin/${user._id}`, {
                     method: "PATCH",
                 })
                     .then((res) => res.json())
@@ -88,7 +89,7 @@ const ManageUsers = () => {
             cancelButtonText: "Cancel",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`${import.meta.env.VITE_API_URL}/users/instructor/${user._id}`, {
+                fetch(`${API_URL}/users/instructor/${user._id}`, {
                     method: "PATCH",
                 })
                     .then((res) => res.json())
