@@ -281,7 +281,7 @@ const AboutUs = () => {
               <Link to="/ContactUs">
                 <OutlineButton
                   text="Learn More"
-                  className="px-8 py-4 bg-white border-2 rounded-full font-bold text-indigo-600 "
+                  className="px-8 py-4 bg-white border-2 !rounded-full font-bold text-indigo-600 "
                 />
               </Link>
             </div>

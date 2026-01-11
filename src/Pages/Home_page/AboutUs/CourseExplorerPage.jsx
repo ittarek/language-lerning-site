@@ -251,7 +251,7 @@ export function CourseExplorerPage() {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl p-12 text-center text-white">
+        <div className="hidden mt-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl p-12 text-center text-white">
           <h2 className="text-3xl font-bold mb-4">Can't Find What You're Looking For?</h2>
           <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
             Our learning advisors are here to help you find the perfect course for your
