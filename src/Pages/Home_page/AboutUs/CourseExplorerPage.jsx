@@ -13,6 +13,7 @@ import {
   FaLightbulb,
   FaHandshake,
 } from 'react-icons/fa';
+import { ViewDetailsButton } from '../../../Components/ui/Button';
 
 // Course Catalog Page
 export function CourseExplorerPage() {
@@ -196,7 +197,7 @@ export function CourseExplorerPage() {
           {filteredCourses.map(course => (
             <div
               key={course.id}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 overflow-hidden">
+              className="relative md:h-[50vh] bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 overflow-hidden">
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={course.image}
@@ -211,7 +212,7 @@ export function CourseExplorerPage() {
                 </div>
               </div>
 
-              <div className="p-6 space-y-4">
+              <div className="p-6 space-y-4 ">
                 <h3 className="text-xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">
                   {course.title}
                 </h3>
@@ -241,10 +242,9 @@ export function CourseExplorerPage() {
                     </span>
                   ))}
                 </div>
-
-                <button className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold hover:shadow-lg transition-all">
-                  Enroll Now
-                </button>
+                <div className=" absolute bottom-0 left-0  w-full ">
+                  <ViewDetailsButton text="       Enroll Now" />
+                </div>
               </div>
             </div>
           ))}
