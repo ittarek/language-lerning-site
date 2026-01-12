@@ -26,7 +26,7 @@ const SectionLoadContext = createContext();
 
 // ✅ Skeleton Loader
 const SectionSkeleton = () => (
-  <div className="py-12 animate-pulse">
+  <div className="py-12 animate-pulse max-w-7xl mx-auto">
     <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-8"></div>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {[1, 2, 3].map(i => (
