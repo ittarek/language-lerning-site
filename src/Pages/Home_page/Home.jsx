@@ -112,42 +112,54 @@ const Home = () => {
           </section>
 
           {/* ✅ Teachers - Lazy load */}
-          <LazySection minHeight="min-h-[500px]" sectionId="teachers">
+          <LazySection
+            minHeight="min-h-[350px] sm:min-h-[400px] md:min-h-[500px]"
+            sectionId="teachers">
             <section id="teachers">
               <Teachers />
             </section>
           </LazySection>
 
           {/* ✅ Events - Lazy load */}
-          <LazySection minHeight="min-h-[600px]" sectionId="events">
+          <LazySection
+            minHeight="min-h-[400px] sm:min-h-[500px] md:min-h-[600px]"
+            sectionId="events">
             <section id="events">
               <Event />
             </section>
           </LazySection>
 
           {/* ✅ Starting Course - Lazy load */}
-          <LazySection minHeight="min-h-[400px]" sectionId="starting_course">
+          <LazySection
+            minHeight="min-h-[300px] sm:min-h-[350px] md:min-h-[400px]"
+            sectionId="starting_course">
             <section id="starting_course">
               <StartingCourse />
             </section>
           </LazySection>
 
           {/* ✅ Pricing - Lazy load */}
-          <LazySection minHeight="min-h-[700px]" sectionId="pricing">
+          <LazySection
+            minHeight="min-h-[500px] sm:min-h-[600px] md:min-h-[700px]"
+            sectionId="pricing">
             <section id="pricing">
               <PricingPage />
             </section>
           </LazySection>
 
           {/* ✅ Trading Article - Lazy load */}
-          <LazySection minHeight="min-h-[500px]" sectionId="article">
+          <LazySection
+            minHeight="min-h-[350px] sm:min-h-[400px] md:min-h-[500px]"
+            sectionId="article">
             <section id="article">
               <TradingArticle />
             </section>
           </LazySection>
 
           {/* ✅ About Us - Lazy load */}
-          <LazySection minHeight="min-h-[400px]" sectionId="about">
+          <LazySection
+            minHeight="min-h-[300px] sm:min-h-[350px] md:min-h-[400px]"
+            sectionId="about">
             <section id="about">
               <AboutUs />
             </section>

@@ -19,8 +19,8 @@ const Banner = ({ onSectionClick }) => {
   };
 
   return (
-    // ✅ Fixed min-height যোগ করা হয়েছে - CLS কমবে
-    <div className="relative overflow-hidden -mt-6 md:mt-0 min-h-[600px] md:min-h-[700px] lg:min-h-[800px]">
+    // ✅ Mobile-first responsive heights
+    <div className="relative overflow-hidden -mt-6 md:mt-0 min-h-[700px] sm:min-h-[750px] md:min-h-[800px] lg:min-h-[850px]">
       <GlassNavigation onSectionClick={onSectionClick} />
 
       {/* Background Image with Overlay */}
@@ -30,79 +30,85 @@ const Banner = ({ onSectionClick }) => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-purple-900/60 to-pink-900/60"></div>
       </div>
 
-      {/* Animated decorative shapes */}
+      {/* Animated decorative shapes - reduced on mobile for performance */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-48 h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
         <div
-          className="absolute bottom-0 left-0 w-48 h-48 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-white/5 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-0 left-0 w-32 h-32 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-white/5 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: '1s' }}></div>
       </div>
 
       {/* Main Content Container */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Left Content */}
-          <div className="text-left space-y-4 sm:space-y-6 order-2 lg:order-1">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-2 sm:px-4 sm:py-2 rounded-full border border-white/30">
+          <div className="text-left space-y-3 sm:space-y-4 md:space-y-6 order-2 lg:order-1">
+            {/* Badge - Fixed height */}
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/30 h-[32px] sm:h-[36px]">
               <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-yellow-400"></span>
               </span>
-              <span className="text-white text-xs sm:text-sm font-semibold">
+              <span className="text-white text-xs sm:text-sm font-semibold whitespace-nowrap">
                 10,000+ Active Learners
               </span>
             </div>
 
-            {/* Heading - ✅ Fixed height যোগ করা */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
-              Mastering Your Guide to
-              <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent mt-2">
+            {/* Heading - Mobile optimized fixed height */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white leading-tight min-h-[80px] sm:min-h-[100px] md:min-h-[140px] lg:min-h-[160px] flex flex-col justify-start">
+              <span className="block">Mastering Your Guide to</span>
+              <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent mt-1 sm:mt-2">
                 Language Learning
               </span>
             </h1>
 
-            {/* Description - ✅ Fixed height */}
-            <p className="text-base sm:text-lg text-white/90 leading-relaxed max-w-xl min-h-[100px] sm:min-h-[120px]">
+            {/* Description - Mobile optimized */}
+            <p className="text-sm sm:text-base md:text-lg text-white/90 leading-relaxed max-w-xl min-h-[90px] sm:min-h-[100px] md:min-h-[120px]">
               Our interactive and engaging classes will inspire and challenge you. With
               our user-friendly platform and supportive community, you'll embark on a
               fulfilling educational adventure. Join us today and unlock your full
               potential!
             </p>
 
-            {/* Stats - ✅ Fixed height */}
-            <div className="flex flex-wrap gap-4 sm:gap-6 lg:gap-8 py-4 min-h-[80px]">
-              <div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">50+</div>
+            {/* Stats - Mobile optimized */}
+            <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 lg:gap-8 py-3 sm:py-4 min-h-[70px] sm:min-h-[80px]">
+              <div className="min-w-[60px]">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                  50+
+                </div>
                 <div className="text-xs sm:text-sm text-white/80">Courses</div>
               </div>
-              <div className="border-l border-white/30 pl-4 sm:pl-6 lg:pl-8">
-                <div className="text-2xl sm:text-3xl font-bold text-white">20+</div>
+              <div className="border-l border-white/30 pl-3 sm:pl-4 md:pl-6 lg:pl-8 min-w-[70px]">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                  20+
+                </div>
                 <div className="text-xs sm:text-sm text-white/80">Instructors</div>
               </div>
-              <div className="border-l border-white/30 pl-4 sm:pl-6 lg:pl-8">
-                <div className="text-2xl sm:text-3xl font-bold text-white">95%</div>
+              <div className="border-l border-white/30 pl-3 sm:pl-4 md:pl-6 lg:pl-8 min-w-[70px]">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                  95%
+                </div>
                 <div className="text-xs sm:text-sm text-white/80">Success Rate</div>
               </div>
             </div>
 
-            {/* CTA Buttons - ✅ Fixed height */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 min-h-[60px]">
+            {/* CTA Buttons - Mobile optimized */}
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3 md:gap-4 min-h-[100px] sm:min-h-[60px]">
               <CTAPrimaryButton text="Get Started" onClick={handleGetStarted} />
               <CTASecondaryButton text="Browse Classes" to="/classes" />
             </div>
           </div>
 
-          {/* Right Image - ✅ aspect-ratio ব্যবহার করা হয়েছে */}
+          {/* Right Image - Mobile optimized */}
           <div className="relative order-1 lg:order-2">
-            {/* Decorative elements */}
+            {/* Decorative elements - hidden on mobile */}
             <div className="hidden md:block absolute -top-6 -right-6 w-48 h-48 lg:w-72 lg:h-72 bg-yellow-400/10 rounded-full blur-2xl"></div>
             <div className="hidden md:block absolute -bottom-6 -left-6 w-48 h-48 lg:w-72 lg:h-72 bg-pink-400/10 rounded-full blur-2xl"></div>
 
-            {/* Main image - ✅ Fixed aspect-ratio container */}
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/20 backdrop-blur-sm">
-              {/* ✅ aspect-ratio দিয়ে container height fix করা */}
-              <div className="relative w-full aspect-[16/10]">
+            {/* Main image - Mobile first aspect ratio */}
+            <div className="relative rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border sm:border-2 md:border-4 border-white/20 backdrop-blur-sm">
+              {/* ✅ Mobile-specific aspect ratio */}
+              <div className="relative w-full aspect-[4/3] sm:aspect-[3/2] md:aspect-[16/10]">
                 <OptimizedImage
                   src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
                   alt="Language Learning"
@@ -111,17 +117,17 @@ const Banner = ({ onSectionClick }) => {
                   aspectRatio="16/10"
                   priority={true}
                   className="absolute inset-0 w-full h-full object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
                   objectFit="cover"
                 />
               </div>
 
-              {/* Floating badge - ✅ Fixed size */}
-              <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl animate-bounce-slow w-[140px] sm:w-[160px]">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+              {/* Floating badge - Mobile optimized */}
+              <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 bg-white rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-3 md:p-4 shadow-xl animate-bounce-slow w-[120px] sm:w-[140px] md:w-[160px]">
+                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg
-                      className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                      className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -134,9 +140,13 @@ const Banner = ({ onSectionClick }) => {
                       />
                     </svg>
                   </div>
-                  <div>
-                    <div className="text-xs sm:text-sm text-gray-600">Success Rate</div>
-                    <div className="text-xl sm:text-2xl font-bold text-gray-900">95%</div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] sm:text-xs md:text-sm text-gray-600 truncate">
+                      Success Rate
+                    </div>
+                    <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-900">
+                      95%
+                    </div>
                   </div>
                 </div>
               </div>
@@ -145,8 +155,8 @@ const Banner = ({ onSectionClick }) => {
         </div>
       </div>
 
-      {/* Bottom wave decoration - ✅ Fixed height */}
-      <div className="absolute bottom-0 left-0 right-0 h-12 sm:h-16">
+      {/* Bottom wave decoration - Mobile optimized */}
+      <div className="absolute bottom-0 left-0 right-0 h-8 sm:h-12 md:h-16">
         <svg
           viewBox="0 0 1440 80"
           fill="none"

@@ -20,7 +20,6 @@ import MobileNavBtn, {
   OutlineButton,
   SubmitButton,
 } from '../../../Components/ui/Button';
-import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 
 const Navbar = () => {
   const { user, loggedOut } = useContext(AuthContext);
@@ -28,33 +27,28 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const tooltipRef = useRef(null);
+
   // ✅ Handle logout
   const handleLogOut = () => {
     loggedOut()
-      .then(() => {
-        // Successfully logged out
-      })
+      .then(() => {})
       .catch(error => {
         console.error('Logout error:', error);
       });
   };
 
-  // ✅ Fixed Tooltip initialization with proper cleanup
+  // ✅ Tooltip initialization
   useEffect(() => {
     if (user?.email) {
       const tooltipElement = document.getElementById('MyTool');
 
       if (tooltipElement) {
-        // Destroy previous tooltip if exists
         if (tooltipRef.current) {
           try {
             tooltipRef.current.destroy();
-          } catch (error) {
-            // Ignore error if already destroyed
-          }
+          } catch (error) {}
         }
 
-        // Create new tooltip
         tooltipRef.current = tippy(tooltipElement, {
           content: user?.displayName || 'User',
           placement: 'bottom',
@@ -63,20 +57,17 @@ const Navbar = () => {
       }
     }
 
-    // Cleanup function
     return () => {
       if (tooltipRef.current) {
         try {
           tooltipRef.current.destroy();
           tooltipRef.current = null;
-        } catch (error) {
-          // Tooltip already destroyed, ignore
-        }
+        } catch (error) {}
       }
     };
   }, [user?.displayName, user?.email]);
 
-  // ✅ Body scroll lock when mobile menu is open
+  // ✅ Body scroll lock
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -93,14 +84,12 @@ const Navbar = () => {
   const handleSearch = e => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // TODO: Navigate to search page or filter results
-      // navigate(`/search?q=${searchQuery}`);
       setIsSearchOpen(false);
       setSearchQuery('');
     }
   };
 
-  // ✅ Close search on Escape key
+  // ✅ Close on Escape
   useEffect(() => {
     const handleEscape = e => {
       if (e.key === 'Escape') {
@@ -122,7 +111,6 @@ const Navbar = () => {
     ...(user ? [{ path: '/wishlist', label: 'Wishlist' }] : []),
   ];
 
-  // ✅ Social links - replace with your actual URLs
   const socialLinks = {
     facebook: 'https://facebook.com/yourpage',
     twitter: 'https://twitter.com/yourpage',
@@ -132,87 +120,99 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Main Navbar */}
+      {/* Main Navbar - ✅ Mobile optimized heights */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between md:h-20 h-14">
-            {/* Logo */}
-            <Link to="/" className="flex-shrink-0">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          {/* ✅ Fixed heights for CLS prevention */}
+          <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
+            {/* Logo - ✅ Fixed dimensions */}
+            <Link
+              to="/"
+              className="flex-shrink-0 min-w-[120px] sm:min-w-[140px] md:min-w-[200px]">
               <img
-                className="w-36 md:w-56 md:h-14 object-contain"
+                className="h-8 sm:h-10 md:h-14 w-auto object-contain"
                 src={logo}
                 alt="Company Logo"
+                width="224"
+                height="56"
+                loading="eager"
               />
             </Link>
 
             {/* Desktop Navigation */}
             <DesktopNavigation navItems={navItems} />
 
-            {/* Right Side Actions */}
-            <div className="flex items-center space-x-4">
-              {/* Search Button */}
-              <OutlineButton
+            {/* Right Side Actions - ✅ Mobile optimized spacing */}
+            <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
+              {/* Search Button - ✅ Fixed size */}
+              <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-2 border-0"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors w-9 h-9 flex items-center justify-center"
                 aria-label="Search"
                 aria-expanded={isSearchOpen}>
-                <FaSearch className="text-gray-600 text-xl" />
-              </OutlineButton>
+                <FaSearch className="text-gray-600 text-base sm:text-lg" />
+              </button>
 
-              {/* Theme Toggle */}
-              <div className="hidden md:block">
+              {/* Theme Toggle - Desktop only */}
+              <div className="hidden md:flex items-center justify-center w-10 h-10">
                 <Mood />
               </div>
 
-              {/* Social Icons - Desktop */}
-              <div className="hidden lg:flex items-center space-x-3">
-                <a
-                  href={socialLinks.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 transition-colors"
-                  aria-label="Facebook">
-                  <FaFacebookF className="text-sm" />
-                </a>
-                <a
-                  href={socialLinks.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 transition-colors"
-                  aria-label="Twitter">
-                  <FaTwitter className="text-sm" />
-                </a>
-                <a
-                  href={socialLinks.google}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition-colors"
-                  aria-label="Google">
-                  <FaGoogle className="text-sm" />
-                </a>
-                <a
-                  href={socialLinks.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition-colors"
-                  aria-label="YouTube">
-                  <FaYoutube className="text-sm" />
-                </a>
+              {/* Social Icons - Desktop only, ✅ Fixed sizes */}
+              <div className="hidden lg:flex items-center space-x-2">
+                {[
+                  {
+                    href: socialLinks.facebook,
+                    icon: FaFacebookF,
+                    color: 'blue',
+                    label: 'Facebook',
+                  },
+                  {
+                    href: socialLinks.twitter,
+                    icon: FaTwitter,
+                    color: 'sky',
+                    label: 'Twitter',
+                  },
+                  {
+                    href: socialLinks.google,
+                    icon: FaGoogle,
+                    color: 'red',
+                    label: 'Google',
+                  },
+                  {
+                    href: socialLinks.youtube,
+                    icon: FaYoutube,
+                    color: 'red',
+                    label: 'YouTube',
+                  },
+                ].map(({ href, icon: Icon, color, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-8 h-8 flex items-center justify-center rounded-full bg-${color}-100 hover:bg-${color}-200 text-${color}-600 transition-colors`}
+                    aria-label={label}>
+                    <Icon className="text-xs" />
+                  </a>
+                ))}
               </div>
 
-              {/* User Profile / Login */}
+              {/* User Profile / Login - ✅ Mobile optimized */}
               {user && user?.email ? (
                 <div className="relative group">
                   <button
                     id="MyTool"
-                    className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-full"
+                    className="flex items-center focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-full w-9 h-9 sm:w-10 sm:h-10"
                     aria-label="User menu">
-                    <div className="w-10 h-10 rounded-full border-2 border-indigo-600 overflow-hidden hover:border-purple-600 transition-colors">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-indigo-600 overflow-hidden hover:border-purple-600 transition-colors flex-shrink-0">
                       {user?.photoURL ? (
                         <img
                           src={user.photoURL}
                           alt={user?.displayName || 'User'}
                           className="w-full h-full object-cover"
+                          width="40"
+                          height="40"
                           loading="lazy"
                           onError={e => {
                             e.target.onerror = null;
@@ -223,7 +223,7 @@ const Navbar = () => {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                        <div className="w-full h-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-sm sm:text-base">
                           {user?.displayName?.charAt(0)?.toUpperCase() ||
                             user?.email?.charAt(0)?.toUpperCase() ||
                             'U'}
@@ -232,23 +232,25 @@ const Navbar = () => {
                     </div>
                   </button>
 
-                  {/* Dropdown Menu */}
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
+                  {/* Dropdown Menu - ✅ Better mobile positioning */}
+                  <div className="absolute right-0 mt-2 w-48 sm:w-56 bg-white rounded-xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right z-50">
                     <div className="py-2">
                       {/* User Info */}
-                      <div className="px-4 py-3 border-b border-gray-100">
-                        <p className="text-sm font-semibold text-gray-800 truncate">
+                      <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-100">
+                        <p className="text-xs sm:text-sm font-semibold text-gray-800 truncate">
                           {user?.displayName || 'User'}
                         </p>
-                        <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                        <p className="text-[10px] sm:text-xs text-gray-500 truncate">
+                          {user?.email}
+                        </p>
                       </div>
 
                       {/* Profile Link */}
                       <Link
                         to="/profile"
-                        className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors">
-                        <span className="text-sm text-gray-700">Profile</span>
-                        <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full font-semibold">
+                        className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 hover:bg-gray-50 transition-colors">
+                        <span className="text-xs sm:text-sm text-gray-700">Profile</span>
+                        <span className="text-[10px] sm:text-xs bg-green-100 text-green-600 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full font-semibold">
                           New
                         </span>
                       </Link>
@@ -262,25 +264,28 @@ const Navbar = () => {
                           onClick={handleLogOut}
                           text="Logout"
                           fullWidth={true}
-                          className="text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors py-2"
+                          className="text-xs sm:text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors py-1.5 sm:py-2"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <Link to="/login">
-                  <SubmitButton text="Login" className="px-6 py-2.5 rounded-lg" />
+                <Link to="/login" className="flex-shrink-0">
+                  <SubmitButton
+                    text="Login"
+                    className="px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-2.5 rounded-lg text-xs sm:text-sm md:text-base"
+                  />
                 </Link>
               )}
 
-              {/* Mobile Menu Button */}
+              {/* Mobile Menu Button - ✅ Fixed size */}
               <MobileNavBtn
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 isActive={isMenuOpen}
                 icon={<FaBars className="text-gray-600" />}
                 activeIcon={<FaTimes className="text-gray-600" />}
-                size="text-2xl"
+                size="text-xl sm:text-2xl"
                 hoverBg="hover:bg-gray-100"
                 ariaLabel="Toggle mobile menu"
               />
@@ -288,31 +293,30 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Search Bar Dropdown */}
+        {/* Search Bar Dropdown - ✅ Mobile optimized */}
         {isSearchOpen && (
           <div className="border-t border-gray-200 bg-white/95 backdrop-blur-md animate-slideDown">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4">
               <form onSubmit={handleSearch} className="relative">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search courses, instructors, topics..."
-                  className="w-full px-4 py-3 pr-12 rounded-lg border-2 border-gray-200 focus:border-indigo-500 focus:outline-none transition-colors"
+                  placeholder="Search courses, instructors..."
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-12 rounded-lg border-2 border-gray-200 focus:border-indigo-500 focus:outline-none transition-colors text-sm sm:text-base"
                   autoFocus
                   aria-label="Search"
                 />
                 <button
                   type="submit"
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition-colors"
+                  className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition-colors"
                   aria-label="Submit search">
-                  <FaSearch />
+                  <FaSearch className="text-sm sm:text-base" />
                 </button>
               </form>
 
-              {/* Search suggestions (optional) */}
               {searchQuery && (
-                <div className="mt-2 text-sm text-gray-500">
+                <div className="mt-2 text-xs sm:text-sm text-gray-500">
                   Press Enter to search or Escape to close
                 </div>
               )}
@@ -320,18 +324,18 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - ✅ Stays under navbar, scrollable */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md animate-slideDown">
-            <div className="px-4 py-6 space-y-3 max-h-[calc(100vh-5rem)] overflow-y-auto">
-              {/* Navigation Links */}
+            <div className="px-3 sm:px-4 py-4 sm:py-6 space-y-2 sm:space-y-3 max-h-[calc(100vh-3.5rem)] sm:max-h-[calc(100vh-4rem)] overflow-y-auto">
+              {/* Navigation Links - ✅ Mobile optimized sizes */}
               {navItems.map(item => (
                 <NavLink
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
                   className={({ isActive }) =>
-                    `block px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                    `block px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 ${
                       isActive
                         ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white'
                         : 'text-gray-700 hover:bg-gray-100'
@@ -341,44 +345,48 @@ const Navbar = () => {
                 </NavLink>
               ))}
 
-              {/* Mobile Social Icons */}
-              <div className="flex items-center justify-center space-x-4 pt-6 border-t border-gray-200">
-                <a
-                  href={socialLinks.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 transition-colors"
-                  aria-label="Facebook">
-                  <FaFacebookF />
-                </a>
-                <a
-                  href={socialLinks.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 transition-colors"
-                  aria-label="Twitter">
-                  <FaTwitter />
-                </a>
-                <a
-                  href={socialLinks.google}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition-colors"
-                  aria-label="Google">
-                  <FaGoogle />
-                </a>
-                <a
-                  href={socialLinks.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition-colors"
-                  aria-label="YouTube">
-                  <FaYoutube />
-                </a>
+              {/* Mobile Social Icons - ✅ Fixed sizes */}
+              <div className="flex items-center justify-center space-x-3 sm:space-x-4 pt-4 sm:pt-6 border-t border-gray-200">
+                {[
+                  {
+                    href: socialLinks.facebook,
+                    icon: FaFacebookF,
+                    color: 'blue',
+                    label: 'Facebook',
+                  },
+                  {
+                    href: socialLinks.twitter,
+                    icon: FaTwitter,
+                    color: 'sky',
+                    label: 'Twitter',
+                  },
+                  {
+                    href: socialLinks.google,
+                    icon: FaGoogle,
+                    color: 'red',
+                    label: 'Google',
+                  },
+                  {
+                    href: socialLinks.youtube,
+                    icon: FaYoutube,
+                    color: 'red',
+                    label: 'YouTube',
+                  },
+                ].map(({ href, icon: Icon, color, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-${color}-100 hover:bg-${color}-200 text-${color}-600 transition-colors`}
+                    aria-label={label}>
+                    <Icon className="text-sm sm:text-base" />
+                  </a>
+                ))}
               </div>
 
-              {/* Mobile Theme Toggle */}
-              <div className="flex justify-center pt-4">
+              {/* Mobile Theme Toggle - ✅ Fixed size */}
+              <div className="flex justify-center pt-3 sm:pt-4 min-h-[48px]">
                 <Mood />
               </div>
             </div>
@@ -386,13 +394,13 @@ const Navbar = () => {
         )}
       </nav>
 
-      {/* Spacer to prevent content from going under fixed navbar */}
-      <div className="h-14 md:h-20"></div>
+      {/* Spacer - ✅ Fixed heights */}
+      <div className="h-14 sm:h-16 md:h-20"></div>
     </>
   );
 };
 
-// Add styles at the end of the file
+// Styles
 const styles = `
   @keyframes slideDown {
     from {
