@@ -1,10 +1,12 @@
 import Container from '../../Components/Container';
 import { Helmet } from 'react-helmet-async';
 import useClass from '../../Hooks/useClass';
-import SliderClass from './SliderClass';
+// import SliderClass from './SliderClass';
 import { MdSchool } from 'react-icons/md';
 import { LoadingState } from '../../Components/Shared/FetchStates/LoadingState';
 import ClassCard from './ClassCard';
+import React, { Suspense } from 'react';
+const LazyLoadSliderClass = React.lazy(() => import('./SliderClass'));
 
 const Classes = () => {
   // ✅ Get loading state and error from hook
@@ -22,7 +24,10 @@ const Classes = () => {
           <div className="">
             <div className="bg-dark" data-aos="fade-up" data-aos-offset="300">
               <div className="w-full h- bg-[#c9cbb2] flex items-center justify-center">
-                <SliderClass />
+                <Suspense fallback={<LoadingState message="Loading classes slider..." />}>
+                  {' '}
+                  <LazyLoadSliderClass />
+                </Suspense>
               </div>
 
               {/* ✅ Loading State */}
