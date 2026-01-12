@@ -3,6 +3,25 @@ import react from '@vitejs/plugin-react';
 import compression from 'vite-plugin-compression';
 export default defineConfig({
   plugins: [
+    VitePWA({
+      registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/language-center-bedfd\.web\.app\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 300, // 5 minutes
+              },
+            },
+          },
+        ],
+      },
+    }),
     react(),
     // ✅ Gzip compression
     compression({

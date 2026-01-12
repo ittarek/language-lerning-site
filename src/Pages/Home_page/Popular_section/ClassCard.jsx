@@ -60,7 +60,8 @@ const ClassCard = ({ singleClass }) => {
             isHovered ? 'scale-110' : 'scale-100'
           }`}
           aspectRatio="4/3"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+          quality={75}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
@@ -186,7 +187,7 @@ const ClassCard = ({ singleClass }) => {
 
         {/* View Details Button */}
 
-        <ViewDetailsButton _id={_id} text='View Details'  className='rounded-lg'/>
+        <ViewDetailsButton _id={_id} text="View Details" className="rounded-lg" />
       </div>
 
       {/* Hover effect border */}

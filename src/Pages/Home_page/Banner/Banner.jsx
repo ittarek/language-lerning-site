@@ -112,12 +112,10 @@ const Banner = ({ onSectionClick }) => {
                 <OptimizedImage
                   src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
                   alt="Language Learning"
-                  width={1920}
-                  height={1200}
-                  aspectRatio="16/10"
+                  aspectRatio="16/9"
                   priority={true}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
+                  quality={85}
+                  className=" w-full h-full "
                   objectFit="cover"
                 />
               </div>
