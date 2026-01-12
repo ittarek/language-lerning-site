@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 
 // Import your background image
 import Feature4BgImg from '../../assets/features/feature4_bg.png';
-import { ViewDetailsButton } from '../../Components/ui/Button';
 import { ExperienceItem } from './ExperienceItem';
 
 const tabs = [
@@ -100,8 +99,6 @@ const InstructorsPageCard = ({ instructor = {} }) => {
     experience = [],
     contact = {},
   } = instructor;
-  console.log(instructor);
-
   const { facebook, twitter, instagram, linkedin } = social_links;
   const { address, phone } = contact;
 

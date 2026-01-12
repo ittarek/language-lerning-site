@@ -15,8 +15,6 @@ const Instructors = () => {
   const sortedInstructors = useMemo(() => {
     if (!classes || !Array.isArray(classes)) return [];
 
-    console.log('📊 Raw classes data:', classes);
-
     // Step 1: Get unique instructors
     const instructorMap = new Map();
 
@@ -27,28 +25,17 @@ const Instructors = () => {
     });
 
     const uniqueInstructors = Array.from(instructorMap.values());
-    console.log('👥 Unique instructors (before sort):', uniqueInstructors.length);
 
     // Step 2: Sort by updated_at (Newest First)
     const sorted = uniqueInstructors.sort((a, b) => {
       const dateA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
       const dateB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
 
-      console.log(
-        `Comparing: ${a.instructor_name} (${dateA}) vs ${b.instructor_name} (${dateB})`
-      );
-
       // DESCENDING - Newest first
       return dateB - dateA;
     });
 
     // Debug: Print sorted order
-    console.log('✅ Sorted instructors (newest first):');
-    sorted.forEach((inst, idx) => {
-      console.log(
-        `${idx + 1}. ${inst.instructor_name} - Updated: ${inst.updated_at || 'NO DATE'}`
-      );
-    });
 
     return sorted;
   }, [classes]);

@@ -248,7 +248,7 @@
 // };
 
 // export default Navbar;
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   FaFacebookF,
@@ -277,38 +277,53 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  // ✅ Safe console.log for user photo
-  useEffect(() => {
-    if (user?.photoURL) {
-      console.log('User Photo URL:', user.photoURL);
-    }
-  }, [user?.photoURL]);
-
+  const tooltipRef = useRef(null);
   // ✅ Handle logout
   const handleLogOut = () => {
     loggedOut()
       .then(() => {
-        console.log('User logged out successfully');
+        // Successfully logged out
       })
       .catch(error => {
         console.error('Logout error:', error);
       });
   };
 
-  // ✅ Tooltip initialization - only once, with cleanup
+  // ✅ Fixed Tooltip initialization with proper cleanup
   useEffect(() => {
     if (user?.email) {
-      const tooltip = tippy('#MyTool', {
-        content: user?.displayName || 'User',
-        placement: 'bottom',
-        trigger: 'mouseenter focus',
-      });
+      const tooltipElement = document.getElementById('MyTool');
 
-      return () => {
-        tooltip.destroy();
-      };
+      if (tooltipElement) {
+        // Destroy previous tooltip if exists
+        if (tooltipRef.current) {
+          try {
+            tooltipRef.current.destroy();
+          } catch (error) {
+            // Ignore error if already destroyed
+          }
+        }
+
+        // Create new tooltip
+        tooltipRef.current = tippy(tooltipElement, {
+          content: user?.displayName || 'User',
+          placement: 'bottom',
+          trigger: 'mouseenter focus',
+        });
+      }
     }
+
+    // Cleanup function
+    return () => {
+      if (tooltipRef.current) {
+        try {
+          tooltipRef.current.destroy();
+          tooltipRef.current = null;
+        } catch (error) {
+          // Tooltip already destroyed, ignore
+        }
+      }
+    };
   }, [user?.displayName, user?.email]);
 
   // ✅ Body scroll lock when mobile menu is open
@@ -328,10 +343,10 @@ const Navbar = () => {
   const handleSearch = e => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      console.log('Searching for:', searchQuery);
       // TODO: Navigate to search page or filter results
       // navigate(`/search?q=${searchQuery}`);
       setIsSearchOpen(false);
+      setSearchQuery('');
     }
   };
 
