@@ -8,7 +8,11 @@ import { LoadingState } from '../../../Components/Shared/FetchStates/LoadingStat
 import useFetchData from '../../../Hooks/useFetchTeacher';
 import { EmptyState } from '../../../Components/Shared/FetchStates/EmptyState';
 import OptimizedImage from '../../../Components/Shared/OptimizedImage';
-import { GradientButton, SeeAllButton, ViewDetailsButton } from '../../../Components/ui/Button';
+import {
+  GradientButton,
+  SeeAllButton,
+  ViewDetailsButton,
+} from '../../../Components/ui/Button';
 
 const Instructor = () => {
   // TanStack query using for data fetch
@@ -61,7 +65,7 @@ const Instructor = () => {
               key={instructor._id}
               className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-indigo-200"
               data-aos="fade-up"
-              data-aos-delay={index * 100}>
+              data-aos-offset="300">
               {/* Background Pattern */}
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -127,7 +131,11 @@ const Instructor = () => {
                   <div className="border-t border-gray-200 my-4"></div>
 
                   {/* View Profile Button */}
-                  <ViewDetailsButton _id={instructor._id} text="View Profile" className='rounded-lg' />
+                  <ViewDetailsButton
+                    _id={instructor._id}
+                    text="View Profile"
+                    className="rounded-lg"
+                  />
                 </div>
               </div>
 
@@ -140,7 +148,6 @@ const Instructor = () => {
         {/* See All Button */}
         <div className="flex justify-center mt-12">
           <SeeAllButton to="/instructors" text="See All Instructors" />
-    
         </div>
       </div>
     </Container>

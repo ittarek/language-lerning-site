@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react';
 import { GlassNavButton } from '../Components/ui/GlassNavButton';
 
-const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
+const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick }) => {
   const [activeSection, setActiveSection] = useState('home');
   const [bgColor, setBgColor] = useState('black');
+
   // Default navigation items if not provided
-  // User should pass their own items with react-icons
   const defaultItems = [
     {
       id: 'home',
       label: 'Home',
-      icon: '🏠', // Fallback emoji if no icon provided
+      icon: '🏠',
       sectionId: 'home',
     },
-
     {
       id: 'events',
       label: 'Events',
@@ -73,13 +72,11 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [navigationItems]);
 
-  // Handle smooth scroll to section
-  const handleClick = (e, item) => {
-    e.preventDefault();
+  // ✅ Enhanced scroll handler with retry mechanism
+  const scrollToSection = (sectionId, retryCount = 0) => {
+    const element = document.getElementById(sectionId);
 
-    const element = document.getElementById(item.sectionId);
     if (element) {
-      // Get navbar height to offset scroll position
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
 
@@ -87,9 +84,34 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80 }) => {
         top: offsetPosition,
         behavior: 'smooth',
       });
+      return true;
+    } else if (retryCount < 5) {
+      // ✅ Section এখনও load হয়নি, retry করো
+      setTimeout(() => {
+        scrollToSection(sectionId, retryCount + 1);
+      }, 200); // 200ms পরে আবার চেষ্টা
+      return false;
     }
 
-    // Call optional onNavigate callback
+    console.warn(`Section ${sectionId} not found after ${retryCount} retries`);
+    return false;
+  };
+
+  // ✅ Handle click with force load mechanism
+  const handleClick = (e, item) => {
+    e.preventDefault();
+
+    // ✅ 1. Parent component কে বলো section load করতে (if callback provided)
+    if (onSectionClick) {
+      onSectionClick(item.sectionId);
+    }
+
+    // ✅ 2. Small delay দিয়ে scroll করো (section load হওয়ার জন্য)
+    setTimeout(() => {
+      scrollToSection(item.sectionId);
+    }, 100);
+
+    // ✅ 3. Optional callback
     if (onNavigate) {
       onNavigate(item);
     }

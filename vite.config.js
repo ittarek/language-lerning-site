@@ -26,7 +26,7 @@ export default defineConfig({
           'icon-vendor': ['react-icons'],
 
           // Firebase (if used)
-          // 'firebase-vendor': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+          'firebase-vendor': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
         },
 
         // Asset file names

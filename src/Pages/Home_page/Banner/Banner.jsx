@@ -6,27 +6,27 @@ import { AuthContext } from '../../../Provider/AuthProvider';
 import { useContext } from 'react';
 import { CTAPrimaryButton, CTASecondaryButton } from '../../../Components/ui/Button';
 
-const Banner = () => {
+const Banner = ({ onSectionClick }) => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext); // Get current user
-  // ✅ Handle Get Started click
+  const { user } = useContext(AuthContext);
+
   const handleGetStarted = () => {
     if (user && user.email) {
-      // User is already logged in - go to classes
       navigate('/classes');
     } else {
-      // User not logged in - go to login/signup
       navigate('/login');
     }
   };
+
   return (
-    <div className=" relative overflow-hidden -mt-6 md:mt-0">
-      <GlassNavigation />
+    // ✅ Fixed min-height যোগ করা হয়েছে - CLS কমবে
+    <div className="relative overflow-hidden -mt-6 md:mt-0 min-h-[600px] md:min-h-[700px] lg:min-h-[800px]">
+      <GlassNavigation onSectionClick={onSectionClick} />
+
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${bgImage})` }}>
-        {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-purple-900/60 to-pink-900/60"></div>
       </div>
 
@@ -54,24 +54,24 @@ const Banner = () => {
               </span>
             </div>
 
-            {/* Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+            {/* Heading - ✅ Fixed height যোগ করা */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
               Mastering Your Guide to
               <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent mt-2">
                 Language Learning
               </span>
             </h1>
 
-            {/* Description */}
-            <p className="text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
+            {/* Description - ✅ Fixed height */}
+            <p className="text-base sm:text-lg text-white/90 leading-relaxed max-w-xl min-h-[100px] sm:min-h-[120px]">
               Our interactive and engaging classes will inspire and challenge you. With
               our user-friendly platform and supportive community, you'll embark on a
               fulfilling educational adventure. Join us today and unlock your full
               potential!
             </p>
 
-            {/* Stats */}
-            <div className="flex flex-wrap gap-4 sm:gap-6 lg:gap-8 py-4">
+            {/* Stats - ✅ Fixed height */}
+            <div className="flex flex-wrap gap-4 sm:gap-6 lg:gap-8 py-4 min-h-[80px]">
               <div>
                 <div className="text-2xl sm:text-3xl font-bold text-white">50+</div>
                 <div className="text-xs sm:text-sm text-white/80">Courses</div>
@@ -86,47 +86,46 @@ const Banner = () => {
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-              {/* Get Started Button */}
+            {/* CTA Buttons - ✅ Fixed height */}
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 min-h-[60px]">
               <CTAPrimaryButton text="Get Started" onClick={handleGetStarted} />
-
-              {/* Browse Classes Button */}
               <CTASecondaryButton text="Browse Classes" to="/classes" />
             </div>
           </div>
 
-          {/* Right Image */}
+          {/* Right Image - ✅ aspect-ratio ব্যবহার করা হয়েছে */}
           <div className="relative order-1 lg:order-2">
-            {/* Decorative elements - hidden on mobile */}
+            {/* Decorative elements */}
             <div className="hidden md:block absolute -top-6 -right-6 w-48 h-48 lg:w-72 lg:h-72 bg-yellow-400/10 rounded-full blur-2xl"></div>
             <div className="hidden md:block absolute -bottom-6 -left-6 w-48 h-48 lg:w-72 lg:h-72 bg-pink-400/10 rounded-full blur-2xl"></div>
 
-            {/* Main image */}
+            {/* Main image - ✅ Fixed aspect-ratio container */}
             <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/20 backdrop-blur-sm">
-              <div className="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
+              {/* ✅ aspect-ratio দিয়ে container height fix করা */}
+              <div className="relative w-full aspect-[16/10]">
                 <OptimizedImage
                   src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
                   alt="Language Learning"
-                  // width={1920}
-                  // height={700}
+                  width={1920}
+                  height={1200}
                   aspectRatio="16/10"
                   priority={true}
-                  className="absolute inset-0 w-full h-full"
-                  sizes="100vw"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   objectFit="cover"
                 />
               </div>
 
-              {/* Floating badge on image */}
-              <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl animate-bounce-slow">
+              {/* Floating badge - ✅ Fixed size */}
+              <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl animate-bounce-slow w-[140px] sm:w-[160px]">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg
                       className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
-                      viewBox="0 0 24 24">
+                      viewBox="0 0 24 24"
+                      aria-hidden="true">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -146,13 +145,14 @@ const Banner = () => {
         </div>
       </div>
 
-      {/* Bottom wave decoration */}
+      {/* Bottom wave decoration - ✅ Fixed height */}
       <div className="absolute bottom-0 left-0 right-0 h-12 sm:h-16">
         <svg
           viewBox="0 0 1440 80"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full">
+          className="w-full h-full"
+          aria-hidden="true">
           <path
             d="M0 0L60 8C120 16 240 32 360 37.3C480 43 600 37 720 32C840 27 960 21 1080 24C1200 27 1320 37 1380 42.7L1440 48V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0V0Z"
             fill="white"
@@ -162,18 +162,18 @@ const Banner = () => {
       </div>
 
       <style>{`
-                @keyframes bounce-slow {
-                    0%, 100% {
-                        transform: translateY(0);
-                    }
-                    50% {
-                        transform: translateY(-10px);
-                    }
-                }
-                .animate-bounce-slow {
-                    animation: bounce-slow 3s ease-in-out infinite;
-                }
-            `}</style>
+        @keyframes bounce-slow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
