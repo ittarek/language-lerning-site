@@ -1,13 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-  createContext,
-  useContext,
-} from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import Container from '../../Components/Container';
 import Banner from './Banner/Banner';
 import PricingPage from './Pricing/PricingPage';
@@ -20,213 +12,116 @@ const Event = lazy(() => import('../../Components/Event/Event'));
 const StartingCourse = lazy(() => import('./StartingCourse'));
 const TradingArticle = lazy(() => import('./TradingArticle/TradingArticle'));
 
-// ✅ Context for managing section loading
-const SectionLoadContext = createContext();
-
-// ✅ Skeleton Loader
+// ✅ Lightweight Skeleton
 const SectionSkeleton = () => (
-  <div className="py-12 animate-pulse max-w-7xl mx-auto">
-    <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-8"></div>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {[1, 2, 3].map(i => (
-        <div key={i} className="bg-gray-200 h-64 rounded-lg"></div>
-      ))}
-    </div>
+  <div className="py-8 sm:py-12 max-w-7xl mx-auto">
+    <div className="h-6 sm:h-8 bg-gray-200 rounded w-48 sm:w-64 mx-auto mb-6 sm:mb-8 animate-pulse"></div>
   </div>
 );
 
-// ✅ Enhanced Lazy Section
-const LazySection = ({
-  children,
-  className = '',
-  minHeight = 'min-h-[400px]',
-  sectionId,
-}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-  const { forceLoadSection } = useContext(SectionLoadContext);
-
-  useEffect(() => {
-    // ✅ Check if this section needs to be force loaded
-    if (forceLoadSection === sectionId) {
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: '200px',
-        threshold: 0.01,
-      }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [forceLoadSection, sectionId]);
-
-  return (
-    <div ref={ref} className={`${className} ${minHeight}`}>
-      {isVisible ? (
-        <Suspense fallback={<SectionSkeleton />}>{children}</Suspense>
-      ) : (
-        <div className="py-12"></div>
-      )}
-    </div>
-  );
-};
-
 const Home = () => {
-  const [forceLoadSection, setForceLoadSection] = useState(null);
+  const [shouldPreload, setShouldPreload] = useState(false);
 
-  // ✅ Callback for GlassNavigation
-  const handleSectionClick = sectionId => {
-    setForceLoadSection(sectionId);
-  };
+  // ✅ Preload all sections after initial render
+  useEffect(() => {
+    // Small delay to let Banner load first
+    const timer = setTimeout(() => {
+      setShouldPreload(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // ✅ Preload components in background
+  useEffect(() => {
+    if (shouldPreload) {
+      // Force all lazy components to start loading
+      const preloadComponents = async () => {
+        try {
+          await Promise.all([
+            import('./AboutUs/AboutUs'),
+            import('./Popular_section/Popular_classes'),
+            import('./Instructor/Instructor'),
+            import('../../Components/Event/Event'),
+            import('./StartingCourse'),
+            import('./TradingArticle/TradingArticle'),
+          ]);
+        } catch (error) {
+          console.error('Preload error:', error);
+        }
+      };
+
+      preloadComponents();
+    }
+  }, [shouldPreload]);
 
   return (
-    <SectionLoadContext.Provider value={{ forceLoadSection }}>
+    <main id="home">
+      <Helmet>
+        <title>Learning | Home</title>
+      </Helmet>
 
-      <main id="home">
-        <Helmet>
-          <title>Learning | Home</title>
-        </Helmet>
+      {/* ✅ Banner loads first - priority */}
+      <Banner />
 
-        {/* ✅ Banner with GlassNavigation */}
-        <Banner onSectionClick={handleSectionClick} />
+      <Container>
+        {/* ✅ All sections with fixed heights for CLS prevention */}
 
-        <Container>
-          {/* ✅ Popular Classes - সরাসরি load */}
-          <section id="popular-classes">
-            <Suspense fallback={<SectionSkeleton />}>
-              <Popular_classes />
-            </Suspense>
-          </section>
+        {/* Popular Classes - First visible section */}
+        <section
+          id="popular-classes"
+          className="min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
+          <Suspense fallback={<SectionSkeleton />}>
+            <Popular_classes />
+          </Suspense>
+        </section>
 
-          {/* ✅ Teachers - Lazy load */}
-          <LazySection
-            minHeight="min-h-[350px] sm:min-h-[400px] md:min-h-[500px]"
-            sectionId="teachers">
-            <section id="teachers">
-              <Teachers />
-            </section>
-          </LazySection>
+        {/* Teachers */}
+        <section
+          id="teachers"
+          className="min-h-[350px] sm:min-h-[400px] md:min-h-[500px]">
+          <Suspense fallback={<SectionSkeleton />}>
+            {shouldPreload && <Teachers />}
+          </Suspense>
+        </section>
 
-          {/* ✅ Events - Lazy load */}
-          <LazySection
-            minHeight="min-h-[400px] sm:min-h-[500px] md:min-h-[600px]"
-            sectionId="events">
-            <section id="events">
-              <Event />
-            </section>
-          </LazySection>
+        {/* Events */}
+        <section id="events" className="min-h-[400px] sm:min-h-[500px] md:min-h-[600px]">
+          <Suspense fallback={<SectionSkeleton />}>{shouldPreload && <Event />}</Suspense>
+        </section>
 
-          {/* ✅ Starting Course - Lazy load */}
-          <LazySection
-            minHeight="min-h-[300px] sm:min-h-[350px] md:min-h-[400px]"
-            sectionId="starting_course">
-            <section id="starting_course">
-              <StartingCourse />
-            </section>
-          </LazySection>
+        {/* Starting Course */}
+        <section
+          id="starting_course"
+          className="min-h-[300px] sm:min-h-[350px] md:min-h-[400px]">
+          <Suspense fallback={<SectionSkeleton />}>
+            {shouldPreload && <StartingCourse />}
+          </Suspense>
+        </section>
 
-          {/* ✅ Pricing - Lazy load */}
-          <LazySection
-            minHeight="min-h-[500px] sm:min-h-[600px] md:min-h-[700px]"
-            sectionId="pricing">
-            <section id="pricing">
-              <PricingPage />
-            </section>
-          </LazySection>
+        {/* Pricing */}
+        <section id="pricing" className="min-h-[500px] sm:min-h-[600px] md:min-h-[700px]">
+          <Suspense fallback={<SectionSkeleton />}>
+            {shouldPreload && <PricingPage />}
+          </Suspense>
+        </section>
 
-          {/* ✅ Trading Article - Lazy load */}
-          <LazySection
-            minHeight="min-h-[350px] sm:min-h-[400px] md:min-h-[500px]"
-            sectionId="article">
-            <section id="article">
-              <TradingArticle />
-            </section>
-          </LazySection>
+        {/* Trading Article */}
+        <section id="article" className="min-h-[350px] sm:min-h-[400px] md:min-h-[500px]">
+          <Suspense fallback={<SectionSkeleton />}>
+            {shouldPreload && <TradingArticle />}
+          </Suspense>
+        </section>
 
-          {/* ✅ About Us - Lazy load */}
-          <LazySection
-            minHeight="min-h-[300px] sm:min-h-[350px] md:min-h-[400px]"
-            sectionId="about">
-            <section id="about">
-              <AboutUs />
-            </section>
-          </LazySection>
-        </Container>
-      </main>
-    </SectionLoadContext.Provider>
+        {/* About Us */}
+        <section id="about" className="min-h-[300px] sm:min-h-[350px] md:min-h-[400px]">
+          <Suspense fallback={<SectionSkeleton />}>
+            {shouldPreload && <AboutUs />}
+          </Suspense>
+        </section>
+      </Container>
+    </main>
   );
 };
 
 export default Home;
-// import { Helmet } from 'react-helmet-async';
-// import Container from '../../Components/Container';
-// import Banner from './Banner/Banner';
-// import PricingPage from './Pricing/PricingPage';
-
-// // ✅ Direct imports - সব section একবারেই load হবে
-// import AboutUs from './AboutUs/AboutUs';
-// import Popular_classes from './Popular_section/Popular_classes';
-// import Teachers from './Instructor/Instructor';
-// import Event from '../../Components/Event/Event';
-// import StartingCourse from './StartingCourse';
-// import TradingArticle from './TradingArticle/TradingArticle';
-
-// const Home = () => {
-//   return (
-//     <main id="home">
-//       <Helmet>
-//         <title>Learning | Home</title>
-//       </Helmet>
-
-//       {/* Banner */}
-//       <Banner />
-
-//       <Container>
-//         {/* ✅ All sections loaded immediately - instant navigation */}
-
-//         <section id="popular-classes">
-//           <Popular_classes />
-//         </section>
-
-//         <section id="teachers">
-//           <Teachers />
-//         </section>
-
-//         <section id="events">
-//           <Event />
-//         </section>
-
-//         <section id="starting_course">
-//           <StartingCourse />
-//         </section>
-
-//         <section id="pricing">
-//           <PricingPage />
-//         </section>
-
-//         <section id="article">
-//           <TradingArticle />
-//         </section>
-
-//         <section id="about">
-//           <AboutUs />
-//         </section>
-//       </Container>
-//     </main>
-//   );
-// };
-
-// export default Home;
