@@ -28,7 +28,8 @@ const MainLayOut = () => {
       {pathName !== '/' && <ScrollToTop />}
       <Navbar />
       <div className="md:min-h-[calc(100vh-140px)]">
-        {isLoading ? <PageLoadingSpinner /> : <Outlet />}
+        {/* {isLoading ? <PageLoadingSpinner /> :         <Outlet />} */}
+        <Outlet />
       </div>
       <Footer />
     </>

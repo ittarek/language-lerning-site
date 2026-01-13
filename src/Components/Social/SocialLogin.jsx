@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getApiUrl } from '../../config/api/Config';
 
-const SocailLogin = () => {
+const SocialLogin = () => {
   const { googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,4 +41,4 @@ const SocailLogin = () => {
   );
 };
 
-export default SocailLogin;
+export default SocialLogin;

@@ -15,10 +15,7 @@ const Register = () => {
   const [showPassword2, setShowPassword2] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-   const API_URL = getApiUrl();
-
-console.log('check api', API_URL);
-
+  const API_URL = getApiUrl();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
@@ -39,20 +36,14 @@ console.log('check api', API_URL);
 
     try {
       // Step 1: Create Firebase account
-      console.log('Creating Firebase account...');
       const result = await registration(data.email, data.password);
 
       if (!result || !result.user) {
         throw new Error('Failed to create account');
       }
 
-      console.log('Firebase account created:', result.user.email);
-
-      // Step 2: Update user profile
-      console.log('Updating user profile...');
+     // Step 2: Update user profile
       await userUpdating(data.name, data.photoURL);
-      console.log('Profile updated successfully');
-
       // Step 3: Save user to database
       const savedUser = {
         name: data.name,
@@ -62,8 +53,7 @@ console.log('check api', API_URL);
         createdAt: new Date().toISOString(),
       };
 
-      console.log('Saving to database...', `${API_URL}/users`);
-
+   
       try {
         const response = await fetch(`${API_URL}/users`, {
           method: 'POST',
@@ -73,15 +63,12 @@ console.log('check api', API_URL);
           body: JSON.stringify(savedUser),
         });
 
-        console.log('Response status:', response.status);
 
         if (!response.ok) {
-          console.error('API response not OK:', response.statusText);
           throw new Error(`Database save failed: ${response.statusText}`);
         }
 
         const responseData = await response.json();
-        console.log('Database response:', responseData);
 
         // Success - show message and redirect
         await Swal.fire({
@@ -100,7 +87,7 @@ console.log('check api', API_URL);
 
         navigate(from, { replace: true });
       } catch (dbError) {
-        console.error('Database error:', dbError);
+
         console.log(
           '⚠️ Backend server not running! User created in Firebase but not saved to database.'
         );
@@ -123,7 +110,7 @@ console.log('check api', API_URL);
         navigate(from, { replace: true });
       }
     } catch (error) {
-      console.error('Registration error:', error);
+   
 
       // Handle specific Firebase errors
       let errorMessage = 'Failed to create account. Please try again.';

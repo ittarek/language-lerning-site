@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 import Swal from "sweetalert2";
 import loginImg from "../../assets/login/login.jpg";
 import Container from "../../Components/Container";
-import SocialLogin from "../../Components/Socail/SocailLogin";
+import SocialLogin from "../../Components/Social/SocialLogin";
 import { AuthContext } from "../../Provider/AuthProvider";
 import OptimizedImage from "../../Components/Shared/OptimizedImage";
 
