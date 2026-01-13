@@ -115,7 +115,8 @@ const Banner = ({ onSectionClick }) => {
                   aspectRatio="16/9"
                   priority={true}
                   quality={85}
-                  className=" w-full h-full "
+                  className="absolute inset-0 w-full h-full object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
                   objectFit="cover"
                 />
               </div>

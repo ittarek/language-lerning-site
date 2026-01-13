@@ -8,44 +8,14 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
   const [showRightArrow, setShowRightArrow] = useState(false);
   const scrollContainerRef = useRef(null);
 
-  // Default navigation items if not provided
+  // Default navigation items
   const defaultItems = [
-    {
-      id: 'home',
-      label: 'Home',
-      icon: '🏠',
-      sectionId: 'home',
-    },
-    {
-      id: 'events',
-      label: 'Events',
-      icon: '📅',
-      sectionId: 'events',
-    },
-    {
-      id: 'starting_course',
-      label: 'Course',
-      icon: '✍️',
-      sectionId: 'starting_course',
-    },
-    {
-      id: 'pricing',
-      label: 'Pricing',
-      icon: '💰',
-      sectionId: 'pricing',
-    },
-    {
-      id: 'article',
-      label: 'Article',
-      icon: '📰',
-      sectionId: 'article',
-    },
-    {
-      id: 'about',
-      label: 'About',
-      icon: '📋',
-      sectionId: 'about',
-    },
+    { id: 'home', label: 'Home', icon: '🏠', sectionId: 'home' },
+    { id: 'events', label: 'Events', icon: '📅', sectionId: 'events' },
+    { id: 'starting_course', label: 'Course', icon: '✍️', sectionId: 'starting_course' },
+    { id: 'pricing', label: 'Pricing', icon: '💰', sectionId: 'pricing' },
+    { id: 'article', label: 'Article', icon: '📰', sectionId: 'article' },
+    { id: 'about', label: 'About', icon: '📋', sectionId: 'about' },
   ];
 
   const navigationItems = items || defaultItems;
@@ -56,7 +26,6 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
     if (!container) return;
 
     const { scrollLeft, scrollWidth, clientWidth } = container;
-
     setShowLeftArrow(scrollLeft > 10);
     setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
   };
@@ -66,30 +35,22 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const scrollAmount = 200; // pixels to scroll
+    const scrollAmount = 200;
     const newScrollLeft =
       direction === 'left'
         ? container.scrollLeft - scrollAmount
         : container.scrollLeft + scrollAmount;
 
-    container.scrollTo({
-      left: newScrollLeft,
-      behavior: 'smooth',
-    });
+    container.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
   };
 
-  // Setup scroll listener for arrows
+  // Setup scroll listeners
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    // Check initial state
     checkScrollPosition();
-
-    // Add scroll event listener
     container.addEventListener('scroll', checkScrollPosition);
-
-    // Add resize listener to recheck on window resize
     window.addEventListener('resize', checkScrollPosition);
 
     return () => {
@@ -98,7 +59,7 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
     };
   }, [navigationItems]);
 
-  // Detect active section on scroll
+  // Detect active section on page scroll
   useEffect(() => {
     const handlePageScroll = () => {
       const sections = navigationItems
@@ -106,7 +67,6 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
         .filter(Boolean);
 
       let current = 'home';
-
       sections.forEach(section => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= 150 && rect.bottom >= 150) {
@@ -123,10 +83,17 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
     return () => window.removeEventListener('scroll', handlePageScroll);
   }, [navigationItems]);
 
-  // Scroll to section with retry mechanism
-  const scrollToSection = (sectionId, retryCount = 0) => {
-    const element = document.getElementById(sectionId);
+  // ✅ Simple instant scroll - no retry, no delay
+  const handleClick = (e, item) => {
+    e.preventDefault();
 
+    // Notify parent to force load section
+    if (onSectionClick) {
+      onSectionClick(item.sectionId);
+    }
+
+    // Instant scroll to section
+    const element = document.getElementById(item.sectionId);
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
@@ -135,32 +102,7 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
         top: offsetPosition,
         behavior: 'smooth',
       });
-      return true;
-    } else if (retryCount < 5) {
-      // Section not loaded yet, retry
-      setTimeout(() => {
-        scrollToSection(sectionId, retryCount + 1);
-      }, 200);
-      return false;
     }
-
-    console.warn(`Section ${sectionId} not found after ${retryCount} retries`);
-    return false;
-  };
-
-  // Handle click with force load mechanism
-  const handleClick = (e, item) => {
-    e.preventDefault();
-
-    // Notify parent component to load section
-    if (onSectionClick) {
-      onSectionClick(item.sectionId);
-    }
-
-    // Delay scroll to allow section to load
-    setTimeout(() => {
-      scrollToSection(item.sectionId);
-    }, 100);
 
     // Optional callback
     if (onNavigate) {
@@ -187,8 +129,8 @@ const GlassNavigation = ({ items, onNavigate, navbarHeight = 80, onSectionClick 
             ref={scrollContainerRef}
             className="flex gap-2 list-none m-0 p-0 items-center overflow-x-auto overflow-y-hidden scrollbar-hide snap-x snap-mandatory scroll-smooth"
             style={{
-              maxWidth: 'calc(100vw - 80px)', // Leave space for arrows
-              WebkitOverflowScrolling: 'touch', // Smooth scrolling on iOS
+              maxWidth: 'calc(100vw - 80px)',
+              WebkitOverflowScrolling: 'touch',
             }}>
             {navigationItems.map(item => {
               const isActive = activeSection === item.sectionId;

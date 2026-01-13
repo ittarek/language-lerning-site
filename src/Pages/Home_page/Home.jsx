@@ -10,7 +10,6 @@ import {
 } from 'react';
 import Container from '../../Components/Container';
 import Banner from './Banner/Banner';
-import { LoadingState } from '../../Components/Shared/FetchStates/LoadingState';
 import PricingPage from './Pricing/PricingPage';
 
 // ✅ Lazy imports
@@ -95,6 +94,7 @@ const Home = () => {
 
   return (
     <SectionLoadContext.Provider value={{ forceLoadSection }}>
+
       <main id="home">
         <Helmet>
           <title>Learning | Home</title>
@@ -171,3 +171,62 @@ const Home = () => {
 };
 
 export default Home;
+// import { Helmet } from 'react-helmet-async';
+// import Container from '../../Components/Container';
+// import Banner from './Banner/Banner';
+// import PricingPage from './Pricing/PricingPage';
+
+// // ✅ Direct imports - সব section একবারেই load হবে
+// import AboutUs from './AboutUs/AboutUs';
+// import Popular_classes from './Popular_section/Popular_classes';
+// import Teachers from './Instructor/Instructor';
+// import Event from '../../Components/Event/Event';
+// import StartingCourse from './StartingCourse';
+// import TradingArticle from './TradingArticle/TradingArticle';
+
+// const Home = () => {
+//   return (
+//     <main id="home">
+//       <Helmet>
+//         <title>Learning | Home</title>
+//       </Helmet>
+
+//       {/* Banner */}
+//       <Banner />
+
+//       <Container>
+//         {/* ✅ All sections loaded immediately - instant navigation */}
+
+//         <section id="popular-classes">
+//           <Popular_classes />
+//         </section>
+
+//         <section id="teachers">
+//           <Teachers />
+//         </section>
+
+//         <section id="events">
+//           <Event />
+//         </section>
+
+//         <section id="starting_course">
+//           <StartingCourse />
+//         </section>
+
+//         <section id="pricing">
+//           <PricingPage />
+//         </section>
+
+//         <section id="article">
+//           <TradingArticle />
+//         </section>
+
+//         <section id="about">
+//           <AboutUs />
+//         </section>
+//       </Container>
+//     </main>
+//   );
+// };
+
+// export default Home;
