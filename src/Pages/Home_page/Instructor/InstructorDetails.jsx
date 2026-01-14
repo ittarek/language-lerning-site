@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-// import Swal from 'sweetalert2';
-// import { toast } from 'react-toastify';
 
 import {
   FaArrowLeft,
