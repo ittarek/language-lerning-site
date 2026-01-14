@@ -11,7 +11,11 @@ import { OutlineButton } from '../../Components/ui/Button';
 
 const Instructors = () => {
   const [classes, loading, refetch, error] = useClass();
-console.log(classes);
+console.log(class name {
+  constructor(parameters) {
+    
+  }
+})
 
   const sortedInstructors = useMemo(() => {
     if (!classes || !Array.isArray(classes)) return [];
