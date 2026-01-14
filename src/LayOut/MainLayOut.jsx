@@ -3,7 +3,6 @@ import Navbar from '../Shared_pages/Header/Navbar/Navbar';
 import Footer from '../Shared_pages/Footer/Footer';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
-import PageLoadingSpinner from '../Components/Spinner/PageLoadingSpinner';
 import AOS from 'aos';
 import { ScrollToTop } from '../Components/Shared/ScrollToTop';
 
