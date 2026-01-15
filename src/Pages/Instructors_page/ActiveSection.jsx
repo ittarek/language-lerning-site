@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const ActiveSection = () => {
+export const ActiveSection = ({ description, students_count, rating, facebook, twitter, instagram, linkedin }) => {
   return (
     <div className="animate-fadeIn space-y-6">
       <div>
@@ -56,4 +56,4 @@ export const ActiveSection = () => {
       )}
     </div>
   );
-}
+};
