@@ -12,7 +12,7 @@ import {
   FaStar,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import  ActiveSection  from './ActiveSection';
 // Import your background image
 import Feature4BgImg from '../../assets/features/feature4_bg.png';
 import { ExperienceItem } from './ExperienceItem';

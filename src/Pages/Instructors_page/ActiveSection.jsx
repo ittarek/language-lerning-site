@@ -1,5 +1,5 @@
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
-export const ActiveSection = ({
+const ActiveSection = ({
   description,
   students_count,
   rating,
@@ -64,3 +64,4 @@ export const ActiveSection = ({
     </div>
   );
 };
+export default ActiveSection;
