@@ -1,6 +1,13 @@
-import React from 'react'
-
-export const ActiveSection = ({ description, students_count, rating, facebook, twitter, instagram, linkedin }) => {
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+export const ActiveSection = ({
+  description,
+  students_count,
+  rating,
+  facebook,
+  twitter,
+  instagram,
+  linkedin,
+}) => {
   return (
     <div className="animate-fadeIn space-y-6">
       <div>

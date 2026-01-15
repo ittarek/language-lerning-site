@@ -214,7 +214,17 @@ const InstructorsPageCard = ({ instructor = {} }) => {
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="flex-1 overflow-y-auto px-6 py-4">
             {/* ABOUT */}
-            {activeSection === 'about' && <ActiveSection />}
+            {activeSection === 'about' && (
+              <ActiveSection
+                description={description}
+                students_count={students_count}
+                rating={rating}
+                facebook={facebook}
+                twitter={twitter}
+                instagram={instagram}
+                linkedin={linkedin}
+              />
+            )}
 
             {/* EXPERIENCE */}
             {activeSection === 'experience' && (
