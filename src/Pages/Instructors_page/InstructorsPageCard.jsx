@@ -56,7 +56,6 @@ const TabButton = ({ label, value, icon: Icon, activeValue, onClick }) => {
   );
 };
 
-
 // Contact Info Component
 const ContactInfo = ({ icon: Icon, text, href }) => (
   <a
@@ -213,7 +212,6 @@ const InstructorsPageCard = ({ instructor = {} }) => {
                 twitter={twitter}
                 instagram={instagram}
                 linkedin={linkedin}
-    
               />
             )}
 
@@ -248,8 +246,12 @@ const InstructorsPageCard = ({ instructor = {} }) => {
 
             {/* CONTACT */}
             {activeSection === 'contact' && (
-              <ContactSection/>
-        
+              <ContactSection
+                address={address}
+                phone={phone}
+                instructor_email={instructor_email}
+                _id={_id}
+              />
             )}
           </div>
 
