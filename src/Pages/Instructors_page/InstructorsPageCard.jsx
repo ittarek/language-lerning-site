@@ -12,7 +12,7 @@ import {
   FaStar,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import  ActiveSection  from './ActiveSection';
+import AboutSection from './AboutSection';
 // Import your background image
 import Feature4BgImg from '../../assets/features/feature4_bg.png';
 import { ExperienceItem } from './ExperienceItem';
@@ -55,17 +55,6 @@ const TabButton = ({ label, value, icon: Icon, activeValue, onClick }) => {
   );
 };
 
-// Social Link Component
-const SocialLink = ({ href, icon: Icon, platform }) => (
-  <a
-    href={href || '#'}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-indigo-100 text-gray-600 hover:text-indigo-600 transition-all duration-300 hover:scale-110 hover:shadow-md"
-    aria-label={platform}>
-    <Icon className="w-4 h-4" />
-  </a>
-);
 
 // Contact Info Component
 const ContactInfo = ({ icon: Icon, text, href }) => (
@@ -215,7 +204,7 @@ const InstructorsPageCard = ({ instructor = {} }) => {
           <div className="flex-1 overflow-y-auto px-6 py-4">
             {/* ABOUT */}
             {activeSection === 'about' && (
-              <ActiveSection
+              <AboutSection
                 description={description}
                 students_count={students_count}
                 rating={rating}
@@ -223,6 +212,7 @@ const InstructorsPageCard = ({ instructor = {} }) => {
                 twitter={twitter}
                 instagram={instagram}
                 linkedin={linkedin}
+    
               />
             )}
 

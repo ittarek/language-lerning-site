@@ -7,7 +7,20 @@ const ActiveSection = ({
   twitter,
   instagram,
   linkedin,
+
 }) => {
+  // Social Link Component
+  const SocialLink = ({ href, icon: Icon, platform }) => (
+    <a
+      href={href || '#'}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-indigo-100 text-gray-600 hover:text-indigo-600 transition-all duration-300 hover:scale-110 hover:shadow-md"
+      aria-label={platform}>
+      <Icon className="w-4 h-4" />
+    </a>
+  );
+
   return (
     <div className="animate-fadeIn space-y-6">
       <div>
