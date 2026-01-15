@@ -1,4 +1,4 @@
-import { Outlet, useNavigation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Navbar from '../Shared_pages/Header/Navbar/Navbar';
 import Footer from '../Shared_pages/Footer/Footer';
 import { useContext, useEffect } from 'react';
@@ -7,14 +7,8 @@ import AOS from 'aos';
 import { ScrollToTop } from '../Components/Shared/ScrollToTop';
 
 const MainLayOut = () => {
-  const { spinner } = useContext(AuthContext);
-  const navigation = useNavigation();
   const pathName = window.location.pathname;
 
-  // Show loading spinner when:
-  // 1. Auth is loading (spinner = true)
-  // 2. Navigating to new page (navigation.state = 'loading')
-  const isLoading = spinner || navigation.state === 'loading';
   useEffect(() => {
     AOS.init({
       duration: 1000,
