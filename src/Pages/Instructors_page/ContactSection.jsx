@@ -2,6 +2,8 @@ import { FaEnvelope, FaPhone } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export const ContactSection = ({ address, phone, instructor_email, _id, ContactInfo }) => {
+  console.log(_id);
+  
   return (
     <div className="animate-fadeIn space-y-4">
       <div className="flex items-center gap-2 mb-4">
