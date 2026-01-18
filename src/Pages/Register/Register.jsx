@@ -4,10 +4,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaUser, FaImage } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import Container from '../../Components/Container';
-import SocialLogin from '../../Components/Socail/SocailLogin';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { SubmitButton } from '../../Components/ui/Button';
 import { getApiUrl } from '../../config/api/Config';
+import SocialLogin from '../../Components/Social/SocialLogin';
 
 const Register = () => {
   const { registration, userUpdating } = useContext(AuthContext);
