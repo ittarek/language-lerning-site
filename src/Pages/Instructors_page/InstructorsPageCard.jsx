@@ -248,6 +248,7 @@ const InstructorsPageCard = ({ instructor = {} }) => {
             {activeSection === 'contact' && (
               <ContactSection
                 address={address}
+                ContactInfo={ContactInfo}
                 phone={phone}
                 instructor_email={instructor_email}
                 _id={_id}
