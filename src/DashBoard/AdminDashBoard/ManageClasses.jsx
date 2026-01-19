@@ -46,7 +46,6 @@ const ManageClasses = () => {
     // যদি 24 এর বেশি হয় তাহলে প্রথম 24টা নিন
     if (classId.length > 24) {
       classId = classId.substring(0, 24);
-      console.log('Corrected ID:', classId);
     }
 
     Swal.fire({
