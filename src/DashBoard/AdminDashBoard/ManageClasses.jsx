@@ -62,16 +62,34 @@ const ManageClasses = () => {
         fetch(`${API_URL}/AllClasses/approve/${classId}`, {
           method: 'PATCH',
         })
-          .then(res => res.json())
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json(); // এটা করতে হবে!
+            console.log(res);
+          })
+
           .then(data => {
+            console.log('Parsed Data:', data); // এখন actual data পাবেন
+
             if (data.error) {
               toast.error(data.message, { position: 'top-right' });
               return;
             }
 
+            // MongoDB update response check করুন
             if (data.modifiedCount > 0) {
-              refetch();
+              refetch(); // Data reload করুন
               toast.success('Class approved successfully!', {
+                position: 'top-right',
+              });
+            } else if (data.matchedCount > 0) {
+              toast.info('Class was already approved', {
+                position: 'top-right',
+              });
+            } else {
+              toast.warning('Class not found', {
                 position: 'top-right',
               });
             }
