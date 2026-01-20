@@ -25,31 +25,24 @@ const ManageUsers = () => {
     return user;
   });
 
-
   // Filter and search logic
   const filteredUsers = useMemo(() => {
     let result = users;
-console.log(result);
+    console.log(result);
 
     // Filter by role
     if (filterRole !== 'all') {
-      result = result.filter(user => user.roll || user.role === filterRole);
+      result = result.filter(user => user.role === filterRole);
       console.log(filterRole);
-      
     }
 
     // Search by name or email
     if (searchTerm) {
-
-      
       result = result.filter(
         user =>
           user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
-
-
-      
     }
 
     // Sort
@@ -273,9 +266,9 @@ console.log(result);
                       <td className="px-6 py-4">
                         <p className="text-sm text-gray-600">{user.email}</p>
                       </td>
-                      <td className="px-6 py-4">{getRoleBadge(user.roll)}</td>
+                      <td className="px-6 py-4">{getRoleBadge(user.role)}</td>
                       <td className="px-6 py-4">
-                        {user.roll === 'admin' ? (
+                        {user.role === 'admin' ? (
                           <span className="px-3 py-1 text-xs font-semibold text-gray-500">
                             Already Admin
                           </span>
@@ -288,7 +281,7 @@ console.log(result);
                         )}
                       </td>
                       <td className="px-6 py-4">
-                        {user.roll === 'instructor' ? (
+                        {user.role === 'instructor' ? (
                           <span className="px-3 py-1 text-xs font-semibold text-gray-500">
                             Already Instructor
                           </span>

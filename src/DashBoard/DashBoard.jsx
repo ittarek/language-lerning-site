@@ -24,6 +24,7 @@ const DashBoard = () => {
     const { user, loggedOut, spinner } = useContext(AuthContext);
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+console.log("user",user);
 
     const [isInstructor, isInstructorsLoading] = useInstructors();
     const [isAdmin, isAdminLoading] = useAdmin();
@@ -48,7 +49,7 @@ const DashBoard = () => {
     const getMenuItems = () => {
         if (isAdmin && !isInstructor) {
             return {
-                role: "Admin",
+                role: "admin",
                 roleIcon: <FaUserShield className="text-2xl" />,
                 items: [
                     { to: "adminHome", icon: <FaHome />, label: "Admin Home" },
@@ -60,18 +61,18 @@ const DashBoard = () => {
 
         if (isInstructor && !isAdmin) {
             return {
-                role: "Instructor",
-                roleIcon: <FaChalkboardTeacher className="text-2xl" />,
-                items: [
-                    { to: "instructorHome", icon: <FaHome />, label: "Instructor Home" },
-                    { to: "addClass", icon: <FaPlus />, label: "Add A Class" },
-                    { to: "myAddedClasses", icon: <FaBookOpen />, label: "My Classes" },
-                ],
+              role: 'instructor',
+              roleIcon: <FaChalkboardTeacher className="text-2xl" />,
+              items: [
+                { to: 'instructorHome', icon: <FaHome />, label: 'Instructor Home' },
+                { to: 'addClass', icon: <FaPlus />, label: 'Add A Class' },
+                { to: 'myAddedClasses', icon: <FaBookOpen />, label: 'My Classes' },
+              ],
             };
         }
 
         return {
-            role: "Student",
+            role: "student",
             roleIcon: <FaGraduationCap className="text-2xl" />,
             items: [
                 { to: "studentHome", icon: <FaHome />, label: "Student Home" },
