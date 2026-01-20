@@ -5,15 +5,10 @@ import {
     FaCalendarAlt,
     FaDollarSign,
     FaArrowUp,
-    FaArrowDown,
     FaChartLine,
-    FaGraduationCap,
     FaChalkboardTeacher,
-    FaClipboardList,
-    FaTrophy,
     FaEye,
     FaEdit,
-    FaTrash
 } from 'react-icons/fa';
 
 const AdminHome = () => {
