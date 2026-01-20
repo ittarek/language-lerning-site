@@ -9,6 +9,7 @@ import AdminROutes from './AdminROutes';
 import { LoadingState } from '../Components/Shared/FetchStates/LoadingState';
 import RoleBasedDashboard from './RoleBasedDashboard';
 import { getApiUrl } from '../config/api/Config';
+import { ManageInstructors } from '../DashBoard/AdminDashBoard/ManageInstructors';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -405,6 +406,16 @@ export const router = createBrowserRouter([
           <AdminROutes>
             <Suspense fallback={<Loader />}>
               <ManageUsers />
+            </Suspense>
+          </AdminROutes>
+        ),
+      },
+      {
+        path: 'manageInstructors',
+        element: (
+          <AdminROutes>
+            <Suspense fallback={<Loader />}>
+              <ManageInstructors />
             </Suspense>
           </AdminROutes>
         ),
