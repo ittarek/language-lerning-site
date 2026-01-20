@@ -8,6 +8,8 @@ import { getApiUrl } from '../../config/api/Config';
 
 const ManageClasses = () => {
   const [classes, , refetch] = useClass();
+  
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
