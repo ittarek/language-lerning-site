@@ -10,6 +10,7 @@ import { LoadingState } from '../Components/Shared/FetchStates/LoadingState';
 import RoleBasedDashboard from './RoleBasedDashboard';
 import { getApiUrl } from '../config/api/Config';
 import { ManageInstructors } from '../DashBoard/AdminDashBoard/ManageInstructors';
+import { ManageEvents } from '../DashBoard/AdminDashBoard/AdminHome/ManageEvents';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -416,6 +417,16 @@ export const router = createBrowserRouter([
           <AdminROutes>
             <Suspense fallback={<Loader />}>
               <ManageInstructors />
+            </Suspense>
+          </AdminROutes>
+        ),
+      },
+      {
+        path: 'manageEvents',
+        element: (
+          <AdminROutes>
+            <Suspense fallback={<Loader />}>
+              <ManageEvents />
             </Suspense>
           </AdminROutes>
         ),
