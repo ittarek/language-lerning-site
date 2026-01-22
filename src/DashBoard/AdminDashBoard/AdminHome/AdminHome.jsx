@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { Overview } from './Overview';
 import { QuickActions } from './QuickActions';
 import { RecentUsers } from './RecentUsers';
+import { PopularClasses } from './PopularClasses';
 
 const AdminHome = () => {
   const [stats, setStats] = useState({
@@ -188,30 +189,7 @@ const AdminHome = () => {
  <RecentUsers/>
 
         {/* Popular Classes */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-800">Popular Classes</h2>
-            <button className="text-sm text-indigo-600 hover:text-indigo-700 font-semibold">
-              View All →
-            </button>
-          </div>
-          <div className="space-y-4">
-            {popularClasses.map(classItem => (
-              <div
-                key={classItem.id}
-                className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                <div className="flex-1">
-                  <p className="font-medium text-gray-800 text-sm">{classItem.name}</p>
-                  <p className="text-xs text-gray-500">{classItem.instructor}</p>
-                </div>
-                <div className="text-right">
-                  <p className="font-bold text-indigo-600">{classItem.students}</p>
-                  <p className="text-xs text-gray-500">students</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <PopularClasses/>
       </div>
     </div>
   );
