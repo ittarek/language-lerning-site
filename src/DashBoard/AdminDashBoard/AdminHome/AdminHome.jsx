@@ -29,43 +29,7 @@ const AdminHome = () => {
   });
 
 
-  const popularClasses = [
-    {
-      id: 1,
-      name: 'Spanish for Beginners',
-      students: 156,
-      instructor: 'Maria Garcia',
-      status: 'Active',
-    },
-    {
-      id: 2,
-      name: 'Advanced French',
-      students: 128,
-      instructor: 'Pierre Dubois',
-      status: 'Active',
-    },
-    {
-      id: 3,
-      name: 'Japanese Fundamentals',
-      students: 112,
-      instructor: 'Yuki Tanaka',
-      status: 'Active',
-    },
-    {
-      id: 4,
-      name: 'German Conversation',
-      students: 98,
-      instructor: 'Hans Mueller',
-      status: 'Active',
-    },
-    {
-      id: 5,
-      name: 'Italian Basics',
-      students: 87,
-      instructor: 'Giuseppe Rossi',
-      status: 'Active',
-    },
-  ];
+
 
   const upcomingEvents = [
     {
