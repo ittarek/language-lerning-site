@@ -31,7 +31,7 @@ export const QuickActions = () => {
           </button>
         </Link>
 
-        <Link to={`dashboard/manageEvents`}>
+        <Link to={`/dashboard/manageEvents`}>
           {' '}
           <button className="w-full flex items-center gap-3 p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors group">
             <div className="p-2 bg-blue-600 rounded-lg group-hover:scale-110 transition-transform">
