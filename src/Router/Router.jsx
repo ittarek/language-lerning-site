@@ -81,7 +81,7 @@ const InsTructionFeedBack = lazy(() =>
 
 const ManageClasses = lazy(() => import('../DashBoard/AdminDashBoard/ManageClasses'));
 const ManageUsers = lazy(() => import('../DashBoard/AdminDashBoard/ManageUsers'));
-const AdminHome = lazy(() => import('../DashBoard/AdminDashBoard/AdminHome'));
+const AdminHome = lazy(() => import('../DashBoard/AdminDashBoard/AdminHome/AdminHome'));
 const AdminFeedBack = lazy(() => import('../DashBoard/AdminDashBoard/AdminFeedBack'));
 
 // 🔹 Reusable Loader
