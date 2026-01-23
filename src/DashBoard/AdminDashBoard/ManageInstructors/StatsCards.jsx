@@ -1,6 +1,6 @@
-import { FiBook, FiCheckCircle, FiUser, FiXCircle } from "react-icons/fi";
+import { FiBook, FiCheckCircle, FiUser, FiXCircle } from 'react-icons/fi';
 
-export const StatsCards = ([instructors]) => {
+export const StatsCards = ({ instructors }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
       <div className="bg-white rounded-lg shadow-sm p-6">
