@@ -3,6 +3,7 @@ export const ModalForEditingInstructors = ({
   editingInstructor,
   formData,
   handleSubmit,
+  setShowModal,
 }) => {
   return (
     <div>

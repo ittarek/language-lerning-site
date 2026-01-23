@@ -1,6 +1,11 @@
 import { FiDownload, FiPlus, FiRefreshCw } from 'react-icons/fi';
 
-export const InstructorsHeader = ({ fetchInstructors }) => {
+export const InstructorsHeader = ({
+  fetchInstructors,
+  setEditingInstructor,
+  setFormData,
+  setShowModal,
+}) => {
   // Export to CSV
   const exportToCSV = () => {
     const headers = [

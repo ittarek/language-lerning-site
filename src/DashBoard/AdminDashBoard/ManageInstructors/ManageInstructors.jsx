@@ -219,7 +219,12 @@ export const ManageInstructors = () => {
 
       <div className="max-w-7xl mx-auto p-4 sm:p-6">
         {/* Header */}
-        <InstructorsHeader fetchInstructors={fetchInstructors} />
+        <InstructorsHeader
+          fetchInstructors={fetchInstructors}
+          setEditingInstructor={setEditingInstructor}
+          setFormData={setFormData}
+          setShowModal={setShowModal}
+        />
 
         {/* Filters and Search */}
         <FilterSearch
@@ -433,6 +438,7 @@ export const ManageInstructors = () => {
         editingInstructor={editingInstructor}
         formData={formData}
         handleSubmit={handleSubmit}
+        setShowModal={setShowModal}
       />
     </div>
   );
