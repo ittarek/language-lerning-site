@@ -322,7 +322,7 @@ export const ManageInstructors = () => {
         />
 
         {/* Stats Cards */}
-    <StatsCards/>
+        <StatsCards instructors={instructors} />
 
         {/* Instructors Table */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
