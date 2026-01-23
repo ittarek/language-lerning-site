@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import {
   FiSearch,
   FiPlus,
@@ -15,111 +15,170 @@ import {
   FiChevronRight,
   FiArrowUp,
   FiArrowDown,
+  FiRefreshCw,
 } from 'react-icons/fi';
+import { Helmet } from 'react-helmet-async';
 
 export const ManageInstructors = () => {
-  const [instructors, setInstructors] = useState([
-    {
-      id: 1,
-      name: 'Abdul Karim',
-      email: 'abdul.karim@example.com',
-      phone: '01712345678',
-      subject: 'Mathematics',
-      joiningDate: '2023-01-15',
-      status: 'active',
-      totalStudents: 45,
-    },
-    {
-      id: 2,
-      name: 'Fatema Akter',
-      email: 'fatema.akter@example.com',
-      phone: '01812345678',
-      subject: 'English',
-      joiningDate: '2023-03-20',
-      status: 'active',
-      totalStudents: 38,
-    },
-    {
-      id: 3,
-      name: 'Mohammad Rahim',
-      email: 'mohammad.rahim@example.com',
-      phone: '01912345678',
-      subject: 'Physics',
-      joiningDate: '2022-11-10',
-      status: 'inactive',
-      totalStudents: 32,
-    },
-    {
-      id: 4,
-      name: 'Ayesha Rahman',
-      email: 'ayesha.rahman@example.com',
-      phone: '01612345678',
-      subject: 'Chemistry',
-      joiningDate: '2023-05-12',
-      status: 'active',
-      totalStudents: 41,
-    },
-    {
-      id: 5,
-      name: 'Kamal Hossain',
-      email: 'kamal.hossain@example.com',
-      phone: '01512345678',
-      subject: 'Biology',
-      joiningDate: '2022-08-25',
-      status: 'active',
-      totalStudents: 52,
-    },
-    {
-      id: 6,
-      name: 'Nadia Islam',
-      email: 'nadia.islam@example.com',
-      phone: '01412345678',
-      subject: 'Computer Science',
-      joiningDate: '2023-02-14',
-      status: 'active',
-      totalStudents: 48,
-    },
-    {
-      id: 7,
-      name: 'Rashid Ahmed',
-      email: 'rashid.ahmed@example.com',
-      phone: '01312345678',
-      subject: 'History',
-      joiningDate: '2022-09-30',
-      status: 'inactive',
-      totalStudents: 28,
-    },
-    {
-      id: 8,
-      name: 'Sabina Khatun',
-      email: 'sabina.khatun@example.com',
-      phone: '01212345678',
-      subject: 'Geography',
-      joiningDate: '2023-04-18',
-      status: 'active',
-      totalStudents: 35,
-    },
-  ]);
-
+  const [instructors, setInstructors] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [showModal, setShowModal] = useState(false);
   const [editingInstructor, setEditingInstructor] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [formData, setFormData] = useState({
-    name: '',
+    displayName: '',
     email: '',
     phone: '',
     subject: '',
+    photoURL: '',
     status: 'active',
   });
+
+  // Simulated API call - Replace with your actual API/Firebase call
+  useEffect(() => {
+    fetchInstructors();
+  }, []);
+
+  const fetchInstructors = async () => {
+    setLoading(true);
+    try {
+      // Replace this with your actual API call
+      // const response = await fetch('YOUR_API_ENDPOINT/instructors');
+      // const data = await response.json();
+
+      // Mock data for demonstration
+      const mockData = [
+        {
+          uid: 'Z8v7zggozmZr1DAJ8Jf1uNEa0AP2',
+          displayName: 'IT Tarek',
+          email: 'ittarek551@gmail.com',
+          phone: '01712345678',
+          photoURL:
+            'https://lh3.googleusercontent.com/a/AAcHTtdRcdaMBy7l5Exg06KsuFhnEUoyHqUhh5KWQymz=s96-c',
+          subject: 'Web Development',
+          emailVerified: true,
+          createdAt: '2023-06-08T10:01:31.000Z',
+          lastLoginAt: '2026-01-20T17:44:41.000Z',
+          status: 'active',
+          totalStudents: 45,
+          totalClasses: 5,
+        },
+        {
+          uid: 'ABC123XYZ456',
+          displayName: 'Sarah Ahmed',
+          email: 'sarah.ahmed@example.com',
+          phone: '01812345678',
+          photoURL: 'https://i.pravatar.cc/150?img=1',
+          subject: 'English Language',
+          emailVerified: true,
+          createdAt: '2023-03-20T08:30:00.000Z',
+          lastLoginAt: '2026-01-19T14:20:15.000Z',
+          status: 'active',
+          totalStudents: 38,
+          totalClasses: 4,
+        },
+        {
+          uid: 'DEF789GHI012',
+          displayName: 'Mohammad Rahman',
+          email: 'mohammad.rahman@example.com',
+          phone: '01912345678',
+          photoURL: 'https://i.pravatar.cc/150?img=12',
+          subject: 'Mathematics',
+          emailVerified: true,
+          createdAt: '2022-11-10T12:15:30.000Z',
+          lastLoginAt: '2026-01-15T09:30:00.000Z',
+          status: 'inactive',
+          totalStudents: 32,
+          totalClasses: 3,
+        },
+        {
+          uid: 'JKL345MNO678',
+          displayName: 'Ayesha Khan',
+          email: 'ayesha.khan@example.com',
+          phone: '01612345678',
+          photoURL: 'https://i.pravatar.cc/150?img=5',
+          subject: 'Science',
+          emailVerified: true,
+          createdAt: '2023-05-12T15:45:20.000Z',
+          lastLoginAt: '2026-01-20T11:10:30.000Z',
+          status: 'active',
+          totalStudents: 41,
+          totalClasses: 6,
+        },
+        {
+          uid: 'PQR901STU234',
+          displayName: 'Kamal Hossain',
+          email: 'kamal.hossain@example.com',
+          phone: '01512345678',
+          photoURL: 'https://i.pravatar.cc/150?img=13',
+          subject: 'Physics',
+          emailVerified: true,
+          createdAt: '2022-08-25T10:20:00.000Z',
+          lastLoginAt: '2026-01-18T16:45:10.000Z',
+          status: 'active',
+          totalStudents: 52,
+          totalClasses: 7,
+        },
+        {
+          uid: 'VWX567YZA890',
+          displayName: 'Nadia Islam',
+          email: 'nadia.islam@example.com',
+          phone: '01412345678',
+          photoURL: 'https://i.pravatar.cc/150?img=9',
+          subject: 'Computer Science',
+          emailVerified: true,
+          createdAt: '2023-02-14T09:25:40.000Z',
+          lastLoginAt: '2026-01-21T08:15:22.000Z',
+          status: 'active',
+          totalStudents: 48,
+          totalClasses: 5,
+        },
+        {
+          uid: 'BCD234EFG567',
+          displayName: 'Rashid Ahmed',
+          email: 'rashid.ahmed@example.com',
+          phone: '01312345678',
+          photoURL: 'https://i.pravatar.cc/150?img=14',
+          subject: 'History',
+          emailVerified: false,
+          createdAt: '2022-09-30T14:50:10.000Z',
+          lastLoginAt: '2025-12-10T10:30:00.000Z',
+          status: 'inactive',
+          totalStudents: 28,
+          totalClasses: 2,
+        },
+        {
+          uid: 'HIJ890KLM123',
+          displayName: 'Sabina Khatun',
+          email: 'sabina.khatun@example.com',
+          phone: '01212345678',
+          photoURL: 'https://i.pravatar.cc/150?img=20',
+          subject: 'Geography',
+          emailVerified: true,
+          createdAt: '2023-04-18T11:35:25.000Z',
+          lastLoginAt: '2026-01-20T13:40:18.000Z',
+          status: 'active',
+          totalStudents: 35,
+          totalClasses: 4,
+        },
+      ];
+
+      setInstructors(mockData);
+    } catch (error) {
+      console.error('Error fetching instructors:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Filtering
   const filteredInstructors = instructors.filter(instructor => {
     const matchesSearch =
-      instructor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      instructor.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       instructor.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
       instructor.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' || instructor.status === filterStatus;
@@ -159,10 +218,11 @@ export const ManageInstructors = () => {
   const handleAddNew = () => {
     setEditingInstructor(null);
     setFormData({
-      name: '',
+      displayName: '',
       email: '',
       phone: '',
       subject: '',
+      photoURL: '',
       status: 'active',
     });
     setShowModal(true);
@@ -171,66 +231,123 @@ export const ManageInstructors = () => {
   const handleEdit = instructor => {
     setEditingInstructor(instructor);
     setFormData({
-      name: instructor.name,
+      displayName: instructor.displayName,
       email: instructor.email,
       phone: instructor.phone,
       subject: instructor.subject,
+      photoURL: instructor.photoURL,
       status: instructor.status,
     });
     setShowModal(true);
   };
 
-  const handleDelete = id => {
+  const handleDelete = async uid => {
     if (window.confirm('Are you sure you want to delete this instructor?')) {
-      setInstructors(instructors.filter(inst => inst.id !== id));
+      try {
+        // Replace with your actual API call
+        // await fetch(`YOUR_API_ENDPOINT/instructors/${uid}`, { method: 'DELETE' });
+
+        setInstructors(instructors.filter(inst => inst.uid !== uid));
+      } catch (error) {
+        console.error('Error deleting instructor:', error);
+      }
     }
   };
 
-  const handleSubmit = () => {
-    if (editingInstructor) {
+  const handleSubmit = async () => {
+    try {
+      if (editingInstructor) {
+        // Update existing instructor
+        // await fetch(`YOUR_API_ENDPOINT/instructors/${editingInstructor.uid}`, {
+        //   method: 'PUT',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(formData)
+        // });
+
+        setInstructors(
+          instructors.map(inst =>
+            inst.uid === editingInstructor.uid ? { ...inst, ...formData } : inst
+          )
+        );
+      } else {
+        // Add new instructor
+        // const response = await fetch('YOUR_API_ENDPOINT/instructors', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(formData)
+        // });
+        // const newInstructor = await response.json();
+
+        const newInstructor = {
+          uid: `UID_${Date.now()}`,
+          ...formData,
+          emailVerified: false,
+          createdAt: new Date().toISOString(),
+          lastLoginAt: null,
+          totalStudents: 0,
+          totalClasses: 0,
+        };
+        setInstructors([...instructors, newInstructor]);
+      }
+      setShowModal(false);
+    } catch (error) {
+      console.error('Error saving instructor:', error);
+    }
+  };
+
+  const handleStatusToggle = async (uid, currentStatus) => {
+    const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+    try {
+      // Replace with your actual API call
+      // await fetch(`YOUR_API_ENDPOINT/instructors/${uid}/status`, {
+      //   method: 'PATCH',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ status: newStatus })
+      // });
+
       setInstructors(
         instructors.map(inst =>
-          inst.id === editingInstructor.id ? { ...inst, ...formData } : inst
+          inst.uid === uid ? { ...inst, status: newStatus } : inst
         )
       );
-    } else {
-      const newInstructor = {
-        id: Math.max(...instructors.map(i => i.id)) + 1,
-        ...formData,
-        joiningDate: new Date().toISOString().split('T')[0],
-        totalStudents: 0,
-      };
-      setInstructors([...instructors, newInstructor]);
+    } catch (error) {
+      console.error('Error updating status:', error);
     }
-    setShowModal(false);
   };
 
   // Export to CSV
   const exportToCSV = () => {
     const headers = [
-      'ID',
+      'UID',
       'Name',
       'Email',
       'Phone',
       'Subject',
-      'Joining Date',
+      'Email Verified',
+      'Created At',
+      'Last Login',
       'Status',
       'Total Students',
+      'Total Classes',
     ];
     const csvData = sortedInstructors.map(inst => [
-      inst.id,
-      inst.name,
+      inst.uid,
+      inst.displayName,
       inst.email,
-      inst.phone,
+      inst.phone || 'N/A',
       inst.subject,
-      inst.joiningDate,
+      inst.emailVerified ? 'Yes' : 'No',
+      new Date(inst.createdAt).toLocaleDateString(),
+      inst.lastLoginAt ? new Date(inst.lastLoginAt).toLocaleDateString() : 'Never',
       inst.status,
       inst.totalStudents,
+      inst.totalClasses,
     ]);
 
-    const csvContent = [headers.join(','), ...csvData.map(row => row.join(','))].join(
-      '\n'
-    );
+    const csvContent = [
+      headers.join(','),
+      ...csvData.map(row => row.map(cell => `"${cell}"`).join(',')),
+    ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -257,17 +374,40 @@ export const ManageInstructors = () => {
     );
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <FiRefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Loading instructors...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>Manage Instructors | Admin Dashboard</title>
+      </Helmet>
+
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Instructor Management</h1>
-              <p className="text-gray-600 mt-1">View and manage all instructors</p>
+              <h1 className="text-2xl font-bold text-gray-900">Manage Instructors</h1>
+              <p className="text-gray-600 mt-1">
+                View and manage all instructors in the system
+              </p>
             </div>
             <div className="flex gap-3">
+              <button
+                onClick={fetchInstructors}
+                className="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">
+                <FiRefreshCw className="w-5 h-5" />
+                Refresh
+              </button>
               <button
                 onClick={exportToCSV}
                 className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
@@ -321,7 +461,7 @@ export const ManageInstructors = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -361,6 +501,19 @@ export const ManageInstructors = () => {
               </div>
             </div>
           </div>
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm">Total Classes</p>
+                <p className="text-3xl font-bold text-purple-600 mt-1">
+                  {instructors.reduce((sum, i) => sum + (i.totalClasses || 0), 0)}
+                </p>
+              </div>
+              <div className="bg-purple-100 p-3 rounded-lg">
+                <FiBook className="w-6 h-6 text-purple-600" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Instructors Table */}
@@ -371,10 +524,10 @@ export const ManageInstructors = () => {
                 <tr>
                   <th
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSort('name')}>
+                    onClick={() => handleSort('displayName')}>
                     <div className="flex items-center gap-2">
                       Instructor
-                      <SortIcon columnKey="name" />
+                      <SortIcon columnKey="displayName" />
                     </div>
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -398,10 +551,10 @@ export const ManageInstructors = () => {
                   </th>
                   <th
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSort('joiningDate')}>
+                    onClick={() => handleSort('createdAt')}>
                     <div className="flex items-center gap-2">
-                      Joining Date
-                      <SortIcon columnKey="joiningDate" />
+                      Joined
+                      <SortIcon columnKey="createdAt" />
                     </div>
                   </th>
                   <th
@@ -419,18 +572,39 @@ export const ManageInstructors = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {currentInstructors.map(instructor => (
-                  <tr key={instructor.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={instructor.uid} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
-                          <FiUser className="w-5 h-5 text-blue-600" />
+                        <div className="flex-shrink-0 h-10 w-10">
+                          {instructor.photoURL ? (
+                            <img
+                              src={instructor.photoURL}
+                              alt={instructor.displayName}
+                              className="h-10 w-10 rounded-full object-cover"
+                              onError={e => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                  'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234F46E5"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E';
+                              }}
+                            />
+                          ) : (
+                            <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                              <FiUser className="w-5 h-5 text-blue-600" />
+                            </div>
+                          )}
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {instructor.name}
+                            {instructor.displayName}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            ID: #{instructor.id}
+                          <div className="text-sm text-gray-500 flex items-center gap-1">
+                            {instructor.emailVerified && (
+                              <FiCheckCircle
+                                className="w-3 h-3 text-green-600"
+                                title="Email Verified"
+                              />
+                            )}
+                            UID: {instructor.uid.substring(0, 8)}...
                           </div>
                         </div>
                       </div>
@@ -440,10 +614,12 @@ export const ManageInstructors = () => {
                         <FiMail className="w-4 h-4" />
                         {instructor.email}
                       </div>
-                      <div className="text-sm text-gray-500 flex items-center gap-1 mt-1">
-                        <FiPhone className="w-4 h-4" />
-                        {instructor.phone}
-                      </div>
+                      {instructor.phone && (
+                        <div className="text-sm text-gray-500 flex items-center gap-1 mt-1">
+                          <FiPhone className="w-4 h-4" />
+                          {instructor.phone}
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
@@ -452,22 +628,43 @@ export const ManageInstructors = () => {
                           {instructor.subject}
                         </span>
                       </div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        {instructor.totalClasses || 0} classes
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {instructor.totalStudents}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(instructor.joiningDate).toLocaleDateString('en-US')}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">
+                        {new Date(instructor.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </div>
+                      {instructor.lastLoginAt && (
+                        <div className="text-xs text-gray-500 mt-1">
+                          Last:{' '}
+                          {new Date(instructor.lastLoginAt).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      <button
+                        onClick={() =>
+                          handleStatusToggle(instructor.uid, instructor.status)
+                        }
+                        className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full cursor-pointer transition-colors ${
                           instructor.status === 'active'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
+                            ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                            : 'bg-red-100 text-red-800 hover:bg-red-200'
                         }`}>
                         {instructor.status === 'active' ? 'Active' : 'Inactive'}
-                      </span>
+                      </button>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center gap-2">
@@ -478,7 +675,7 @@ export const ManageInstructors = () => {
                           <FiEdit2 className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => handleDelete(instructor.id)}
+                          onClick={() => handleDelete(instructor.uid)}
                           className="text-red-600 hover:text-red-900 p-2 hover:bg-red-50 rounded transition-colors"
                           title="Delete">
                           <FiTrash2 className="w-4 h-4" />
@@ -495,43 +692,31 @@ export const ManageInstructors = () => {
             <div className="text-center py-12">
               <FiUser className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-500">No instructors found</p>
+              <p className="text-gray-400 text-sm mt-1">
+                Try adjusting your search or filters
+              </p>
             </div>
           )}
 
           {/* Pagination */}
           {filteredInstructors.length > 0 && (
             <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-              <div className="text-sm text-gray-700">
-                Showing {indexOfFirstItem + 1} to{' '}
-                {Math.min(indexOfLastItem, sortedInstructors.length)} of{' '}
-                {sortedInstructors.length} results
+              <div className="text-sm text-gray-600">
+                Page {currentPage} of {totalPages}
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
-                  <FiChevronLeft className="w-5 h-5" />
+                  className="p-2 rounded bg-white border disabled:opacity-50">
+                  <FiChevronLeft />
                 </button>
-                <div className="flex gap-1">
-                  {[...Array(totalPages)].map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentPage(idx + 1)}
-                      className={`px-3 py-1 rounded-lg ${
-                        currentPage === idx + 1
-                          ? 'bg-blue-600 text-white'
-                          : 'border border-gray-300 hover:bg-gray-100'
-                      }`}>
-                      {idx + 1}
-                    </button>
-                  ))}
-                </div>
+
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
-                  <FiChevronRight className="w-5 h-5" />
+                  className="p-2 rounded bg-white border disabled:opacity-50">
+                  <FiChevronRight />
                 </button>
               </div>
             </div>
@@ -541,86 +726,69 @@ export const ManageInstructors = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              {editingInstructor ? 'Edit Instructor' : 'Add New Instructor'}
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg w-full max-w-lg p-6">
+            <h2 className="text-xl font-bold mb-4">
+              {editingInstructor ? 'Edit Instructor' : 'Add Instructor'}
             </h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  value={formData.subject}
-                  onChange={e => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Status
-                </label>
-                <select
-                  value={formData.status}
-                  onChange={e => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-              <div className="flex gap-3 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                  {editingInstructor ? 'Update' : 'Add'}
-                </button>
-              </div>
+
+            <div className="space-y-3">
+              <input
+                type="text"
+                placeholder="Name"
+                value={formData.displayName}
+                onChange={e => setFormData({ ...formData, displayName: e.target.value })}
+                className="w-full border px-3 py-2 rounded"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={e => setFormData({ ...formData, email: e.target.value })}
+                className="w-full border px-3 py-2 rounded"
+              />
+              <input
+                type="text"
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full border px-3 py-2 rounded"
+              />
+              <input
+                type="text"
+                placeholder="Subject"
+                value={formData.subject}
+                onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                className="w-full border px-3 py-2 rounded"
+              />
+              <input
+                type="text"
+                placeholder="Photo URL"
+                value={formData.photoURL}
+                onChange={e => setFormData({ ...formData, photoURL: e.target.value })}
+                className="w-full border px-3 py-2 rounded"
+              />
+
+              <select
+                value={formData.status}
+                onChange={e => setFormData({ ...formData, status: e.target.value })}
+                className="w-full border px-3 py-2 rounded">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 rounded bg-gray-200">
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="px-4 py-2 rounded bg-blue-600 text-white">
+                Save
+              </button>
             </div>
           </div>
         </div>
