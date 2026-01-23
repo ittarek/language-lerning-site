@@ -21,6 +21,7 @@ import { Helmet } from 'react-helmet-async';
 import mockData from './mockData.json';
 import { FilterSearch } from './FilterSearch';
 import { StatsCards } from './StatsCards';
+import { InstructorsHeader } from './InstructorsHeader';
 export const ManageInstructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -101,18 +102,7 @@ export const ManageInstructors = () => {
     setSortConfig({ key, direction });
   };
 
-  const handleAddNew = () => {
-    setEditingInstructor(null);
-    setFormData({
-      displayName: '',
-      email: '',
-      phone: '',
-      subject: '',
-      photoURL: '',
-      status: 'active',
-    });
-    setShowModal(true);
-  };
+
 
   const handleEdit = instructor => {
     setEditingInstructor(instructor);
@@ -201,53 +191,7 @@ export const ManageInstructors = () => {
     }
   };
 
-  // Export to CSV
-  const exportToCSV = () => {
-    const headers = [
-      'UID',
-      'Name',
-      'Email',
-      'Phone',
-      'Subject',
-      'Email Verified',
-      'Created At',
-      'Last Login',
-      'Status',
-      'Total Students',
-      'Total Classes',
-    ];
-    const csvData = sortedInstructors.map(inst => [
-      inst.uid,
-      inst.displayName,
-      inst.email,
-      inst.phone || 'N/A',
-      inst.subject,
-      inst.emailVerified ? 'Yes' : 'No',
-      new Date(inst.createdAt).toLocaleDateString(),
-      inst.lastLoginAt ? new Date(inst.lastLoginAt).toLocaleDateString() : 'Never',
-      inst.status,
-      inst.totalStudents,
-      inst.totalClasses,
-    ]);
 
-    const csvContent = [
-      headers.join(','),
-      ...csvData.map(row => row.map(cell => `"${cell}"`).join(',')),
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute(
-      'download',
-      `instructors_${new Date().toISOString().split('T')[0]}.csv`
-    );
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   const SortIcon = ({ columnKey }) => {
     if (sortConfig.key !== columnKey) {
@@ -279,7 +223,7 @@ export const ManageInstructors = () => {
 
       <div className="max-w-7xl mx-auto p-4 sm:p-6">
         {/* Header */}
-    
+        <InstructorsHeader fetchInstructors={fetchInstructors} />
 
         {/* Filters and Search */}
         <FilterSearch
