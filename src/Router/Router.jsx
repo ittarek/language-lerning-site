@@ -9,7 +9,7 @@ import AdminROutes from './AdminROutes';
 import { LoadingState } from '../Components/Shared/FetchStates/LoadingState';
 import RoleBasedDashboard from './RoleBasedDashboard';
 import { getApiUrl } from '../config/api/Config';
-import { ManageInstructors } from '../DashBoard/AdminDashBoard/ManageInstructors';
+import { ManageInstructors } from '../DashBoard/AdminDashBoard/ManageInstructors/ManageInstructors';
 import { ManageEvents } from '../DashBoard/AdminDashBoard/AdminHome/ManageEvents';
 
 // 🔹 Public Pages (Lazy)

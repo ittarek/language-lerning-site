@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   FiSearch,
   FiPlus,
@@ -18,7 +18,7 @@ import {
   FiRefreshCw,
 } from 'react-icons/fi';
 import { Helmet } from 'react-helmet-async';
-
+import mockData from './mockData.json';
 export const ManageInstructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,8 +51,6 @@ export const ManageInstructors = () => {
       // const data = await response.json();
 
       // Mock data for demonstration
-      const fetchData =  
-
       setInstructors(mockData);
     } catch (error) {
       console.error('Error fetching instructors:', error);
