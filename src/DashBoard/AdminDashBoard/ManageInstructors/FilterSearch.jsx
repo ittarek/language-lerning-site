@@ -1,5 +1,8 @@
+import { useState } from "react";
+import { FiSearch } from "react-icons/fi";
 
 export const FilterSearch = () => {
+    const [searchTerm, setSearchTerm] = useState('');
   return (
          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
             <div className="flex flex-col md:flex-row gap-4">

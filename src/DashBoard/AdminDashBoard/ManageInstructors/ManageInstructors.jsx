@@ -23,7 +23,7 @@ import { FilterSearch } from './FilterSearch';
 export const ManageInstructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+
   const [filterStatus, setFilterStatus] = useState('all');
   const [showModal, setShowModal] = useState(false);
   const [editingInstructor, setEditingInstructor] = useState(null);
