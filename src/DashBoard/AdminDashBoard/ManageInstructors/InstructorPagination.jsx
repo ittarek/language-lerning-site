@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const InstructorPagination = () => {
+export const InstructorPagination = ({ filteredInstructors }) => {
   return (
     <div>
       {' '}

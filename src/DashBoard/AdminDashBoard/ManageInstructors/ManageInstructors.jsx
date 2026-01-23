@@ -419,7 +419,7 @@ export const ManageInstructors = () => {
           )}
 
           {/* Pagination */}
-    <InstructorPagination/>
+          <InstructorPagination filteredInstructors={filteredInstructors} />
         </div>
       </div>
 
