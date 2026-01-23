@@ -22,6 +22,7 @@ import mockData from './mockData.json';
 import { FilterSearch } from './FilterSearch';
 import { StatsCards } from './StatsCards';
 import { InstructorsHeader } from './InstructorsHeader';
+import { InstructorPagination } from './InstructorPagination';
 export const ManageInstructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -101,8 +102,6 @@ export const ManageInstructors = () => {
     }
     setSortConfig({ key, direction });
   };
-
-
 
   const handleEdit = instructor => {
     setEditingInstructor(instructor);
@@ -190,8 +189,6 @@ export const ManageInstructors = () => {
       console.error('Error updating status:', error);
     }
   };
-
-
 
   const SortIcon = ({ columnKey }) => {
     if (sortConfig.key !== columnKey) {
@@ -422,28 +419,7 @@ export const ManageInstructors = () => {
           )}
 
           {/* Pagination */}
-          {filteredInstructors.length > 0 && (
-            <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                Page {currentPage} of {totalPages}
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="p-2 rounded bg-white border disabled:opacity-50">
-                  <FiChevronLeft />
-                </button>
-
-                <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  className="p-2 rounded bg-white border disabled:opacity-50">
-                  <FiChevronRight />
-                </button>
-              </div>
-            </div>
-          )}
+    <InstructorPagination/>
         </div>
       </div>
 
