@@ -419,7 +419,12 @@ export const ManageInstructors = () => {
           )}
 
           {/* Pagination */}
-          <InstructorPagination filteredInstructors={filteredInstructors} />
+          <InstructorPagination
+            filteredInstructors={filteredInstructors}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </div>
 

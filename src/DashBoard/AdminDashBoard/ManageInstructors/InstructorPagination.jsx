@@ -1,6 +1,12 @@
 import React from 'react';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-export const InstructorPagination = ({ filteredInstructors }) => {
+export const InstructorPagination = ({
+  filteredInstructors,
+  currentPage,
+  totalPages,
+  setCurrentPage,
+}) => {
   return (
     <div>
       {' '}
