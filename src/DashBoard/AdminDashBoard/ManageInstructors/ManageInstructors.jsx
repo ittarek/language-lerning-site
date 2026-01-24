@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import {
-  FiSearch,
-  FiPlus,
   FiEdit2,
   FiTrash2,
   FiMail,
@@ -9,10 +7,6 @@ import {
   FiUser,
   FiBook,
   FiCheckCircle,
-  FiXCircle,
-  FiDownload,
-  FiChevronLeft,
-  FiChevronRight,
   FiArrowUp,
   FiArrowDown,
   FiRefreshCw,
@@ -25,6 +19,7 @@ import { InstructorsHeader } from './InstructorsHeader';
 import { InstructorPagination } from './InstructorPagination';
 import { ModalForEditingInstructors } from './ModalForEditingInstructors';
 import { NoInstructorsFound } from './NoInstructorsFound';
+import Spinner from '../../../Components/Spinner';
 export const ManageInstructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -202,14 +197,7 @@ export const ManageInstructors = () => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <FiRefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading instructors...</p>
-        </div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (
@@ -298,7 +286,7 @@ export const ManageInstructors = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {currentInstructors.map(instructor => (
                   <tr key={instructor.uid} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-2 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
                           {instructor.photoURL ? (
