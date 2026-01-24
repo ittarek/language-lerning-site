@@ -1,7 +1,7 @@
 // ✅ Language Learning Loading Spinner
 const PageLoadingSpinner = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+    <div className="flex  items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
       <div className="text-center space-y-6">
         {/* Animated Spinner */}
         <div className="flex justify-center">
