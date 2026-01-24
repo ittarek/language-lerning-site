@@ -4,8 +4,6 @@
 
 // export default API_URL;
 
-
-
 let API_URL = null;
 let API_URL_PROMISE = null;
 
