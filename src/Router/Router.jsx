@@ -11,6 +11,7 @@ import RoleBasedDashboard from './RoleBasedDashboard';
 import { getApiUrl } from '../config/api/Config';
 import { ManageInstructors } from '../DashBoard/AdminDashBoard/ManageInstructors/ManageInstructors';
 import { ManageEvents } from '../DashBoard/AdminDashBoard/AdminHome/ManageEvents';
+import Spinner from '../Components/Spinner';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -89,6 +90,11 @@ const AdminFeedBack = lazy(() => import('../DashBoard/AdminDashBoard/AdminFeedBa
 const Loader = () => (
   <div className="">
     <LoadingState />
+  </div>
+);
+const DashBoardLoader = () => (
+  <div className="">
+    <Spinner />
   </div>
 );
 
