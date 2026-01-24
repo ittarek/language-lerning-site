@@ -208,11 +208,9 @@ const Navbar = () => {
                     <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-indigo-600 overflow-hidden hover:border-purple-600 transition-colors flex-shrink-0">
                       {user?.photoURL ? (
                         <img
-                          src={user.photoURL}
+                          src={user?.photoURL}
                           alt={user?.displayName || 'User'}
                           className="w-full h-full object-cover"
-                          width="40"
-                          height="40"
                           loading="lazy"
                           onError={e => {
                             e.target.onerror = null;
