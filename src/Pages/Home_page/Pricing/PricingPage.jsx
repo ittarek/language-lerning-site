@@ -117,7 +117,7 @@ export default function PricingPage() {
             return (
               <div
                 key={plan.id}
-                className={`relative group  ${
+                className={`relative group   ${
                   plan.recommended ? 'lg:scale-105 lg:z-10' : ''
                 }`}>
                 {plan.recommended && (
@@ -143,7 +143,7 @@ export default function PricingPage() {
                   <div className="relative p-8 space-y-6">
                     <div className="text-center space-y-2">
                       <div
-                        className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${color.gradient} text-white shadow-lg`}>
+                        className={`inline-flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-r ${color.gradient} text-white shadow-lg`}>
                         {plan.name === 'Yearly' ? (
                           <svg
                             className="w-8 h-8"
@@ -159,7 +159,7 @@ export default function PricingPage() {
                           </svg>
                         ) : (
                           <svg
-                            className="w-8 h-8"
+                            className="w-6 h-6"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -172,15 +172,15 @@ export default function PricingPage() {
                           </svg>
                         )}
                       </div>
-                      <h3 className="text-2xl font-bold text-gray-900 uppercase tracking-wide">
+                      <h3 className=" font-bold text-gray-900 uppercase tracking-wide">
                         {plan.name}
                       </h3>
                     </div>
 
-                    <div className="text-center py-6">
+                    <div className="text-center">
                       <div className="flex items-start justify-center gap-1">
                         <span className="text-3xl font-bold text-gray-900 mt-2">$</span>
-                        <span className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                        <span className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                           {plan.price}
                         </span>
                       </div>
@@ -188,8 +188,8 @@ export default function PricingPage() {
                         {plan.name === 'Lifetime'
                           ? 'one-time payment'
                           : plan.name === 'Yearly'
-                          ? 'per year'
-                          : 'per month'}
+                            ? 'per year'
+                            : 'per month'}
                       </p>
                       {plan.originalPrice && plan.originalPrice > plan.price && (
                         <div className="mt-3 space-y-1">
@@ -219,7 +219,9 @@ export default function PricingPage() {
                       {plan.details}
                     </p>
 
-                    <div className="space-y-3 pt-4">
+                    <div
+                      className="space-y-2 
+                    ">
                       {plan.features.map((f, i) => (
                         <div key={i} className="flex items-center gap-3 text-gray-700">
                           <div

@@ -124,7 +124,7 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-md">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           {/* ✅ Fixed heights for CLS prevention */}
-          <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
+          <div className="flex items-center justify-between h-14 sm:h-16 md:h-16">
             {/* Logo - ✅ Fixed dimensions */}
             <Link
               to="/"
