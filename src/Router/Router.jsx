@@ -11,7 +11,7 @@ import RoleBasedDashboard from './RoleBasedDashboard';
 import { getApiUrl } from '../config/api/Config';
 import { ManageInstructors } from '../DashBoard/AdminDashBoard/ManageInstructors/ManageInstructors';
 import { ManageEvents } from '../DashBoard/AdminDashBoard/AdminHome/ManageEvents';
-import Spinner from '../Components/Spinner';
+import Spinner from '../Components/Spinner/Spinner';
 
 // 🔹 Public Pages (Lazy)
 const Home = lazy(() => import('../Pages/Home_page/Home'));
@@ -27,20 +27,20 @@ const EventDetail = lazy(() => import('../Components/Event/EventDetail'));
 const ErrorPage = lazy(() => import('../Pages/ErrorPage'));
 
 // 🔹 Details Pages (Lazy)
-const ClassDetails = lazy(() =>
-  import('../Pages/Home_page/Popular_section/ClassDetails')
+const ClassDetails = lazy(
+  () => import('../Pages/Home_page/Popular_section/ClassDetails')
 );
-const InstructorDetails = lazy(() =>
-  import('../Pages/Home_page/Instructor/InstructorDetails')
+const InstructorDetails = lazy(
+  () => import('../Pages/Home_page/Instructor/InstructorDetails')
 );
-const ComingSoonCourseDetails = lazy(() =>
-  import('../Pages/Home_page/ComingSoonCourseDetails')
+const ComingSoonCourseDetails = lazy(
+  () => import('../Pages/Home_page/ComingSoonCourseDetails')
 );
-const TradingArticleDetails = lazy(() =>
-  import('../Pages/Home_page/TradingArticle/TradingArticleDetails')
+const TradingArticleDetails = lazy(
+  () => import('../Pages/Home_page/TradingArticle/TradingArticleDetails')
 );
-const WishlistSystem = lazy(() =>
-  import('../Pages/Home_page/WishlistSystem/WishlistSystem')
+const WishlistSystem = lazy(
+  () => import('../Pages/Home_page/WishlistSystem/WishlistSystem')
 );
 
 // 🔹 Pricing & Checkout Pages (Lazy)
@@ -48,37 +48,37 @@ const PricingPage = lazy(() => import('../Pages/Home_page/Pricing/PricingPage'))
 const ProcessingPage = lazy(() => import('../Pages/Home_page/Pricing/ProcessingPage'));
 const SuccessPage = lazy(() => import('../Pages/Home_page/Pricing/SuccessPage'));
 const CheckoutPage = lazy(() => import('../Pages/Home_page/Pricing/CheckoutPage'));
-const ContactSalesPage = lazy(() =>
-  import('../Pages/Home_page/Pricing/ContactSalesPage')
+const ContactSalesPage = lazy(
+  () => import('../Pages/Home_page/Pricing/ContactSalesPage')
 );
 
 // 🔹 About Pages (Lazy)
-const CourseExplorerPage = lazy(() =>
-  import('../Pages/Home_page/AboutUs/CourseExplorerPage')
+const CourseExplorerPage = lazy(
+  () => import('../Pages/Home_page/AboutUs/CourseExplorerPage')
 );
-const DetailedAboutPage = lazy(() =>
-  import('../Pages/Home_page/AboutUs/DetailedAboutPage')
+const DetailedAboutPage = lazy(
+  () => import('../Pages/Home_page/AboutUs/DetailedAboutPage')
 );
 
 // 🔹 Dashboard Pages (Lazy)
 const DashBoard = lazy(() => import('../DashBoard/DashBoard'));
 const StudentHome = lazy(() => import('../DashBoard/StudenDashBoard/StudentHome'));
-const MySelectClasses = lazy(() =>
-  import('../DashBoard/StudenDashBoard/MySelectClasses')
+const MySelectClasses = lazy(
+  () => import('../DashBoard/StudenDashBoard/MySelectClasses')
 );
 const MyEnroll = lazy(() => import('../DashBoard/StudenDashBoard/MyEnroll'));
 const Payment = lazy(() => import('../DashBoard/StudenDashBoard/Payment/Payment'));
 const PaymentHistory = lazy(() => import('../DashBoard/StudenDashBoard/PaymentHistory'));
 
-const InstructorHome = lazy(() =>
-  import('../DashBoard/InstructionDashBoard/InstructorHome')
+const InstructorHome = lazy(
+  () => import('../DashBoard/InstructionDashBoard/InstructorHome')
 );
 const AddClass = lazy(() => import('../DashBoard/InstructionDashBoard/AddClass'));
-const MyAddedClasses = lazy(() =>
-  import('../DashBoard/InstructionDashBoard/MyAddedClasses')
+const MyAddedClasses = lazy(
+  () => import('../DashBoard/InstructionDashBoard/MyAddedClasses')
 );
-const InsTructionFeedBack = lazy(() =>
-  import('../DashBoard/InstructionDashBoard/InsTructionFeedBack')
+const InsTructionFeedBack = lazy(
+  () => import('../DashBoard/InstructionDashBoard/InsTructionFeedBack')
 );
 
 const ManageClasses = lazy(() => import('../DashBoard/AdminDashBoard/ManageClasses'));

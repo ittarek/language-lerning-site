@@ -19,7 +19,7 @@ import { InstructorsHeader } from './InstructorsHeader';
 import { InstructorPagination } from './InstructorPagination';
 import { ModalForEditingInstructors } from './ModalForEditingInstructors';
 import { NoInstructorsFound } from './NoInstructorsFound';
-import Spinner from '../../../Components/Spinner';
+import Spinner from '../../../Components/Spinner/Spinner';
 export const ManageInstructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);

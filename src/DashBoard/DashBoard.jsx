@@ -17,7 +17,7 @@ import {
 } from 'react-icons/fa';
 import useAdmin from '../Hooks/useAdmin';
 import useInstructors from '../Hooks/useInstructor';
-import Spinner from '../Components/Spinner';
+import Spinner from '../Components/Spinner/Spinner';
 import { AuthContext } from '../Provider/AuthProvider';
 
 const DashBoard = () => {
