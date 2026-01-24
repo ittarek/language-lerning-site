@@ -13,7 +13,17 @@ const queryClient = new QueryClient();
 await initializeApiUrl();
 
 const rootElement = document.getElementById('root');
-rootElement.innerHTML = '';
+// ✅ Initial loader hide function
+const hideInitialLoader = () => {
+  const loader = document.getElementById('initial-loader');
+  if (loader) {
+    loader.style.opacity = '0';
+    loader.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => loader.remove(), 300);
+  }
+};
+
+hideInitialLoader(); // ✅ React load hoile call
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>

@@ -44,7 +44,6 @@ const WishlistSystem = lazy(
 );
 
 // 🔹 Pricing & Checkout Pages (Lazy)
-const PricingPage = lazy(() => import('../Pages/Home_page/Pricing/PricingPage'));
 const ProcessingPage = lazy(() => import('../Pages/Home_page/Pricing/ProcessingPage'));
 const SuccessPage = lazy(() => import('../Pages/Home_page/Pricing/SuccessPage'));
 const CheckoutPage = lazy(() => import('../Pages/Home_page/Pricing/CheckoutPage'));
