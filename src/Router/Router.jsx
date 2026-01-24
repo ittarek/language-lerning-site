@@ -296,7 +296,7 @@ export const router = createBrowserRouter([
         path: 'studentHome',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <StudentHome />
             </Suspense>
           </PrivetRoute>
@@ -306,7 +306,7 @@ export const router = createBrowserRouter([
         path: 'mySelectedClasses',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <MySelectClasses />
             </Suspense>
           </PrivetRoute>
@@ -316,7 +316,7 @@ export const router = createBrowserRouter([
         path: 'myEnroll',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <MyEnroll />
             </Suspense>
           </PrivetRoute>
@@ -326,7 +326,7 @@ export const router = createBrowserRouter([
         path: 'mySelectedClasses/payment/:id',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <Payment />
             </Suspense>
           </PrivetRoute>
@@ -337,7 +337,7 @@ export const router = createBrowserRouter([
         path: 'paymentHistory',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <PaymentHistory />
             </Suspense>
           </PrivetRoute>
@@ -349,7 +349,7 @@ export const router = createBrowserRouter([
         path: 'instructorHome',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <InstructorHome />
             </Suspense>
           </PrivetRoute>
@@ -359,7 +359,7 @@ export const router = createBrowserRouter([
         path: 'addClass',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <AddClass />
             </Suspense>
           </PrivetRoute>
@@ -369,7 +369,7 @@ export const router = createBrowserRouter([
         path: 'myAddedClasses',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <MyAddedClasses />
             </Suspense>
           </PrivetRoute>
@@ -379,7 +379,7 @@ export const router = createBrowserRouter([
         path: 'myAddedClasses/instructorFeedback',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <InsTructionFeedBack />
             </Suspense>
           </PrivetRoute>
@@ -391,7 +391,7 @@ export const router = createBrowserRouter([
         path: 'adminHome',
         element: (
           <AdminROutes>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <AdminHome />
             </Suspense>
           </AdminROutes>
@@ -401,7 +401,7 @@ export const router = createBrowserRouter([
         path: 'manageClasses',
         element: (
           <AdminROutes>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <ManageClasses />
             </Suspense>
           </AdminROutes>
@@ -411,7 +411,7 @@ export const router = createBrowserRouter([
         path: 'manageUsers',
         element: (
           <AdminROutes>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <ManageUsers />
             </Suspense>
           </AdminROutes>
@@ -421,7 +421,7 @@ export const router = createBrowserRouter([
         path: 'manageInstructors',
         element: (
           <AdminROutes>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <ManageInstructors />
             </Suspense>
           </AdminROutes>
@@ -431,7 +431,7 @@ export const router = createBrowserRouter([
         path: 'manageEvents',
         element: (
           <AdminROutes>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <ManageEvents />
             </Suspense>
           </AdminROutes>
@@ -441,7 +441,7 @@ export const router = createBrowserRouter([
         path: 'manageClasses/adminFeedBack/:id',
         element: (
           <AdminROutes>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <AdminFeedBack />
             </Suspense>
           </AdminROutes>
@@ -454,7 +454,7 @@ export const router = createBrowserRouter([
         path: 'dashboard',
         element: (
           <PrivetRoute>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<DashBoardLoader />}>
               <DashBoard />
             </Suspense>
           </PrivetRoute>
