@@ -208,7 +208,7 @@ const Blog = () => {
       <div className="container mx-auto px-4 py-16">
         {/* Featured Post */}
         {selectedCategory === 'All' && featuredPost && (
-        
+        <Feat
         )}
 
         {/* Blog Grid */}
