@@ -1,6 +1,6 @@
-import React from 'react'
+import { FaUser } from "react-icons/fa";
 
-export const LatestBlog = () => {
+export const LatestBlog = ({ filteredPosts, regularPosts, categoryIcons }) => {
   return (
     <div>
       {' '}
@@ -63,4 +63,4 @@ export const LatestBlog = () => {
       )}
     </div>
   );
-}
+};
