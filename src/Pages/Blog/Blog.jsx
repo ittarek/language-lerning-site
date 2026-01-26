@@ -247,7 +247,7 @@ const Blog = () => {
                 )}
 
                 {/* Blog Grid */}
-                <div className="mb-8">
+                <div className="mb-8 ">
                     <div className="flex items-center gap-2 mb-6">
                         <div className="w-2 h-8 bg-gradient-to-b from-indigo-600 to-purple-600 rounded-full"></div>
                         <h2 className="text-3xl font-bold text-gray-800">Latest Articles</h2>
@@ -255,7 +255,7 @@ const Blog = () => {
                 </div>
 
                 {filteredPosts.length > 0 ? (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 ">
                         {regularPosts.map(post => (
                             <article
                                 key={post.id}
