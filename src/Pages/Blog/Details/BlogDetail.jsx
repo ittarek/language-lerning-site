@@ -16,7 +16,7 @@ import {
     FaLightbulb,
     FaSearch
 } from 'react-icons/fa';
-import { blogPosts } from './blogPosts';
+import { blogPosts } from '../blogPosts';
 
 const BlogDetail = () => {
     const { id } = useParams();
