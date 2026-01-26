@@ -208,7 +208,7 @@ const Blog = () => {
       <div className="container mx-auto px-4 py-16">
         {/* Featured Post */}
         {selectedCategory === 'All' && featuredPost && (
-          <div className="mb-16">
+          <div className="mb-16 ">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-2 h-8 bg-gradient-to-b from-indigo-600 to-purple-600 rounded-full"></div>
               <h2 className="text-3xl font-bold text-gray-800">Featured Article</h2>
