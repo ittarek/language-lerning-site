@@ -16,6 +16,7 @@ import {
 import FilterSection from '../../Components/Shared/FilterSection/FilterSection';
 import OptimizedImage from '../../Components/Shared/OptimizedImage';
 import { LatestBlog } from './LatestBlog';
+import { FeaturedBlogs } from './FeaturedBlogs';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -207,9 +208,7 @@ const Blog = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
         {/* Featured Post */}
-        {selectedCategory === 'All' && featuredPost && (
-        <Feat
-        )}
+        {selectedCategory === 'All' && featuredPost && <FeaturedBlogs/>}
 
         {/* Blog Grid */}
         <div className="mb-8 ">

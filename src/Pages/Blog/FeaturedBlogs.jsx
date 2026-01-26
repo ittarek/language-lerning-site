@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Featured = () => {
+export const FeaturedBlogs = () => {
   return (
     <div className="mb-16 ">
       <div className="flex items-center gap-2 mb-6">
