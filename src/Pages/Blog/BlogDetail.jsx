@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -101,7 +101,7 @@ const BlogDetail = () => {
             {/* Reading Progress Bar */}
             <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
                 <div
-                    className="h-full bg-gradient-to-r from-gray-950 via-purple-800 to-gray-900   transition-all duration-150"
+                    className="h-full bg-gradient-to-r from-gray-950 via-purple-800 to-red-500   transition-all duration-150"
                     style={{ width: `${scrollProgress}%` }}
                 ></div>
             </div>
