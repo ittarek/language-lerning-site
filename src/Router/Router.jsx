@@ -20,7 +20,7 @@ const Register = lazy(() => import('../Pages/Register/Register'));
 const Instructors = lazy(() => import('../Pages/Instructors_page/InstructorsPage'));
 const Classes = lazy(() => import('../Pages/Classes/Classes'));
 const Blog = lazy(() => import('../Pages/Blog/Blog'));
-const BlogDetail = lazy(() => import('../Pages/Blog/BlogDetail'));
+const BlogDetail = lazy(() => import('../Pages/Blog/Details/BlogDetail'));
 const News = lazy(() => import('../Pages/News/News'));
 const NewsDetail = lazy(() => import('../Pages/News/NewsDetail'));
 const EventDetail = lazy(() => import('../Components/Event/EventDetail'));
