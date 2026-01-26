@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import OptimizedImage from '../../Components/Shared/OptimizedImage';
-import { FaCalendar, FaClock, FaUser } from 'react-icons/fa';
+import { FaArrowRight, FaCalendar, FaClock, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 export const FeaturedBlogs = ({ featuredPost, categoryIcons }) => {
