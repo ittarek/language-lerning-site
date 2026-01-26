@@ -20,7 +20,7 @@ const Banner = ({ onSectionClick }) => {
 
   return (
     // ✅ Mobile-first responsive heights
-    <div className="relative overflow-hidden -mt-6 md:mt-0 min-h-[700px] sm:min-h-[750px] md:min-h-[800px] lg:min-h-[850px]">
+    <div className="relative overflow-hidden -mt-6 md:mt- min-h-[700px] sm:min-h-[750px] md:min-h-[800px] lg:min-h-[850px]">
       <GlassNavigation onSectionClick={onSectionClick} />
 
       {/* Background Image with Overlay */}
