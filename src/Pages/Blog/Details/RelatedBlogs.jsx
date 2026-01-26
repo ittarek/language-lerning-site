@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export const RelatedBlogs = () => {
+export const RelatedBlogs = ({ relatedPosts }) => {
   return (
     <div>
       {' '}
