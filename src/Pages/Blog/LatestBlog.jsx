@@ -1,4 +1,4 @@
-import { FaUser } from "react-icons/fa";
+import { FaClock, FaUser } from "react-icons/fa";
 
 export const LatestBlog = ({ filteredPosts, regularPosts, categoryIcons }) => {
   return (
