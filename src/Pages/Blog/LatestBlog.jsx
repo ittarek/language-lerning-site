@@ -1,7 +1,7 @@
 import { FaArrowRight, FaClock, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-export const LatestBlog = ({ filteredPosts, regularPosts, categoryIcons }) => {
+export const LatestBlog = ({ filteredPosts,  categoryIcons }) => {
   const regularPosts = filteredPosts.filter(post => !post.featured);
   return (
     <div>
