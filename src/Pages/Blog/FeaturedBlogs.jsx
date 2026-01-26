@@ -1,6 +1,7 @@
 import React from 'react'
+import OptimizedImage from '../../Components/Shared/OptimizedImage';
 
-export const FeaturedBlogs = () => {
+export const FeaturedBlogs = ({ featuredPost }) => {
   return (
     <div className="mb-16 ">
       <div className="flex items-center gap-2 mb-6">
@@ -67,4 +68,4 @@ export const FeaturedBlogs = () => {
       </div>
     </div>
   );
-}
+};
