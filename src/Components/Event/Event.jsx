@@ -320,7 +320,7 @@ const Events = () => {
                               _id={event.id}
                               sate={event}
                               text="Details"
-                              to={`/events/${event.id}`}
+                              to={`/events/${event?.id}`}
                               width={false}
                             />
                           </div>
@@ -405,7 +405,7 @@ const Events = () => {
 
                         <ViewDetailsButton
                           className="rounded-lg"
-                          _id={event.id}
+                          // _id={event.id}
                           sate={event}
                           text="View Details"
                           to={`/events/${event.id}`}
