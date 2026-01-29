@@ -8,6 +8,7 @@ import {
   FaBars,
   FaTimes,
   FaSearch,
+  FaLinkedinIn,
 } from 'react-icons/fa';
 import logo from '../../../assets/website logo.png';
 import { AuthContext } from '../../../Provider/AuthProvider';
@@ -112,10 +113,10 @@ const Navbar = () => {
   ];
 
   const socialLinks = {
-    facebook: 'https://facebook.com/yourpage',
-    twitter: 'https://twitter.com/yourpage',
+    facebook: 'https://www.facebook.com/md.tariqul.islam.428023',
+    linkedin: 'https://www.linkedin.com/in/md-tariqul-islam-ab42b61a1/',
     google: 'https://google.com',
-    youtube: 'https://youtube.com/yourchannel',
+    youtube: 'https://youtube.com/',
   };
 
   return (
@@ -168,10 +169,10 @@ const Navbar = () => {
                     label: 'Facebook',
                   },
                   {
-                    href: socialLinks.twitter,
-                    icon: FaTwitter,
-                    color: 'sky',
-                    label: 'Twitter',
+                    href: socialLinks.linkedin,
+                    icon: FaLinkedinIn,
+                    color: 'gray',
+                    label: 'LinkedIn',
                   },
                   {
                     href: socialLinks.google,
