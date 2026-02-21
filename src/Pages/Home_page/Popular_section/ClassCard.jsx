@@ -101,7 +101,7 @@ const ClassCard = ({ singleClass }) => {
           {/* Bookmark button */}
           <button
             onClick={() => handleWishlist(_id)}
-            className={`shadow-lg  hover:scale-110  p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
+            className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300 ${
               isBookmarked
                 ? 'bg-red-500 text-white scale-110'
                 : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
