@@ -103,18 +103,7 @@ export default {
     },
   },
 
-  // plugins: [require('daisyui')],
 
-  daisyui: {
-    themes: ['light'], // ✅ শুধু একটা theme (smaller bundle)
-    darkTheme: 'light',
-    base: true,
-    styled: true,
-    utils: true,
-    logs: false,
-    rtl: false,
-    prefix: '',
-  },
 };
 
 /**

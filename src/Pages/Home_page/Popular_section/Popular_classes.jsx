@@ -1,6 +1,3 @@
-import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { BsArrowRight } from 'react-icons/bs';
 import ClassCard from './ClassCard';
 import Container from '../../../Components/Container';
 import SectionTitle from '../../../Components/SectionTitle';
