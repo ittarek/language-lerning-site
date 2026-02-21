@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FaBookmark,
   FaDollarSign,
@@ -8,6 +8,7 @@ import {
   FaClock,
   FaLanguage,
   FaGraduationCap,
+  FaHeart,
 } from 'react-icons/fa';
 import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 import StarRatings from 'react-star-ratings';
@@ -33,12 +34,24 @@ const ClassCard = ({ singleClass }) => {
 
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
+    setIsBookmarked(wishlist.includes(_id));
+  }, [_id]);
   // handle bookmark for wishlist
   const handleWishlist = id => {
-
-
-    setIsBookmarked(!isBookmarked);
+    const getWistList = JSON.parse(localStorage.getItem('classData')) || [];
+    if (getWistList.includes(id)) {
+      // remove from wishlist
+      const updatedWishlist = getWistList.filter(items => items !== id);
+      localStorage.setItem('classData', JSON.stringify(updatedWishlist));
+      setIsBookmarked(false);
+    } else {
+      //  add to wishlist
+      const updated = [...getWistList, id];
+      localStorage.setItem('classData', JSON.stringify(updated));
+      setIsBookmarked(true);
+    }
   };
   // Calculate availability percentage
   const totalSeats = available_seats + enrolled_students;
@@ -85,17 +98,17 @@ const ClassCard = ({ singleClass }) => {
               </div>
             )}
           </div>
-
           {/* Bookmark button */}
           <button
             onClick={() => handleWishlist(_id)}
-            className="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110">
-            {isBookmarked ? (
-              <FaBookmark className="text-indigo-600 text-lg" />
-            ) : (
-              <FaRegBookmark className="text-gray-600 text-lg" />
-            )}
-          </button>
+            className={`shadow-lg  hover:scale-110  p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
+              isBookmarked
+                ? 'bg-red-500 text-white scale-110'
+                : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
+            }`}>
+      
+            <FaHeart className="w-5 h-5" />
+          </button>{' '}
         </div>
 
         {/* Bottom instructor name */}
