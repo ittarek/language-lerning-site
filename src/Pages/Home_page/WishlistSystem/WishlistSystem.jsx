@@ -166,41 +166,43 @@ const mockData = {
 const WishlistSystem = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [activeTab, setActiveTab] = useState('classes');
-  const [wishlistItems, setWishlistItems] = useState({});
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [tabs, setTabs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showWishlist, setShowWishlist] = useState(false);
-    const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
   // TanStack query using for data fetch
-  const {
-    data: classes = [],
-    isLoading,
-    isError,
-    error,
-    refetch,
-    isFetching,
-  } = useFetchData('/classes/top', 'topClasses', {
-    staleTime: 3 * 60 * 1000, // Custom stale time: 3 minutes
-    refetchOnWindowFocus: true, // Enable refetch on focus
-  });
-  console.log(classes.map(data => data._id));
-  
+const {
+  data: classes = [],
+  isLoading,
+  isError,
+  error,
+  refetch,
+} = useFetchData('/classes/top', 'topClasses', {
+  staleTime: 3 * 60 * 1000,
+  refetchOnWindowFocus: true,
+  enabled: activeTab === 'classes', // শুধু classes active হলে fetch হবে
+});
+
   useEffect(() => {
-    // Load wishlist from localStorage
-    const saved = localStorage.getItem('wishlistItems');
-    if (saved) {
-      setWishlistItems(JSON.parse(saved));
-    }
+    // get saved IDs
+    const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
+    console.log(Object.keys(localStorage));
+    const tabs = Object.keys(wishlist);
+    const activeIds = wishlist[activeTab] || [];
+    console.log(tabs);
+
+    const filteredData = classes?.filter(item => activeIds.includes(item._id));
+    console.log(filteredData);
+
+    setTabs(tabs);
+    // get data
+    const getWishlistData = classes?.filter(item =>
+      wishlist?.classes?.includes(item._id)
+    );
+    setWishlistItems(getWishlistData);
+    setIsBookmarked(wishlist?.classes?.includes(getWishlistData[0]?._id));
   }, []);
-    useEffect(() => {
-      // get saved IDs
-      const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
-      // get data
-      const getWishlistData = classes?.filter(item => wishlist.includes(item._id));
-
-      console.log(getWishlistData);
-
-      setIsBookmarked(wishlist.includes(getWishlistData._id));
-    }, []);
 
   const saveToLocalStorage = items => {
     localStorage.setItem('wishlistItems', JSON.stringify(items));
@@ -240,46 +242,72 @@ const WishlistSystem = () => {
     return Object.values(wishlistItems).reduce((acc, items) => acc + items.length, 0);
   };
 
-  const tabs = [
-    {
-      id: 'classes',
-      label: 'Classes',
-      icon: FaBookOpen,
-      count: wishlistItems.classes?.length || 0,
-    },
-    {
-      id: 'news',
-      label: 'News',
-      icon: FaNewspaper,
-      count: wishlistItems.news?.length || 0,
-    },
-    {
-      id: 'blogs',
-      label: 'Blogs',
-      icon: FaBookOpen,
-      count: wishlistItems.blogs?.length || 0,
-    },
-    {
-      id: 'articles',
-      label: 'Trending Articles',
-      icon: MdTrendingUp,
-      count: wishlistItems.articles?.length || 0,
-    },
-    {
-      id: 'events',
-      label: 'Events',
-      icon: FaCalendarAlt,
-      count: wishlistItems.events?.length || 0,
-    },
-  ];
+  // const tabs = [
+  //   {
+  //     id: 'classes',
+  //     label: 'Classes',
+  //     icon: FaBookOpen,
+  //     count: wishlistItems.classes?.length || 0,
+  //   },
+  //   {
+  //     id: 'news',
+  //     label: 'News',
+  //     icon: FaNewspaper,
+  //     count: wishlistItems.news?.length || 0,
+  //   },
+  //   {
+  //     id: 'blogs',
+  //     label: 'Blogs',
+  //     icon: FaBookOpen,
+  //     count: wishlistItems.blogs?.length || 0,
+  //   },
+  //   {
+  //     id: 'articles',
+  //     label: 'Trending Articles',
+  //     icon: MdTrendingUp,
+  //     count: wishlistItems.articles?.length || 0,
+  //   },
+  //   {
+  //     id: 'events',
+  //     label: 'Events',
+  //     icon: FaCalendarAlt,
+  //     count: wishlistItems.events?.length || 0,
+  //   },
+  // ];
+  const [data, setData] = useState([]);
+  const wishlistData = JSON.parse(localStorage.getItem('classData')) || {};
+  const activeIds = wishlistData[activeTab] || [];
 
-  const filteredItems = () => {
-    const items = wishlistItems[activeTab] || [];
-    if (!searchTerm) return items;
-    return items.filter(item =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  };
+
+let currentData = [];
+if (activeTab === 'classes') currentData = classes;
+else if (activeTab === 'news') currentData = news;
+else if (activeTab === 'blogs') currentData = blogs;
+
+const filteredItems = currentData.filter(item =>
+  !searchTerm ? true : item.title.toLowerCase().includes(searchTerm.toLowerCase())
+);
+  //   const filteredItems = () => {
+  //   const wishlistData = JSON.parse(localStorage.getItem('classData')) || {};
+
+  //     const ids = wishlistData[activeTab] || [];
+  //     console.log("ids",ids);
+
+  //   const sourceData = classes[activeTab] || [];
+
+  // console.log('data', sourceData);
+
+  //   // ID match করে full object বের করা
+  //   const matchedItems = sourceData.filter(item => ids.includes(item._id));
+  // console.log("match",matchedItems);
+
+  //   // search filter
+  //   if (!searchTerm) return matchedItems;
+
+  //   return matchedItems.filter(item =>
+  //     item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  //   };
 
   const renderCard = (item, type) => {
     const inWishlist = isInWishlist(item.id, type);
@@ -498,15 +526,18 @@ const WishlistSystem = () => {
 
           <div className="flex gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
             <TabButtonGroup
-              tabs={tabs}
+              tabs={tabs.map(tab => ({
+                id: tab,
+                label: tab.charAt(0).toUpperCase() + tab.slice(1),
+              }))}
               activeTab={activeTab}
               onTabChange={setActiveTab}
             />
           </div>
 
-          {filteredItems().length > 0 ? (
+          {filteredItems.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredItems().map(item => renderCard(item, activeTab))}
+              {filteredItems.map(item => renderCard(item, activeTab))}
             </div>
           ) : (
             <div className="text-center py-20">
@@ -557,6 +588,6 @@ const WishlistSystem = () => {
       )}
     </div>
   );
-};;
+};
 
 export default WishlistSystem;

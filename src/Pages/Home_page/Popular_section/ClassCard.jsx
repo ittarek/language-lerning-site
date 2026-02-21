@@ -38,29 +38,31 @@ const ClassCard = ({ singleClass, classes }) => {
   // wishlist
 useEffect(() => {
   const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
-
-  const idSet = new Set(wishlist); // because we will store only IDs
-console.log(idSet);
-
+  const classId = wishlist.classes || [];
+  const idSet = new Set(classId); // because we will store only IDs
   setIsBookmarked(idSet.has(_id));
 }, [_id]);
   // handle bookmark for wishlist
-const handleWishlist = () => {
-  const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
-
+const handleWishlist = (id, type) => {
+  const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
+  // create array if no id
+  const currentWishlist = wishlist[type] || [];
   let updatedWishlist;
 
-  if (wishlist.includes(_id)) {
+  if (currentWishlist.includes(id)) {
     // remove
-    updatedWishlist = wishlist.filter(id => id !== _id);
+    updatedWishlist = currentWishlist.filter(item => item !== id);
     setIsBookmarked(false);
   } else {
     // add
-    updatedWishlist = [...wishlist, _id];
+    updatedWishlist = [...currentWishlist, id];
     setIsBookmarked(true);
   }
 
-  localStorage.setItem('classData', JSON.stringify(updatedWishlist));
+  localStorage.setItem(
+    'classData',
+    JSON.stringify({ ...wishlist, [type]: updatedWishlist })
+  );
 };
   // Calculate availability percentage
   const totalSeats = available_seats + enrolled_students;
@@ -109,7 +111,7 @@ const handleWishlist = () => {
           </div>
           {/* Bookmark button */}
           <button
-            onClick={() => handleWishlist(singleClass)}
+            onClick={() => handleWishlist(_id, 'classes')}
             className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300 ${
               isBookmarked
                 ? 'bg-red-500 text-white scale-110'
