@@ -36,31 +36,32 @@ const ClassCard = ({ singleClass, classes }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   // wishlist
-  useEffect(() => {
-    // get saved IDs
-    const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
-    // get data
-    const getWishlistData = classes?.filter(item => wishlist.includes(item._id));
+useEffect(() => {
+  const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
 
-    console.log(getWishlistData._id);
+  const idSet = new Set(wishlist); // because we will store only IDs
+console.log(idSet);
 
-    setIsBookmarked(wishlist.includes(_id));
-  }, [_id]);
+  setIsBookmarked(idSet.has(_id));
+}, [_id]);
   // handle bookmark for wishlist
-  const handleWishlist = singleClass => {
-    const getWistList = JSON.parse(localStorage.getItem('classData')) || [];
-    if (getWistList.includes(singleClass.id)) {
-      // remove from wishlist
-      const updatedWishlist = getWistList.filter(items => items !== singleClass.id);
-      localStorage.setItem('classData', JSON.stringify(updatedWishlist));
-      setIsBookmarked(false);
-    } else {
-      //  add to wishlist
-      const updated = [...getWistList, singleClass];
-      localStorage.setItem('classData', JSON.stringify(updated));
-      setIsBookmarked(true);
-    }
-  };
+const handleWishlist = () => {
+  const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
+
+  let updatedWishlist;
+
+  if (wishlist.includes(_id)) {
+    // remove
+    updatedWishlist = wishlist.filter(id => id !== _id);
+    setIsBookmarked(false);
+  } else {
+    // add
+    updatedWishlist = [...wishlist, _id];
+    setIsBookmarked(true);
+  }
+
+  localStorage.setItem('classData', JSON.stringify(updatedWishlist));
+};
   // Calculate availability percentage
   const totalSeats = available_seats + enrolled_students;
   const availabilityPercentage = Math.round(
