@@ -64,15 +64,21 @@ const ClassCard = ({ singleClass }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
         {/* Top badges */}
-        <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-          {/* Price and Category badge */}
-
-          {category && (
-            <div className="bg-white/90 backdrop-blur-sm text-indigo-600 px-3 py-1 mt-11 rounded-full font-semibold text-xs shadow-lg flex items-center gap-1 w-fit">
-              <FaLanguage size={12} />
-              {category}
-            </div>
-          )}
+        <div className="absolute top-2 left-4 right-4 flex justify-between items-start">
+          <div>
+            {/* Status Badge */}
+            {status === 'approved' && (
+              <div className="bg-green-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-full font-semibold text-xs shadow-lg">
+                ✓ Available
+              </div>
+            )}
+            {category && (
+              <div className="bg-white/90 backdrop-blur-sm text-indigo-600 px-3 py-1 mt-11 rounded-full font-semibold text-xs shadow-lg flex items-center gap-1 w-fit">
+                <FaLanguage size={12} />
+                {category}
+              </div>
+            )}
+          </div>
 
           {/* Bookmark button */}
           <button
@@ -85,15 +91,6 @@ const ClassCard = ({ singleClass }) => {
             )}
           </button>
         </div>
-
-        {/* Status Badge */}
-        {status === 'approved' && (
-          <div className="absolute top-4 left-4">
-            <div className="bg-green-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-full font-semibold text-xs shadow-lg">
-              ✓ Available
-            </div>
-          </div>
-        )}
 
         {/* Bottom instructor name */}
         <div className="absolute bottom-4 left-4 right-4">
