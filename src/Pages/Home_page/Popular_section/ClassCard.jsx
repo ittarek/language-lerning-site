@@ -14,7 +14,7 @@ import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 import StarRatings from 'react-star-ratings';
 import { ViewDetailsButton } from '../../../Components/ui/Button';
 
-const ClassCard = ({ singleClass }) => {
+const ClassCard = ({ singleClass, classes }) => {
   const {
     _id,
     class_imgUrl,
@@ -32,23 +32,31 @@ const ClassCard = ({ singleClass }) => {
     instructor_bg_img,
   } = singleClass;
 
+
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  // wishlist
   useEffect(() => {
+    // get saved IDs
     const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
+    // get data
+    const getWishlistData = classes?.filter(item => wishlist.includes(item._id));
+
+    console.log(getWishlistData._id);
+
     setIsBookmarked(wishlist.includes(_id));
   }, [_id]);
   // handle bookmark for wishlist
-  const handleWishlist = id => {
+  const handleWishlist = singleClass => {
     const getWistList = JSON.parse(localStorage.getItem('classData')) || [];
-    if (getWistList.includes(id)) {
+    if (getWistList.includes(singleClass.id)) {
       // remove from wishlist
-      const updatedWishlist = getWistList.filter(items => items !== id);
+      const updatedWishlist = getWistList.filter(items => items !== singleClass.id);
       localStorage.setItem('classData', JSON.stringify(updatedWishlist));
       setIsBookmarked(false);
     } else {
       //  add to wishlist
-      const updated = [...getWistList, id];
+      const updated = [...getWistList, singleClass];
       localStorage.setItem('classData', JSON.stringify(updated));
       setIsBookmarked(true);
     }
@@ -100,13 +108,12 @@ const ClassCard = ({ singleClass }) => {
           </div>
           {/* Bookmark button */}
           <button
-            onClick={() => handleWishlist(_id)}
+            onClick={() => handleWishlist(singleClass)}
             className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300 ${
               isBookmarked
                 ? 'bg-red-500 text-white scale-110'
                 : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
             }`}>
-      
             <FaHeart className="w-5 h-5" />
           </button>{' '}
         </div>

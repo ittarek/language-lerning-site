@@ -63,7 +63,11 @@ const Popular_classes = () => {
               classes
                 .slice(0, 8)
                 .map(singleClass => (
-                  <ClassCard key={singleClass._id} singleClass={singleClass} />
+                  <ClassCard
+                    key={singleClass._id}
+                    singleClass={singleClass}
+                    classes={classes}
+                  />
                 ))}
         </div>
 

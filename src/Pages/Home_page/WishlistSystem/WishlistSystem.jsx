@@ -24,6 +24,7 @@ import {
   ViewDetailsButton,
   WishlistButton,
 } from '../../../Components/ui/Button';
+import useFetchData from '../../../Hooks/useFetchTeacher';
 
 // Mock data for demonstration
 const mockData = {
@@ -168,7 +169,21 @@ const WishlistSystem = () => {
   const [wishlistItems, setWishlistItems] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [showWishlist, setShowWishlist] = useState(false);
-
+    const [isBookmarked, setIsBookmarked] = useState(false);
+  // TanStack query using for data fetch
+  const {
+    data: classes = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+    isFetching,
+  } = useFetchData('/classes/top', 'topClasses', {
+    staleTime: 3 * 60 * 1000, // Custom stale time: 3 minutes
+    refetchOnWindowFocus: true, // Enable refetch on focus
+  });
+  console.log(classes.map(data => data._id));
+  
   useEffect(() => {
     // Load wishlist from localStorage
     const saved = localStorage.getItem('wishlistItems');
@@ -176,6 +191,16 @@ const WishlistSystem = () => {
       setWishlistItems(JSON.parse(saved));
     }
   }, []);
+    useEffect(() => {
+      // get saved IDs
+      const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
+      // get data
+      const getWishlistData = classes?.filter(item => wishlist.includes(item._id));
+
+      console.log(getWishlistData);
+
+      setIsBookmarked(wishlist.includes(getWishlistData._id));
+    }, []);
 
   const saveToLocalStorage = items => {
     localStorage.setItem('wishlistItems', JSON.stringify(items));
@@ -532,6 +557,6 @@ const WishlistSystem = () => {
       )}
     </div>
   );
-};
+};;
 
 export default WishlistSystem;
