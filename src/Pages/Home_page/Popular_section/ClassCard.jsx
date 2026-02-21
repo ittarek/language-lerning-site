@@ -34,6 +34,12 @@ const ClassCard = ({ singleClass }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  // handle bookmark for wishlist
+  const handleWishlist = id => {
+
+
+    setIsBookmarked(!isBookmarked);
+  };
   // Calculate availability percentage
   const totalSeats = available_seats + enrolled_students;
   const availabilityPercentage = Math.round(
@@ -82,7 +88,7 @@ const ClassCard = ({ singleClass }) => {
 
           {/* Bookmark button */}
           <button
-            onClick={() => setIsBookmarked(!isBookmarked)}
+            onClick={() => handleWishlist(_id)}
             className="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all duration-300 hover:scale-110">
             {isBookmarked ? (
               <FaBookmark className="text-indigo-600 text-lg" />
