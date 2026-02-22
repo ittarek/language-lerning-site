@@ -25,143 +25,7 @@ import {
   WishlistButton,
 } from '../../../Components/ui/Button';
 import useFetchData from '../../../Hooks/useFetchTeacher';
-
-// Mock data for demonstration
-const mockData = {
-  classes: [
-    {
-      id: 1,
-      title: 'Advanced React Patterns',
-      instructor: 'John Doe',
-      duration: '8 weeks',
-      image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400',
-      rating: 4.8,
-      students: 1234,
-    },
-    {
-      id: 2,
-      title: 'Machine Learning Fundamentals',
-      instructor: 'Jane Smith',
-      duration: '12 weeks',
-      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400',
-      rating: 4.9,
-      students: 2341,
-    },
-    {
-      id: 3,
-      title: 'UI/UX Design Masterclass',
-      instructor: 'Mike Johnson',
-      duration: '6 weeks',
-      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400',
-      rating: 4.7,
-      students: 987,
-    },
-  ],
-  news: [
-    {
-      id: 4,
-      title: 'Breaking: New AI Technology Revolutionizes Industry',
-      category: 'Technology',
-      date: '2024-01-05',
-      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400',
-      author: 'Tech Daily',
-    },
-    {
-      id: 5,
-      title: 'Global Climate Summit Reaches Historic Agreement',
-      category: 'Environment',
-      date: '2024-01-04',
-      image: 'https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=400',
-      author: 'World News',
-    },
-    {
-      id: 6,
-      title: 'Stock Markets Hit All-Time High',
-      category: 'Finance',
-      date: '2024-01-03',
-      image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400',
-      author: 'Finance Today',
-    },
-  ],
-  blogs: [
-    {
-      id: 7,
-      title: '10 Tips for Productive Remote Work',
-      author: 'Sarah Williams',
-      readTime: '5 min',
-      image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400',
-      category: 'Productivity',
-    },
-    {
-      id: 8,
-      title: 'The Future of Web Development in 2024',
-      author: 'David Chen',
-      readTime: '8 min',
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400',
-      category: 'Technology',
-    },
-    {
-      id: 9,
-      title: 'Mindfulness Practices for Busy Professionals',
-      author: 'Emily Brown',
-      readTime: '6 min',
-      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400',
-      category: 'Wellness',
-    },
-  ],
-  articles: [
-    {
-      id: 10,
-      title: 'Understanding Quantum Computing',
-      views: '45K',
-      trending: true,
-      image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400',
-      author: 'Dr. Robert Lee',
-    },
-    {
-      id: 11,
-      title: 'The Rise of Sustainable Fashion',
-      views: '38K',
-      trending: true,
-      image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400',
-      author: 'Fashion Weekly',
-    },
-    {
-      id: 12,
-      title: 'Blockchain Beyond Cryptocurrency',
-      views: '52K',
-      trending: true,
-      image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400',
-      author: 'Tech Insights',
-    },
-  ],
-  events: [
-    {
-      id: 13,
-      title: 'Annual Tech Conference 2024',
-      date: '2024-03-15',
-      location: 'San Francisco, CA',
-      image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400',
-      attendees: '5K+',
-    },
-    {
-      id: 14,
-      title: 'Digital Marketing Summit',
-      date: '2024-04-20',
-      location: 'New York, NY',
-      image: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=400',
-      attendees: '3K+',
-    },
-    {
-      id: 15,
-      title: 'Global Startup Expo',
-      date: '2024-05-10',
-      location: 'London, UK',
-      image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400',
-      attendees: '10K+',
-    },
-  ],
-};
+import { RenderCard } from './RenderCard';
 
 const WishlistSystem = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -187,13 +51,9 @@ const WishlistSystem = () => {
   useEffect(() => {
     // get saved IDs
     const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
-    console.log(Object.keys(localStorage));
+
     const tabs = Object.keys(wishlist);
     const activeIds = wishlist[activeTab] || [];
-    console.log(tabs);
-
-    const filteredData = classes?.filter(item => activeIds.includes(item._id));
-    console.log(filteredData);
 
     setTabs(tabs);
     // get data
@@ -208,31 +68,7 @@ const WishlistSystem = () => {
     localStorage.setItem('wishlistItems', JSON.stringify(items));
   };
 
-  const addToWishlist = (item, type) => {
-    const newWishlistItems = {
-      ...wishlistItems,
-      [type]: [...(wishlistItems[type] || []), item],
-    };
-    setWishlistItems(newWishlistItems);
-    saveToLocalStorage(newWishlistItems);
-    toast.success('Added to wishlist! ❤️', {
-      position: 'top-right',
-      autoClose: 2000,
-    });
-  };
 
-  const removeFromWishlist = (itemId, type) => {
-    const newWishlistItems = {
-      ...wishlistItems,
-      [type]: wishlistItems[type].filter(item => item.id !== itemId),
-    };
-    setWishlistItems(newWishlistItems);
-    saveToLocalStorage(newWishlistItems);
-    toast.info('Removed from wishlist', {
-      position: 'top-right',
-      autoClose: 2000,
-    });
-  };
 
   const isInWishlist = (itemId, type) => {
     return wishlistItems[type]?.some(item => item.id === itemId) || false;
@@ -241,40 +77,6 @@ const WishlistSystem = () => {
   const getTotalWishlistCount = () => {
     return Object.values(wishlistItems).reduce((acc, items) => acc + items.length, 0);
   };
-
-  // const tabs = [
-  //   {
-  //     id: 'classes',
-  //     label: 'Classes',
-  //     icon: FaBookOpen,
-  //     count: wishlistItems.classes?.length || 0,
-  //   },
-  //   {
-  //     id: 'news',
-  //     label: 'News',
-  //     icon: FaNewspaper,
-  //     count: wishlistItems.news?.length || 0,
-  //   },
-  //   {
-  //     id: 'blogs',
-  //     label: 'Blogs',
-  //     icon: FaBookOpen,
-  //     count: wishlistItems.blogs?.length || 0,
-  //   },
-  //   {
-  //     id: 'articles',
-  //     label: 'Trending Articles',
-  //     icon: MdTrendingUp,
-  //     count: wishlistItems.articles?.length || 0,
-  //   },
-  //   {
-  //     id: 'events',
-  //     label: 'Events',
-  //     icon: FaCalendarAlt,
-  //     count: wishlistItems.events?.length || 0,
-  //   },
-  // ];
-  const [data, setData] = useState([]);
   const wishlistData = JSON.parse(localStorage.getItem('classData')) || {};
   const activeIds = wishlistData[activeTab] || [];
 
@@ -286,165 +88,6 @@ const WishlistSystem = () => {
   const filteredItems = currentData.filter(item =>
     !searchTerm ? true : item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  //   const filteredItems = () => {
-  //   const wishlistData = JSON.parse(localStorage.getItem('classData')) || {};
-
-  //     const ids = wishlistData[activeTab] || [];
-  //     console.log("ids",ids);
-
-  //   const sourceData = classes[activeTab] || [];
-
-  // console.log('data', sourceData);
-
-  //   // ID match করে full object বের করা
-  //   const matchedItems = sourceData.filter(item => ids.includes(item._id));
-  // console.log("match",matchedItems);
-
-  //   // search filter
-  //   if (!searchTerm) return matchedItems;
-
-  //   return matchedItems.filter(item =>
-  //     item.title.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  //   };
-
-  const renderCard = (item, type) => {
-    const inWishlist = isInWishlist(item._id, type);
-    const {
-      available_seats,
-      class_imgUrl,
-      class_name,
-      created_at,
-      description,
-      enrolled_students,
-      experience,
-      instructor_description,
-      instructor_designation,
-      instructor_email,
-      instructor_img,
-      instructor_name,
-      instructor_rating,
-      instructor_students_count,
-      price,
-      status,
-      updated_at,
-      _id,
-      contact,
-      social_links,
-    } = item;
-    return (
-      <div
-        key={_id}
-        className="group relative bg-white h-[45vh] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={class_imgUrl}
-            alt={class_name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-          <button
-            onClick={() =>
-              inWishlist ? removeFromWishlist(_id, type) : addToWishlist(item, type)
-            }
-            className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all duration-300 ${
-              inWishlist
-                ? 'bg-red-500 text-white scale-110'
-                : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
-            }`}>
-            <FaHeart className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-            {class_name || item.title}
-          </h3>
-
-          {type === 'classes' && (
-            <div className="space-y-2">
-              <p className="text-gray-600 flex items-center gap-2">
-                <FaUser className="w-4 h-4" /> {instructor_name}
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500 flex items-center gap-2">
-                  <FaClock className="w-4 h-4" /> 5 hours/week
-                </span>
-                <span className="text-sm font-semibold text-amber-500 flex items-center gap-1">
-                  <FaStar className="w-4 h-4" /> {instructor_rating}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {type === 'news' && (
-            <div className="space-y-2">
-              <span className="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
-                {item.category}
-              </span>
-              <p className="text-gray-600 text-sm flex items-center gap-2">
-                <FaCalendarAlt className="w-4 h-4" /> {item.date}
-              </p>
-            </div>
-          )}
-
-          {type === 'blogs' && (
-            <div className="space-y-2">
-              <p className="text-gray-600 flex items-center gap-2">
-                <FaUser className="w-4 h-4" /> {item.author}
-              </p>
-              <span className="text-sm text-gray-500 flex items-center gap-2">
-                <FaClock className="w-4 h-4" /> {item.readTime}
-              </span>
-            </div>
-          )}
-
-          {type === 'articles' && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-600 flex items-center gap-2">
-                  <FaEye className="w-4 h-4" /> {item.views} views
-                </span>
-                {item.trending && (
-                  <span className="flex items-center gap-1 text-orange-500 font-semibold">
-                    <MdTrendingUp className="w-4 h-4" /> Trending
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-
-          {type === 'events' && (
-            <div className="space-y-2">
-              <p className="text-gray-600 flex items-center gap-2">
-                <FaMapMarkerAlt className="w-4 h-4" /> {item.location}
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500 flex items-center gap-2">
-                  <FaCalendarAlt className="w-4 h-4" /> {item.date}
-                </span>
-                <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
-                  <FaUsers className="w-4 h-4" /> {item.attendees}
-                </span>
-              </div>
-            </div>
-          )}
-
-          <div className="flex gap-2 absolute bottom-2 w-full left-0 px-3">
-            <ViewDetailsButton text="View" icon={FaExternalLinkAlt} showIcon={true} />
-            <SocialButton
-              icon={<FaShareAlt className="w-5 h-5" />}
-              className="p-2 border-2 border-gray-200 rounded-lg hover:border-blue-500"
-              textColor="text-gray-600 hover:text-blue-500"
-              bg="bg-transparent"
-              hoverBg="hover:bg-blue-50"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   if (!isLoggedIn) {
     return (
@@ -533,7 +176,17 @@ const WishlistSystem = () => {
 
         {filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredItems.map(item => renderCard(item, activeTab))}
+            {filteredItems.map(item =>
+              RenderCard(
+                item,
+                activeTab,
+                isInWishlist,
+                FaExternalLinkAlt,
+                wishlistItems,
+                setWishlistItems,
+                saveToLocalStorage
+              )
+            )}
           </div>
         ) : (
           <div className="text-center py-20">
