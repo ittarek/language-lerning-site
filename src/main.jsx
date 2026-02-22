@@ -7,6 +7,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import AuthProvider from './Provider/AuthProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initializeApiUrl } from './config/api/Config.js';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const queryClient = new QueryClient();
 
 // Initialize API URL on app start
@@ -30,6 +32,19 @@ ReactDOM.createRoot(rootElement).render(
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
+          {' '}
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <RouterProvider router={router} />
         </HelmetProvider>
       </QueryClientProvider>

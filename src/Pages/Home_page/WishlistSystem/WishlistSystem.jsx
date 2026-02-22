@@ -15,8 +15,6 @@ import {
   FaEye,
   FaBookOpen,
 } from 'react-icons/fa';
-import { MdTrendingUp } from 'react-icons/md';
-import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   SocialButton,
@@ -112,19 +110,6 @@ const WishlistSystem = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Toast Container - Correctly Placed */}
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
 
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {
