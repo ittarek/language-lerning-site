@@ -11,18 +11,15 @@ import {
 } from 'react-icons/fa';
 import { MdTrendingUp } from 'react-icons/md';
 import { SocialButton, ViewDetailsButton } from '../../../Components/ui/Button';
-import { toast } from 'react-toastify';
 import { handleWishlist } from '../../../utils/wishlist/wishlist';
 import { useEffect, useState } from 'react';
 
 export const RenderCard = (
 {item,
 type,
-isInWishlist,
 FaExternalLinkAlt,}
 ) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const inWishlist = isInWishlist(item._id, type);
   const {
     available_seats,
     class_imgUrl,

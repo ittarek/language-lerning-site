@@ -84,7 +84,9 @@ const WishlistSystem = () => {
   else if (activeTab === 'blogs') currentData = blogs;
 
   const filteredItems = currentData.filter(item =>
-    !searchTerm ? true : item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    !searchTerm
+      ? true
+      : item?.class_name?.toLowerCase().includes(searchTerm?.toLowerCase())
   );
 
   if (!isLoggedIn) {
