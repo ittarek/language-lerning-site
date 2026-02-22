@@ -310,23 +310,45 @@ const filteredItems = currentData.filter(item =>
   //   };
 
   const renderCard = (item, type) => {
+    console.log('Rendering item:', item);
     const inWishlist = isInWishlist(item.id, type);
-
+const {
+  available_seats,
+  class_imgUrl,
+  class_name,
+  created_at,
+  description,
+  enrolled_students,
+  experience,
+  instructor_description,
+  instructor_designation,
+  instructor_email,
+  instructor_img,
+  instructor_name,
+  instructor_rating,
+  instructor_students_count,
+  price,
+  status,
+  updated_at,
+  _id,
+  contact,
+  social_links,
+} = item;
     return (
       <div
-        key={item.id}
+        key={_id}
         className="group relative bg-white h-[45vh] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
         <div className="relative h-48 overflow-hidden">
           <img
-            src={item.image}
-            alt={item.title}
+            src={class_imgUrl}
+            alt={class_name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
           <button
             onClick={() =>
-              inWishlist ? removeFromWishlist(item.id, type) : addToWishlist(item, type)
+              inWishlist ? removeFromWishlist(_id, type) : addToWishlist(item, type)
             }
             className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all duration-300 ${
               inWishlist
@@ -339,20 +361,20 @@ const filteredItems = currentData.filter(item =>
 
         <div className="p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-            {item.title}
+            {class_name || item.title}
           </h3>
 
           {type === 'classes' && (
             <div className="space-y-2">
               <p className="text-gray-600 flex items-center gap-2">
-                <FaUser className="w-4 h-4" /> {item.instructor}
+                <FaUser className="w-4 h-4" /> {instructor_name}
               </p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500 flex items-center gap-2">
-                  <FaClock className="w-4 h-4" /> {item.duration}
+                  <FaClock className="w-4 h-4" /> 5 hours/week
                 </span>
                 <span className="text-sm font-semibold text-amber-500 flex items-center gap-1">
-                  <FaStar className="w-4 h-4" /> {item.rating}
+                  <FaStar className="w-4 h-4" /> {instructor_rating}
                 </span>
               </div>
             </div>
