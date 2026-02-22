@@ -1,17 +1,27 @@
-import { FaCalendarAlt, FaClock, FaEye, FaHeart, FaMapMarkerAlt, FaShareAlt, FaStar, FaUser, FaUsers } from "react-icons/fa";
-import { MdTrendingUp } from "react-icons/md";
-import { SocialButton, ViewDetailsButton } from "../../../Components/ui/Button";
-import { toast } from "react-toastify";
+import {
+  FaCalendarAlt,
+  FaClock,
+  FaEye,
+  FaHeart,
+  FaMapMarkerAlt,
+  FaShareAlt,
+  FaStar,
+  FaUser,
+  FaUsers,
+} from 'react-icons/fa';
+import { MdTrendingUp } from 'react-icons/md';
+import { SocialButton, ViewDetailsButton } from '../../../Components/ui/Button';
+import { toast } from 'react-toastify';
+import { handleWishlist } from '../../../utils/wishlist/wishlist';
+import { useEffect, useState } from 'react';
 
 export const RenderCard = (
-  item,
-  type,
-  isInWishlist,
-  FaExternalLinkAlt,
-  wishlistItems,
-  setWishlistItems,
-  saveToLocalStorage
+{item,
+type,
+isInWishlist,
+FaExternalLinkAlt,}
 ) => {
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const inWishlist = isInWishlist(item._id, type);
   const {
     available_seats,
@@ -35,31 +45,14 @@ export const RenderCard = (
     contact,
     social_links,
   } = item;
-  const addToWishlist = (item, type) => {
-    const newWishlistItems = {
-      ...wishlistItems,
-      [type]: [...(wishlistItems[type] || []), item],
-    };
-    setWishlistItems(newWishlistItems);
-    saveToLocalStorage(newWishlistItems);
-    toast.success('Added to wishlist! ❤️', {
-      position: 'top-right',
-      autoClose: 2000,
-    });
-  };
+  // wishlist
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
+    const classId = wishlist.classes || [];
+    const idSet = new Set(classId); // because we will store only IDs
+    setIsBookmarked(idSet.has(_id));
+  }, [_id]);
 
-  const removeFromWishlist = (itemId, type) => {
-    const newWishlistItems = {
-      ...wishlistItems,
-      [type]: wishlistItems[type].filter(item => item.id !== itemId),
-    };
-    setWishlistItems(newWishlistItems);
-    saveToLocalStorage(newWishlistItems);
-    toast.info('Removed from wishlist', {
-      position: 'top-right',
-      autoClose: 2000,
-    });
-  };
   return (
     <div
       key={_id}
@@ -73,11 +66,9 @@ export const RenderCard = (
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
         <button
-          onClick={() =>
-            inWishlist ? removeFromWishlist(_id, type) : addToWishlist(item, type)
-          }
+          onClick={() => handleWishlist(_id, type, setIsBookmarked)}
           className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all duration-300 ${
-            inWishlist
+            isBookmarked
               ? 'bg-red-500 text-white scale-110'
               : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
           }`}>

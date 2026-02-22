@@ -68,8 +68,6 @@ const WishlistSystem = () => {
     localStorage.setItem('wishlistItems', JSON.stringify(items));
   };
 
-
-
   const isInWishlist = (itemId, type) => {
     return wishlistItems[type]?.some(item => item.id === itemId) || false;
   };
@@ -176,17 +174,18 @@ const WishlistSystem = () => {
 
         {filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredItems.map(item =>
-              RenderCard(
-                item,
-                activeTab,
-                isInWishlist,
-                FaExternalLinkAlt,
-                wishlistItems,
-                setWishlistItems,
-                saveToLocalStorage
-              )
-            )}
+            {filteredItems.map(item => (
+              <RenderCard
+                key={item._id}
+                item={item}
+                type={activeTab}
+                isInWishlist={isInWishlist}
+                FaExternalLinkAlt={FaExternalLinkAlt}
+                wishlistItems={wishlistItems}
+                setWishlistItems={setWishlistItems}
+                saveToLocalStorage={saveToLocalStorage}
+              />
+            ))}
           </div>
         ) : (
           <div className="text-center py-20">

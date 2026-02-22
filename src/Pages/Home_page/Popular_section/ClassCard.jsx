@@ -13,6 +13,8 @@ import {
 import OptimizedImage from '../../../Components/Shared/OptimizedImage';
 import StarRatings from 'react-star-ratings';
 import { ViewDetailsButton } from '../../../Components/ui/Button';
+import { handleWishlist } from '../../../utils/wishlist/wishlist';
+import { ToastContainer } from 'react-toastify';
 
 const ClassCard = ({ singleClass, classes }) => {
   const {
@@ -32,38 +34,16 @@ const ClassCard = ({ singleClass, classes }) => {
     instructor_bg_img,
   } = singleClass;
 
-
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   // wishlist
-useEffect(() => {
-  const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
-  const classId = wishlist.classes || [];
-  const idSet = new Set(classId); // because we will store only IDs
-  setIsBookmarked(idSet.has(_id));
-}, [_id]);
-  // handle bookmark for wishlist
-const handleWishlist = (id, type) => {
-  const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
-  // create array if no id
-  const currentWishlist = wishlist[type] || [];
-  let updatedWishlist;
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
+    const classId = wishlist.classes || [];
+    const idSet = new Set(classId); // because we will store only IDs
+    setIsBookmarked(idSet.has(_id));
+  }, [_id]);
 
-  if (currentWishlist.includes(id)) {
-    // remove
-    updatedWishlist = currentWishlist.filter(item => item !== id);
-    setIsBookmarked(false);
-  } else {
-    // add
-    updatedWishlist = [...currentWishlist, id];
-    setIsBookmarked(true);
-  }
-
-  localStorage.setItem(
-    'classData',
-    JSON.stringify({ ...wishlist, [type]: updatedWishlist })
-  );
-};
   // Calculate availability percentage
   const totalSeats = available_seats + enrolled_students;
   const availabilityPercentage = Math.round(
@@ -77,6 +57,19 @@ const handleWishlist = (id, type) => {
       onMouseLeave={() => setIsHovered(false)}
       data-aos="fade-up"
       data-aos-duration="400">
+      {' '}
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {/* Image Container */}
       <div className="relative overflow-hidden h-56">
         {/* Image */}
@@ -111,7 +104,7 @@ const handleWishlist = (id, type) => {
           </div>
           {/* Bookmark button */}
           <button
-            onClick={() => handleWishlist(_id, 'classes')}
+            onClick={() => handleWishlist(_id, 'classes', setIsBookmarked)}
             className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300 ${
               isBookmarked
                 ? 'bg-red-500 text-white scale-110'
@@ -143,7 +136,6 @@ const handleWishlist = (id, type) => {
           </div>
         </div>
       </div>
-
       {/* Content Container */}
       <div className="p-6 space-y-4">
         {/* Title */}
@@ -212,7 +204,6 @@ const handleWishlist = (id, type) => {
 
         <ViewDetailsButton _id={_id} text="View Details" className="rounded-lg" />
       </div>
-
       {/* Hover effect border */}
       <div
         className={`absolute inset-0 border-2 border-indigo-500 rounded-2xl transition-opacity duration-300 pointer-events-none ${
