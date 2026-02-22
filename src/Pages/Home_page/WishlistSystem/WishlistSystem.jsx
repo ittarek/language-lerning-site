@@ -172,17 +172,17 @@ const WishlistSystem = () => {
   const [showWishlist, setShowWishlist] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   // TanStack query using for data fetch
-const {
-  data: classes = [],
-  isLoading,
-  isError,
-  error,
-  refetch,
-} = useFetchData('/classes/top', 'topClasses', {
-  staleTime: 3 * 60 * 1000,
-  refetchOnWindowFocus: true,
-  enabled: activeTab === 'classes', // শুধু classes active হলে fetch হবে
-});
+  const {
+    data: classes = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useFetchData('/classes/top', 'topClasses', {
+    staleTime: 3 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    enabled: activeTab === 'classes', // শুধু classes active হলে fetch হবে
+  });
 
   useEffect(() => {
     // get saved IDs
@@ -278,15 +278,14 @@ const {
   const wishlistData = JSON.parse(localStorage.getItem('classData')) || {};
   const activeIds = wishlistData[activeTab] || [];
 
+  let currentData = [];
+  if (activeTab === 'classes') currentData = classes;
+  else if (activeTab === 'news') currentData = news;
+  else if (activeTab === 'blogs') currentData = blogs;
 
-let currentData = [];
-if (activeTab === 'classes') currentData = classes;
-else if (activeTab === 'news') currentData = news;
-else if (activeTab === 'blogs') currentData = blogs;
-
-const filteredItems = currentData.filter(item =>
-  !searchTerm ? true : item.title.toLowerCase().includes(searchTerm.toLowerCase())
-);
+  const filteredItems = currentData.filter(item =>
+    !searchTerm ? true : item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   //   const filteredItems = () => {
   //   const wishlistData = JSON.parse(localStorage.getItem('classData')) || {};
 
@@ -310,30 +309,29 @@ const filteredItems = currentData.filter(item =>
   //   };
 
   const renderCard = (item, type) => {
-    console.log('Rendering item:', item);
-    const inWishlist = isInWishlist(item.id, type);
-const {
-  available_seats,
-  class_imgUrl,
-  class_name,
-  created_at,
-  description,
-  enrolled_students,
-  experience,
-  instructor_description,
-  instructor_designation,
-  instructor_email,
-  instructor_img,
-  instructor_name,
-  instructor_rating,
-  instructor_students_count,
-  price,
-  status,
-  updated_at,
-  _id,
-  contact,
-  social_links,
-} = item;
+    const inWishlist = isInWishlist(item._id, type);
+    const {
+      available_seats,
+      class_imgUrl,
+      class_name,
+      created_at,
+      description,
+      enrolled_students,
+      experience,
+      instructor_description,
+      instructor_designation,
+      instructor_email,
+      instructor_img,
+      instructor_name,
+      instructor_rating,
+      instructor_students_count,
+      price,
+      status,
+      updated_at,
+      _id,
+      contact,
+      social_links,
+    } = item;
     return (
       <div
         key={_id}
@@ -495,119 +493,67 @@ const {
         }
       `}</style>
 
-      <nav className="bg-white shadow-lg sticky top-0 z-50 backdrop-blur-lg bg-white/95">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                <FaHeart className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                MyWishlist
-              </span>
-            </div>
-
-            {isLoggedIn && (
-              <WishlistButton
-                onClick={() => setShowWishlist(!showWishlist)}
-                count={getTotalWishlistCount()}
-                text="My Wishlist"
-              />
-            )}
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            Your{' '}
+            <span className="bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
+              Wishlist
+            </span>
+          </h1>
+          <p className="text-gray-600 text-lg">
+            {getTotalWishlistCount()} items saved across{' '}
+            {Object.keys(wishlistItems).length} categories
+          </p>
         </div>
-      </nav>
 
-      {showWishlist ? (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">
-              Your{' '}
-              <span className="bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
-                Wishlist
-              </span>
-            </h1>
-            <p className="text-gray-600 text-lg">
-              {getTotalWishlistCount()} items saved across{' '}
-              {Object.keys(wishlistItems).length} categories
-            </p>
-          </div>
-
-          <div className="max-w-2xl mx-auto mb-8">
-            <div className="relative">
-              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search your wishlist..."
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300 text-lg"
-              />
-            </div>
-          </div>
-
-          <div className="flex gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
-            <TabButtonGroup
-              tabs={tabs.map(tab => ({
-                id: tab,
-                label: tab.charAt(0).toUpperCase() + tab.slice(1),
-              }))}
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
+        <div className="max-w-2xl mx-auto mb-8">
+          <div className="relative">
+            <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search your wishlist..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-all duration-300 text-lg"
             />
           </div>
-
-          {filteredItems.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredItems.map(item => renderCard(item, activeTab))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <FaHeart className="w-16 h-16 text-gray-300" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                No items in this category
-              </h3>
-              <p className="text-gray-600 mb-6">Start adding items to your wishlist!</p>
-              <ViewDetailsButton
-                onClick={() => setShowWishlist(false)}
-                text="Browse Items"
-                showIcon={false}
-                width={false}
-                className="mx-auto"
-              />
-            </div>
-          )}
         </div>
-      ) : (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">
-              Discover & Save Your{' '}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Favorites
-              </span>
-            </h1>
-            <p className="text-gray-600 text-lg">
-              Browse through our collection and add items to your wishlist
-            </p>
-          </div>
 
-          <div className="space-y-12">
-            {Object.entries(mockData).map(([type, items]) => (
-              <div key={type}>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 capitalize">
-                  {type}
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {items.map(item => renderCard(item, type))}
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="flex gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
+          <TabButtonGroup
+            tabs={tabs.map(tab => ({
+              id: tab,
+              label: tab.charAt(0).toUpperCase() + tab.slice(1),
+            }))}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
         </div>
-      )}
+
+        {filteredItems.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredItems.map(item => renderCard(item, activeTab))}
+          </div>
+        ) : (
+          <div className="text-center py-20">
+            <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <FaHeart className="w-16 h-16 text-gray-300" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              No items in this category
+            </h3>
+            <p className="text-gray-600 mb-6">Start adding items to your wishlist!</p>
+            <ViewDetailsButton
+              onClick={() => setShowWishlist(false)}
+              text="Browse Items"
+              showIcon={false}
+              width={false}
+              className="mx-auto"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
