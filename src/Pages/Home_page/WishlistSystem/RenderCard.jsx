@@ -44,9 +44,11 @@ FaExternalLinkAlt,}
     contact,
     social_links,
   } = item;
+  console.log(item);
+  
   // wishlist
   useEffect(() => {
-    const wishlist = JSON.parse(localStorage.getItem('classData')) || [];
+    const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
     const classId = wishlist.classes || [];
     const idSet = new Set(classId); // because we will store only IDs
     setIsBookmarked(idSet.has(_id));
