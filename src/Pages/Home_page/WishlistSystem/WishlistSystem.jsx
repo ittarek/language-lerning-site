@@ -216,6 +216,7 @@ const WishlistSystem = () => {
               showIcon={false}
               width={false}
               className="mx-auto"
+              to="/classes"
             />
           </div>
         )}
