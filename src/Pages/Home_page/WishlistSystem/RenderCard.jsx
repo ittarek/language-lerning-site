@@ -14,6 +14,8 @@ import { SocialButton, ViewDetailsButton } from '../../../Components/ui/Button';
 import { handleWishlist } from '../../../utils/wishlist/wishlist';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 export const RenderCard = ({
   item,
@@ -24,10 +26,12 @@ export const RenderCard = ({
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     available_seats,
     class_imgUrl,
     class_name,
+    class_description,
     created_at,
     description,
     enrolled_students,
@@ -54,7 +58,24 @@ export const RenderCard = ({
     const idSet = new Set(classId); // because we will store only IDs
     setIsBookmarked(idSet.has(_id));
   }, [_id]);
-
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: class_name,
+        text: class_description,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      Swal.fire({
+        icon: 'success',
+        title: 'Link Copied!',
+        text: 'Course link copied to clipboard',
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
+  };
   return (
     <div
       key={_id}
@@ -157,6 +178,7 @@ export const RenderCard = ({
         <div className="flex gap-2 absolute bottom-2 w-full left-0 px-3">
           <ViewDetailsButton _id={_id} text="View Details" className="rounded-lg" />
           <SocialButton
+            onClick={handleShare}
             icon={<FaShareAlt className="w-5 h-5" />}
             className="p-2 border-2 border-gray-200 rounded-lg hover:border-blue-500"
             textColor="text-gray-600 hover:text-blue-500"
