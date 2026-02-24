@@ -90,7 +90,7 @@ const Instructor = () => {
                   </div>
 
                   {/* Status badge */}
-                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-400 to-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">
+                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-400 to-green-600 text-white text-[9px] md:text-[9px] font-bold px-3 py-1 rounded-full shadow-lg">
                     ⭐ Top Rated
                   </div>
                 </div>
