@@ -7,12 +7,14 @@ import {
   FaCheckCircle,
   FaLock,
   FaExclamationTriangle,
+  FaHeart,
 } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Provider/AuthProvider';
 import useAdmin from '../../Hooks/useAdmin';
 import useInstructor from '../../Hooks/useInstructor';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { handleWishlist } from '../../utils/wishlist/wishlist';
 
 const AllClasses = ({ classes, refetch }) => {
   const { user } = useContext(AuthContext);
@@ -23,7 +25,7 @@ const AllClasses = ({ classes, refetch }) => {
   const [isCheckingSelection, setIsCheckingSelection] = useState(true);
   const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
-
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const {
     instructor_name,
     instructor_email,
@@ -142,7 +144,13 @@ const AllClasses = ({ classes, refetch }) => {
       setIsLoading(false);
     }
   };
-
+  // wishlist
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
+    const classId = wishlist.classes || [];
+    const idSet = new Set(classId); // because we will store only IDs
+    setIsBookmarked(idSet.has(_id));
+  }, [_id]);
   // Get button content based on state
   const getButtonContent = () => {
     if (isCheckingSelection) {
@@ -242,7 +250,16 @@ const AllClasses = ({ classes, refetch }) => {
       {/* Unavailable Overlay */}
       <div className="flex justify-between items-start">
         {' '}
-        <div className="absolute top-4 left-2 z-10">B</div>
+        {/* Bookmark button */}
+        <button
+          onClick={() => handleWishlist(_id, 'classes', setIsBookmarked, user)}
+          className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300 absolute top-4 right-4 z-10 ${
+            isBookmarked
+              ? 'bg-red-500 text-white scale-110'
+              : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
+          }`}>
+          <FaHeart className="w-5 h-5" />
+        </button>{' '}
         {!isAvailable && (
           <div className="absolute top-4 right-4 z-10">
             <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
@@ -250,7 +267,6 @@ const AllClasses = ({ classes, refetch }) => {
             </span>
           </div>
         )}
-       
       </div>
 
       {/* Selected Badge */}
@@ -360,6 +376,6 @@ const AllClasses = ({ classes, refetch }) => {
       )}
     </div>
   );
-};
+};;
 
 export default AllClasses;
