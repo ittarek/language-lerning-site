@@ -349,7 +349,7 @@ const AllClasses = ({ classes, refetch }) => {
         <button
           onClick={handleSelect}
           disabled={isDisabled || isLoading || isCheckingSelection}
-          className={`w-full py-3 rounded-b-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 bottom-0 absolute left-0  ${
+          className={`w-full py-3 rounded-b-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 bottom-0 absolute left-0 z-20  ${
             isDisabled || isLoading || isCheckingSelection
               ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
               : isSelected
