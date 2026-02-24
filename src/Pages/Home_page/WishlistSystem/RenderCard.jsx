@@ -155,7 +155,7 @@ export const RenderCard = ({
         )}
 
         <div className="flex gap-2 absolute bottom-2 w-full left-0 px-3">
-          <ViewDetailsButton text="View" icon={FaExternalLinkAlt} showIcon={true} />
+          <ViewDetailsButton _id={_id} text="View Details" className="rounded-lg" />
           <SocialButton
             icon={<FaShareAlt className="w-5 h-5" />}
             className="p-2 border-2 border-gray-200 rounded-lg hover:border-blue-500"
