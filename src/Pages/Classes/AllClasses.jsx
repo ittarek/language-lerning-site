@@ -252,7 +252,8 @@ const AllClasses = ({ classes, refetch }) => {
         <div className="flex justify-between items-start">
           {' '}
           {/* Bookmark button */}
-          { isAdmin || isInstructor ? null : <button
+          {isAdmin || isInstructor ? null :
+            <button
             onClick={() => handleWishlist(_id, 'classes', setIsBookmarked, user)}
             className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300  ${
               isBookmarked
