@@ -181,19 +181,18 @@ const WishlistSystem = () => {
         )}
 
         {/* Cards */}
+        {/* Cards */}
         {!isLoading && filteredItems.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredItems.map(item => (
-              <div key={item._id} className="relative">
-                <RenderCard item={item} type={activeTab} FaExternalLinkAlt={null} />
-                {/* Remove button */}
-                <button
-                  onClick={() => handleRemove(item._id, activeTab)}
-                  className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-full shadow-md transition-all duration-300 hover:scale-110 z-10"
-                  title="Remove from wishlist">
-                  <FaTrash className="w-3.5 h-3.5" />
-                </button>
-              </div>
+              <RenderCard
+                key={item._id}
+                item={item}
+                type={activeTab}
+                FaExternalLinkAlt={null}
+                setWishlistIds={setWishlistIds}
+                setTabs={setTabs}
+              />
             ))}
           </div>
         )}

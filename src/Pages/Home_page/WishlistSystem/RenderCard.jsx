@@ -15,13 +15,15 @@ import { handleWishlist } from '../../../utils/wishlist/wishlist';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
 
-export const RenderCard = (
-{item,
-type,
-FaExternalLinkAlt,}
-) => {
+export const RenderCard = ({
+  item,
+  type,
+  FaExternalLinkAlt,
+  setWishlistIds = null,
+  setTabs = null,
+}) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const {
     available_seats,
     class_imgUrl,
@@ -44,8 +46,7 @@ FaExternalLinkAlt,}
     contact,
     social_links,
   } = item;
-  console.log(item);
-  
+
   // wishlist
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
@@ -67,7 +68,9 @@ FaExternalLinkAlt,}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
         <button
-          onClick={() => handleWishlist(_id, type, setIsBookmarked, user)}
+          onClick={() =>
+            handleWishlist(_id, type, setIsBookmarked, user, setWishlistIds, setTabs)
+          }
           className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all duration-300 ${
             isBookmarked
               ? 'bg-red-500 text-white scale-110'
