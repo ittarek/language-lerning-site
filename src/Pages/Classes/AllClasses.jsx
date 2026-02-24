@@ -248,25 +248,27 @@ const AllClasses = ({ classes, refetch }) => {
         !isAvailable ? 'opacity-75' : ''
       } ${isDisabled ? '' : 'hover:border-indigo-200'}`}>
       {/* Unavailable Overlay */}
-      <div className="flex justify-between items-start">
-        {' '}
-        {/* Bookmark button */}
-        <button
-          onClick={() => handleWishlist(_id, 'classes', setIsBookmarked, user)}
-          className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300 absolute top-4 right-4 z-10 ${
-            isBookmarked
-              ? 'bg-red-500 text-white scale-110'
-              : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
-          }`}>
-          <FaHeart className="w-5 h-5" />
-        </button>{' '}
-        {!isAvailable && (
-          <div className="absolute top-4 right-4 z-10">
-            <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-              Seats Full
-            </span>
-          </div>
-        )}
+      <div className=" absolute top-2 left-2 z-10 inset-2">
+        <div className="flex justify-between items-start">
+          {' '}
+          {/* Bookmark button */}
+          <button
+            onClick={() => handleWishlist(_id, 'classes', setIsBookmarked, user)}
+            className={`shadow-lg  hover:scale-110  p-1 rounded-full backdrop-blur-md transition-all duration-300  ${
+              isBookmarked
+                ? 'bg-red-500 text-white scale-110'
+                : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
+            }`}>
+            <FaHeart className="w-5 h-5" />
+          </button>{' '}
+          {!isAvailable && (
+            <div className="">
+              <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                Seats Full
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Selected Badge */}
@@ -376,6 +378,6 @@ const AllClasses = ({ classes, refetch }) => {
       )}
     </div>
   );
-};;
+};
 
 export default AllClasses;
