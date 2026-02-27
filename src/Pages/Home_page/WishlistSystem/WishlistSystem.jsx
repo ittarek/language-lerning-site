@@ -52,26 +52,12 @@ const WishlistSystem = () => {
     loadWishlist();
   }, []);
 
-  // Remove item from wishlist
-  const handleRemove = (id, type) => {
-    const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
-    const updated = (wishlist[type] || []).filter(item => item !== id);
-    const newWishlist = { ...wishlist, [type]: updated };
-    localStorage.setItem('classData', JSON.stringify(newWishlist));
-    setWishlistIds(newWishlist);
-
-    // update tabs
-    const existingTabs = Object.keys(newWishlist).filter(
-      key => newWishlist[key]?.length > 0
-    );
-    setTabs(existingTabs);
-
-    toast.info('Removed from wishlist', { autoClose: 2000 });
-  };
 
   // Get current tab's IDs
   const activeIds = wishlistIds[activeTab] || [];
-
+  const blogs = JSON.parse(localStorage.getItem('classData') || '[]');
+  console.log(blogs.blogs);
+  
   // Filter data based on active tab
   const currentData = activeTab === 'classes' ? classes : [];
 
@@ -180,7 +166,6 @@ const WishlistSystem = () => {
           </div>
         )}
 
-        {/* Cards */}
         {/* Cards */}
         {!isLoading && filteredItems.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
