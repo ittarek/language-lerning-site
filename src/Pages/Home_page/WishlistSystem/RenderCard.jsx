@@ -61,15 +61,16 @@ export const RenderCard = ({
     contact,
     social_links,
   } = item;
-  console.log('item', item);
+
 
   // wishlist
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
     const classId = wishlist.classes || [];
-    const idSet = new Set(classId); // because we will store only IDs
-    setIsBookmarked(idSet.has(_id));
-  }, [_id]);
+    const blogsId = wishlist.blogs || [];
+    const idSet = new Set([...classId, ...blogsId]); // because we will store only IDs
+    setIsBookmarked(idSet.has(_id || id));
+  }, [_id, id]);
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -102,7 +103,7 @@ export const RenderCard = ({
 
         <button
           onClick={() =>
-            handleWishlist(_id, type, setIsBookmarked, user, setWishlistIds, setTabs)
+            handleWishlist(_id || id, type, setIsBookmarked, user, setWishlistIds, setTabs)
           }
           className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all duration-300 ${
             isBookmarked

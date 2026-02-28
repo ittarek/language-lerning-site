@@ -190,5 +190,18 @@ Accept that mistakes are essential. Practice consistently rather than intensivel
         category: 'Learning Tips',
         image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80',
       },
+      {
+        id: 9,
+        title: 'From Beginner to Advanced: Realistic Timeline Expectations',
+        excerpt:
+          'Set achievable goals by understanding what different proficiency levels actually mean and how long they typically take to reach.',
+        content:
+          "The FSI (Foreign Service Institute) estimates that English speakers need 600-750 hours for 'easy' languages like Spanish and French, and 2200+ hours for 'hard' languages like Arabic and Japanese. But what do these hours translate to? With one hour daily, that's 2-3 years for Spanish or 6+ for Mandarin to reach professional proficiency. However, the journey isn't linear. A1 (beginner) to A2 (elementary) happens relatively quickly - 3-6 months of consistent study. A2 to B1 (intermediate) takes longer, often 6-12 months, but opens up real conversations. B1 to B2 (upper intermediate) is the notorious plateau where many quit - expect 1-2 years. This level lets you work in the language but not fully express nuance. B2 to C1 (advanced) requires another 1-2 years and extensive immersion. C2 (mastery) takes a lifetime; even natives continue learning. These timelines assume quality study - passive app scrolling doesn't count. Factors affecting speed include: language similarity to your native tongue, previous language learning experience, study intensity, quality of resources, immersion opportunities, natural aptitude, and motivation. Don't compare your progress to others; focus on consistent improvement.",
+        author: 'Michael Santos',
+        date: 'December 3, 2024',
+        readTime: '9 min read',
+        category: 'Learning Tips',
+        image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80',
+      },
       // Add more blog posts here (4-8) with similar detailed content structure
     ];
