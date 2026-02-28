@@ -24,6 +24,8 @@ export const RenderCard = ({
   setWishlistIds = null,
   setTabs = null,
 }) => {
+  console.log('type', type);
+
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -186,7 +188,11 @@ export const RenderCard = ({
         )}
 
         <div className="flex gap-2 absolute bottom-2 w-full left-0 px-3">
-          <ViewDetailsButton to={`/${type}/${_id || id}`} _id={_id || id} text="View Details" className="rounded-lg" />
+          <ViewDetailsButton
+            to={`${type === 'classes' ? '/class' : type === 'blogs' ? '/blog' : '/event'}/${_id || id}`}
+            text="View Details"
+            className="rounded-lg"
+          />
           <SocialButton
             onClick={handleShare}
             icon={<FaShareAlt className="w-5 h-5" />}
