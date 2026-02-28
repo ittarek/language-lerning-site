@@ -55,26 +55,29 @@ const WishlistSystem = () => {
 
   // Get current tab's IDs
   const activeIds = wishlistIds[activeTab] || [];
+  console.log("activesIds" , activeIds);
+  
   // blogs data from localStorage
-  useEffect(() => {
-    fetch(blogPosts)
-      .then(res => res.json())
-      .then(data => {
-        const blogsData = JSON.parse(localStorage.getItem('classData')) || {};
-        blogsData.blogs = data;
-        console.log('blogs data', data);
+  useEffect(() => {}, []);
+  const findBlogs = blogPosts.filter(blog => activeIds.includes(blog.id));
+  console.log("findblogs",findBlogs);
 
-        localStorage.setItem('classData', JSON.stringify(blogsData));
-      });
-  }, []);
   const blogs = JSON.parse(localStorage.getItem('classData') || '[]');
   // console.log('blog', blogs.blogs);
 
   // Filter data based on active tab
-  const currentData = activeTab === 'classes' ? classes : [];
-
+  let currentData;
+  if (activeTab === 'classes') {
+    currentData = classes;
+  } else if (activeTab === 'blogs') {
+    currentData = findBlogs;
+    console.log("currentdata", currentData);
+    
+  } else {
+    console.log('data');
+  }
   const filteredItems = currentData
-    .filter(item => activeIds.includes(item._id))
+    .filter(item => activeIds.includes(item._id || item.id))
     .filter(item =>
       !searchTerm
         ? true

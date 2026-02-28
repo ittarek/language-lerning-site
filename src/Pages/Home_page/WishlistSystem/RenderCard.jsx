@@ -31,6 +31,15 @@ export const RenderCard = ({
     available_seats,
     class_imgUrl,
     class_name,
+    author,
+    category,
+    content,
+    date,
+    excerpt,
+    id,
+    image,
+    readTime,
+    title,
     class_description,
     created_at,
     description,
@@ -50,6 +59,7 @@ export const RenderCard = ({
     contact,
     social_links,
   } = item;
+  console.log('item', item);
 
   // wishlist
   useEffect(() => {
@@ -82,7 +92,7 @@ export const RenderCard = ({
       className="group relative bg-white h-[45vh] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
       <div className="relative h-48 overflow-hidden">
         <img
-          src={class_imgUrl}
+          src={image || class_imgUrl}
           alt={class_name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
@@ -103,7 +113,7 @@ export const RenderCard = ({
 
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-          {class_name || item.title}
+          {class_name || title}
         </h3>
 
         {type === 'classes' && (
@@ -176,7 +186,7 @@ export const RenderCard = ({
         )}
 
         <div className="flex gap-2 absolute bottom-2 w-full left-0 px-3">
-          <ViewDetailsButton _id={_id} text="View Details" className="rounded-lg" />
+          <ViewDetailsButton to={`/${type}/${_id || id}`} _id={_id || id} text="View Details" className="rounded-lg" />
           <SocialButton
             onClick={handleShare}
             icon={<FaShareAlt className="w-5 h-5" />}
