@@ -52,12 +52,21 @@ const WishlistSystem = () => {
     loadWishlist();
   }, []);
 
-
   // Get current tab's IDs
   const activeIds = wishlistIds[activeTab] || [];
+  // blogs data from localStorage
+  useEffect(() => {
+    fetch('/blogs')
+      .then(res => res.json())
+      .then(data => {
+        const blogsData = JSON.parse(localStorage.getItem('classData')) || {};
+        blogsData.blogs = data;
+        localStorage.setItem('classData', JSON.stringify(blogsData));
+      });
+  }, []);
   const blogs = JSON.parse(localStorage.getItem('classData') || '[]');
-  console.log(blogs.blogs);
-  
+  console.log('blog', blogs.blogs);
+
   // Filter data based on active tab
   const currentData = activeTab === 'classes' ? classes : [];
 
