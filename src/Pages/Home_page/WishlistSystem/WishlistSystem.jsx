@@ -14,6 +14,7 @@ import { TabButtonGroup, ViewDetailsButton } from '../../../Components/ui/Button
 import useFetchData from '../../../Hooks/useFetchTeacher';
 import { RenderCard } from './RenderCard';
 import { AuthContext } from '../../../Provider/AuthProvider';
+import { blogPosts } from '../../Blog/blogPosts';
 
 const TAB_ICONS = {
   classes: <FaGraduationCap />,
@@ -56,16 +57,18 @@ const WishlistSystem = () => {
   const activeIds = wishlistIds[activeTab] || [];
   // blogs data from localStorage
   useEffect(() => {
-    fetch('/blogs')
+    fetch(blogPosts)
       .then(res => res.json())
       .then(data => {
         const blogsData = JSON.parse(localStorage.getItem('classData')) || {};
         blogsData.blogs = data;
+        console.log('blogs data', data);
+
         localStorage.setItem('classData', JSON.stringify(blogsData));
       });
   }, []);
   const blogs = JSON.parse(localStorage.getItem('classData') || '[]');
-  console.log('blog', blogs.blogs);
+  // console.log('blog', blogs.blogs);
 
   // Filter data based on active tab
   const currentData = activeTab === 'classes' ? classes : [];
