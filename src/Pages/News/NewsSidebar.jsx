@@ -1,5 +1,6 @@
-import React from 'react'
 import { SubmitButton } from '../../Components/ui/Button';
+import { FaClock, FaFire } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const NewsSidebar = () => {
   return (
