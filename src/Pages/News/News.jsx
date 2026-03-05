@@ -329,7 +329,7 @@ const News = () => {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             {/* Trending Section */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 sticky top-24">
+            <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 sticky top-[22%]">
               <div className="flex items-center gap-2 mb-6">
                 <FaFire className="text-red-600 text-xl" />
                 <h3 className="text-2xl font-bold text-gray-800">Trending Now</h3>
