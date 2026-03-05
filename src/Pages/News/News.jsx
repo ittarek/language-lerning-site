@@ -170,7 +170,7 @@ const News = () => {
       </Helmet>
 
       {/* Hero Section */}
-  <NewsHeroSection />
+      <NewsHeroSection searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       {/* Breaking News Ticker */}
       <BreakingNewsTicker breakingNews={breakingNews} />
