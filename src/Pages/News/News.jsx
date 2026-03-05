@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
-  FaCalendar,
-  FaClock,
-  FaArrowRight,
-  FaSearch,
   FaFire,
   FaTrophy,
   FaGlobeAmericas,
@@ -14,8 +9,6 @@ import {
   FaBookReader,
 } from 'react-icons/fa';
 import FilterSection from '../../Components/Shared/FilterSection/FilterSection';
-import { SubmitButton } from '../../Components/ui/Button';
-import { NewsSidebar } from './NewsSidebar';
 import { NewsCTA } from './NewsCTA';
 import { BreakingNewsTicker } from './BreakingNewsTicker';
 import { NewsHeroSection } from './NewsHeroSection';

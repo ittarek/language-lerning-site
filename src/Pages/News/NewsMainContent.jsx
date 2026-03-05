@@ -1,4 +1,3 @@
-import React from 'react'
 import { NewsSidebar } from './NewsSidebar';
 import { FaArrowRight, FaCalendar, FaClock, FaFire } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
