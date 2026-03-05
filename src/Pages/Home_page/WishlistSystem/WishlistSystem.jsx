@@ -81,7 +81,7 @@ const WishlistSystem = () => {
     .filter(item =>
       !searchTerm
         ? true
-        : item?.class_name?.toLowerCase().includes(searchTerm.toLowerCase())
+        : item?.class_name || item?.title?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   const totalCount = Object.values(wishlistIds).reduce(
