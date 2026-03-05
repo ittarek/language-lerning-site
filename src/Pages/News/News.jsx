@@ -328,7 +328,7 @@ const News = () => {
           </div>
 
           {/* Sidebar */}
-         <NewsSidebar/>
+          <NewsSidebar trendingNews={trendingNews} />
         </div>
       </div>
 

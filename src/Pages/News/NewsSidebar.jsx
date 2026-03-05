@@ -2,7 +2,7 @@ import { SubmitButton } from '../../Components/ui/Button';
 import { FaClock, FaFire } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-export const NewsSidebar = () => {
+export const NewsSidebar = ({ trendingNews }) => {
   return (
     <div className="lg:col-span-1">
       {/* Trending Section */}
@@ -53,4 +53,4 @@ export const NewsSidebar = () => {
       </div>
     </div>
   );
-}
+};
