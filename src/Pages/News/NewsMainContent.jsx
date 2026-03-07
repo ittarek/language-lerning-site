@@ -11,14 +11,14 @@ export const NewsMainContent = ({
   categoryIcons,
   trendingNews,
 }) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(new Set());
   const { user } = useContext(AuthContext);
-  const Ids = new Set(regularNews.map(article => article.id));
+  const Ids = regularNews.map(article => article.id); // ✅ এখন post.id ঠিকমতো কাজ করবে
   // Load all bookmarked IDs once on mount
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
-    const blogIds = wishlist.blogs || [];
-    setIsBookmarked(new Set(blogIds).has(Ids));
+    const newsIds = wishlist.news || [];
+    setIsBookmarked(new Set(newsIds).has(Ids));
   }, [Ids]); // ✅ এখন post.id ঠিকমতো কাজ করবে
 
   // Toggle bookmark for a specific article
