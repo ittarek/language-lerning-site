@@ -2,15 +2,14 @@ import { useState, useEffect, useContext } from 'react';
 import {
   FaHeart,
   FaSearch,
-  FaTrash,
-  FaBookOpen,
+    FaBookOpen,
   FaNewspaper,
   FaCalendarAlt,
   FaGraduationCap,
 } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TabButtonGroup, ViewDetailsButton } from '../../../Components/ui/Button';
+import {  ViewDetailsButton } from '../../../Components/ui/Button';
 import useFetchData from '../../../Hooks/useFetchTeacher';
 import { RenderCard } from './RenderCard';
 import { AuthContext } from '../../../Provider/AuthProvider';
@@ -56,14 +55,10 @@ const WishlistSystem = () => {
 
   // Get current tab's IDs
   const activeIds = wishlistIds[activeTab] || [];
-  console.log("activesIds" , activeIds);
   
   // blogs data from localStorage
   const findBlogs = blogPosts.filter(blog => activeIds.includes(blog.id));
 const fineNews = news.filter(blog => activeIds.includes(blog.id));
-
-  const blogs = JSON.parse(localStorage.getItem('classData') || '[]');
-  // console.log('blog', blogs.blogs);
 
   // Filter data based on active tab
   let currentData;
