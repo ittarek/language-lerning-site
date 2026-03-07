@@ -2,7 +2,7 @@ import { NewsSidebar } from './NewsSidebar';
 import { FaArrowRight, FaCalendar, FaClock, FaFire, FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { handleWishlist } from '../../utils/wishlist/wishlist';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 
 export const NewsMainContent = ({
@@ -13,6 +13,18 @@ export const NewsMainContent = ({
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { user } = useContext(AuthContext);
+  const Ids = new Set(regularNews.map(article => article.id));
+  // Load all bookmarked IDs once on mount
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
+    const blogIds = wishlist.blogs || [];
+    setIsBookmarked(new Set(blogIds).has(Ids));
+  }, [Ids]); // ✅ এখন post.id ঠিকমতো কাজ করবে
+
+  // Toggle bookmark for a specific article
+  const handleToggleBookmark = articleId => {
+    handleWishlist(articleId, 'news', setIsBookmarked, user);
+  };
   return (
     <div className="container mx-auto px-4 py-16">
       <div className="grid lg:grid-cols-3 gap-8">
@@ -44,16 +56,24 @@ export const NewsMainContent = ({
                         alt={article.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
-                          {categoryIcons[article.category]}
-                          {article.category}
-                        </span>
+                      <div className=" flex justify-between items-start">
+                        <div className="absolute top-4 left-4">
+                          <span className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
+                            {categoryIcons[article.category]}
+                            {article.category}
+                          </span>
+                          {article.trending && (
+                            <div className="absolute top-8 ">
+                              <span className="bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                                <FaFire /> Trending
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        {/* wishlist button */}
                         <div>
                           <button
-                            onClick={() =>
-                              handleWishlist(article.id, 'news', setIsBookmarked, user)
-                            }
+                            onClick={() => handleToggleBookmark(article.id)}
                             className={`absolute top-4 right-4 shadow-lg hover:scale-110 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
                               isBookmarked
                                 ? 'bg-red-500 text-white scale-110'
@@ -63,13 +83,6 @@ export const NewsMainContent = ({
                           </button>
                         </div>
                       </div>
-                      {article.trending && (
-                        <div className="absolute top-4 right-4">
-                          <span className="bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
-                            <FaFire /> Trending
-                          </span>
-                        </div>
-                      )}
                     </div>
 
                     <div
