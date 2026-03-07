@@ -39,7 +39,7 @@ export const RenderCard = ({
     date,
     excerpt,
     id,
-    image,
+    image,img,
     readTime,
     title,
     class_description,
@@ -95,7 +95,7 @@ export const RenderCard = ({
       className="group relative bg-white h-[45vh] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
       <div className="relative h-48 overflow-hidden">
         <img
-          src={image || class_imgUrl}
+          src={image || class_imgUrl || img}
           alt={class_name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />

@@ -15,6 +15,7 @@ import useFetchData from '../../../Hooks/useFetchTeacher';
 import { RenderCard } from './RenderCard';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import { blogPosts } from '../../Blog/blogPosts';
+import { news } from '../TradingArticle/news';
 
 const TAB_ICONS = {
   classes: <FaGraduationCap />,
@@ -58,9 +59,8 @@ const WishlistSystem = () => {
   console.log("activesIds" , activeIds);
   
   // blogs data from localStorage
-  useEffect(() => {}, []);
   const findBlogs = blogPosts.filter(blog => activeIds.includes(blog.id));
-  console.log("findblogs",findBlogs);
+const fineNews = news.filter(blog => activeIds.includes(blog.id));
 
   const blogs = JSON.parse(localStorage.getItem('classData') || '[]');
   // console.log('blog', blogs.blogs);
@@ -70,10 +70,12 @@ const WishlistSystem = () => {
   if (activeTab === 'classes') {
     currentData = classes;
   } else if (activeTab === 'blogs') {
-    currentData = findBlogs;
-    console.log("currentdata", currentData);
-    
-  } else {
+    currentData = findBlogs;    
+  } else if (activeTab === 'news') {
+    currentData = fineNews;
+    console.log('currentData', currentData);
+  }
+    else {
     console.log('data');
   }
   const filteredItems = currentData
