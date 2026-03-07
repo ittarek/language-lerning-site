@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Cover from '../../Components/Cover';
 import { Helmet } from 'react-helmet-async';
 import {
-  FaCalendar,
-  FaUser,
-  FaClock,
-  FaArrowRight,
   FaSearch,
   FaBookOpen,
   FaGraduationCap,
@@ -14,7 +8,6 @@ import {
   FaLightbulb,
 } from 'react-icons/fa';
 import FilterSection from '../../Components/Shared/FilterSection/FilterSection';
-import OptimizedImage from '../../Components/Shared/OptimizedImage';
 import { LatestBlog } from './LatestBlog';
 import { FeaturedBlogs } from './FeaturedBlogs';
 
@@ -193,8 +186,8 @@ const Blog = () => {
       </div>
 
       {/* Category Filter */}
-      <FilterSection className
-="container"
+      <FilterSection
+        className="container"
         filters={[
           {
             label: 'Category',

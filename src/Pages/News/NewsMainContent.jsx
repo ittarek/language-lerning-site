@@ -1,8 +1,18 @@
 import { NewsSidebar } from './NewsSidebar';
-import { FaArrowRight, FaCalendar, FaClock, FaFire } from 'react-icons/fa';
+import { FaArrowRight, FaCalendar, FaClock, FaFire, FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { handleWishlist } from '../../utils/wishlist/wishlist';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../Provider/AuthProvider';
 
-export const NewsMainContent = ({ filteredNews, regularNews, categoryIcons , trendingNews}) => {
+export const NewsMainContent = ({
+  filteredNews,
+  regularNews,
+  categoryIcons,
+  trendingNews,
+}) => {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const { user } = useContext(AuthContext);
   return (
     <div className="container mx-auto px-4 py-16">
       <div className="grid lg:grid-cols-3 gap-8">
@@ -39,6 +49,19 @@ export const NewsMainContent = ({ filteredNews, regularNews, categoryIcons , tre
                           {categoryIcons[article.category]}
                           {article.category}
                         </span>
+                        <div>
+                          <button
+                            onClick={() =>
+                              handleWishlist(article.id, 'news', setIsBookmarked, user)
+                            }
+                            className={`absolute top-4 right-4 shadow-lg hover:scale-110 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
+                              isBookmarked
+                                ? 'bg-red-500 text-white scale-110'
+                                : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
+                            }`}>
+                            <FaHeart className="w-5 h-5" />
+                          </button>
+                        </div>
                       </div>
                       {article.trending && (
                         <div className="absolute top-4 right-4">
