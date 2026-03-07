@@ -13,17 +13,31 @@ export const NewsMainContent = ({
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(new Set());
   const { user } = useContext(AuthContext);
-  const Ids = regularNews.map(article => article.id); // ✅ এখন post.id ঠিকমতো কাজ করবে
   // Load all bookmarked IDs once on mount
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
     const newsIds = wishlist.news || [];
-    setIsBookmarked(new Set(newsIds).has(Ids));
-  }, [Ids]); // ✅ এখন post.id ঠিকমতো কাজ করবে
+    // ✅ সঠিক - আগের উত্তরের মতো
+    const bookmarked = new Set(
+      regularNews.map(a => a.id).filter(id => newsIds.includes(id))
+    );
+    setIsBookmarked(bookmarked);
+  }, []); // ✅ এখন post.id ঠিকমতো কাজ করবে
 
   // Toggle bookmark for a specific article
   const handleToggleBookmark = articleId => {
-    handleWishlist(articleId, 'news', setIsBookmarked, user);
+    handleWishlist(
+      articleId,
+      'news',
+      isNowBookmarked => {
+        setIsBookmarked(prev => {
+          const updated = new Set(prev);
+          isNowBookmarked ? updated.add(articleId) : updated.delete(articleId);
+          return updated;
+        });
+      },
+      user
+    );
   };
   return (
     <div className="container mx-auto px-4 py-16">
@@ -75,7 +89,7 @@ export const NewsMainContent = ({
                           <button
                             onClick={() => handleToggleBookmark(article.id)}
                             className={`absolute top-4 right-4 shadow-lg hover:scale-110 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
-                              isBookmarked
+                              isBookmarked.has(article.id)
                                 ? 'bg-red-500 text-white scale-110'
                                 : 'bg-white/90 text-gray-600 hover:bg-red-500 hover:text-white'
                             }`}>
