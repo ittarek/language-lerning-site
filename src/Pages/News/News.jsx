@@ -171,6 +171,7 @@ const News = () => {
 
       {/* Category Filter */}
       <FilterSection
+        className="container "
         filters={[
           {
             label: 'Category',

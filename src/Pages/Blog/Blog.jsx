@@ -193,7 +193,8 @@ const Blog = () => {
       </div>
 
       {/* Category Filter */}
-      <FilterSection
+      <FilterSection className
+="container"
         filters={[
           {
             label: 'Category',

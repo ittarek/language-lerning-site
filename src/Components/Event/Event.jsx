@@ -211,7 +211,7 @@ const Events = () => {
       <EventsSectionHeader eventsCount={events.length} />
 
       {/* Filters */}
-      <FilterSection
+      <FilterSection className="max-w-7xl"
         filters={[
           {
             label: 'Category',

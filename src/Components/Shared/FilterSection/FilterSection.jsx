@@ -22,7 +22,7 @@ import styles from './FilterSection.module.css';
  * }
  */
 
-const FilterSection = ({
+const FilterSection = ({className = '',
   filters = [],
   showContainer = true,
   isSticky = true,
@@ -199,9 +199,9 @@ const FilterSection = ({
   );
 
   // Wrapper with optional sticky and container
-  const wrapperClasses = `
+  const wrapperClasses = `${className}
         ${isSticky ? 'sticky top-14 md:top-18 z-40' : ''}
-        bg-white shadow-md  container mx-auto
+        bg-white shadow-md   mx-auto
     `;
 
   if (showContainer) {
