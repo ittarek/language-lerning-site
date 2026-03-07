@@ -141,7 +141,7 @@ const fineNews = news.filter(blog => activeIds.includes(blog.id));
           <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
             {tabs.map(tab => (
               <button
-                key={tab}
+                key={tab.id}
                 onClick={() => setActiveTab(tab)}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 whitespace-nowrap ${
                   activeTab === tab

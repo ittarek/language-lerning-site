@@ -37,7 +37,8 @@ export const RenderCard = ({
     date,
     excerpt,
     id,
-    image,img,
+    image,
+    img,
     readTime,
     title,
     class_description,
@@ -59,7 +60,6 @@ export const RenderCard = ({
     contact,
     social_links,
   } = item;
-
 
   // wishlist
   useEffect(() => {
@@ -87,9 +87,18 @@ export const RenderCard = ({
       });
     }
   };
+  const getPath = () => {
+    const pathMap = {
+      classes: '/class',
+      blogs: '/blog',
+      news: '/news',
+      events: '/event',
+    };
+    return `${pathMap[type] || '/event'}/${_id || id}`;
+  };
   return (
     <div
-      key={_id}
+      key={_id || id}
       className="group relative bg-white h-[45vh] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
       <div className="relative h-48 overflow-hidden">
         <img
@@ -101,7 +110,14 @@ export const RenderCard = ({
 
         <button
           onClick={() =>
-            handleWishlist(_id || id, type, setIsBookmarked, user, setWishlistIds, setTabs)
+            handleWishlist(
+              _id || id,
+              type,
+              setIsBookmarked,
+              user,
+              setWishlistIds,
+              setTabs
+            )
           }
           className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all duration-300 ${
             isBookmarked
@@ -188,8 +204,9 @@ export const RenderCard = ({
 
         <div className="flex gap-2 absolute bottom-2 w-full left-0 px-3">
           <ViewDetailsButton
-            to={`${type === 'classes' ? '/class' : type === 'blogs' ? '/blog' : type === 'news' ? '/news' : '/event'}/${_id || id}`}
-            text="View Details"state={item}
+            to={getPath()}
+            text="View Details"
+            state={{ article: item }}
             className="rounded-lg"
           />
           <SocialButton
