@@ -59,7 +59,7 @@ export const RenderCard = ({
     contact,
     social_links,
   } = item;
-console.log("news",item);
+
 
   // wishlist
   useEffect(() => {
