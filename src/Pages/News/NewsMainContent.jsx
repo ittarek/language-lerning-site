@@ -11,7 +11,7 @@ export const NewsMainContent = ({
   categoryIcons,
   trendingNews,
 }) => {
-  console.log();
+  console.log(regularNews);
   
   const [isBookmarked, setIsBookmarked] = useState(new Set());
   const { user } = useContext(AuthContext);

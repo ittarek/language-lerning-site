@@ -14,7 +14,8 @@ import useFetchData from '../../../Hooks/useFetchTeacher';
 import { RenderCard } from './RenderCard';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import { blogPosts } from '../../Blog/blogPosts';
-import { news } from '../TradingArticle/news';
+import { newsArticles } from '../../News/newsArticles';
+
 
 const TAB_ICONS = {
   classes: <FaGraduationCap />,
@@ -58,7 +59,7 @@ const WishlistSystem = () => {
   
   // blogs data from localStorage
   const findBlogs = blogPosts.filter(blog => activeIds.includes(blog.id));
-const fineNews = news.filter(blog => activeIds.includes(blog.id));
+const fineNews = newsArticles.filter(news => activeIds.includes(news.id));
 
   // Filter data based on active tab
   let currentData;
