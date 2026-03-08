@@ -1,8 +1,9 @@
-export  const newsArticles = [
+export const newsArticles = [
   {
     id: 1,
     title: '10 Effective Tips for Learning a New Language Fast',
     date: 'Dec 20, 2024',
+    readTime: '8 min read',
     details:
       'Discover proven strategies that can help you master a new language in record time. From immersion techniques to digital tools.',
     content: `Learning a new language doesn't have to take years. With the right strategies, you can accelerate your progress dramatically.
@@ -50,6 +51,7 @@ With these strategies combined, learners have reported reaching conversational f
     id: 2,
     title: 'The Science Behind Language Acquisition in Adults',
     date: 'Dec 18, 2024',
+    readTime: '10 min read',
     details:
       'Explore the neurological processes that occur when adults learn new languages and how to optimize your learning potential.',
     content: `For decades, scientists believed adults couldn't achieve native-like fluency. Modern neuroscience tells a very different story.
@@ -88,6 +90,7 @@ The science is clear: adult language acquisition is not only possible but can be
     id: 3,
     title: 'Why Cultural Immersion is Key to Language Mastery',
     date: 'Dec 15, 2024',
+    readTime: '12 min read',
     details:
       "Understanding culture is just as important as learning grammar. Here's why immersion makes all the difference.",
     content: `Fluency isn't just about grammar and vocabulary — it's about thinking, feeling, and living through a language's cultural lens.
@@ -162,6 +165,7 @@ The most effective approach combines tools: use SRS for vocabulary, a conversati
     id: 5,
     title: 'How Daily Practice Builds Long-Term Language Memory',
     date: 'Dec 10, 2024',
+    readTime: '10 min read',
     details:
       'Consistent daily practice strengthens long-term memory and helps learners retain vocabulary and grammar more effectively.',
     content: `The secret to language fluency isn't talent or expensive courses — it's showing up every single day.
@@ -200,6 +204,7 @@ Daily practice is not glamorous. But it is the single most reliable predictor of
     id: 6,
     title: 'Common Mistakes Language Learners Should Avoid',
     date: 'Dec 08, 2024',
+    readTime: '15 min read',
     details:
       'Many learners struggle due to common mistakes like overthinking grammar or avoiding speaking. Learn how to fix them.',
     content: `Most language learners plateau or quit not from lack of talent, but from avoidable mistakes that silently sabotage their progress.
@@ -241,6 +246,7 @@ Avoiding these mistakes won't guarantee fluency, but making them guarantees a mu
     id: 7,
     title: 'How AI is Transforming Language Learning in 2025',
     date: 'Dec 05, 2024',
+    readTime: '20 min read',
     details:
       'Artificial Intelligence is reshaping how people learn languages through personalized lessons and real-time feedback.',
     content: `2025 marks a turning point where AI has moved from a novelty in language education to an indispensable tool that's fundamentally changing how the world learns languages.

@@ -59,7 +59,8 @@ export const RenderCard = ({
     contact,
     social_links,
   } = item;
-log
+console.log("news",item);
+
   // wishlist
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem('classData')) || {};

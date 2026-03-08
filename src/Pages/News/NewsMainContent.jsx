@@ -11,6 +11,8 @@ export const NewsMainContent = ({
   categoryIcons,
   trendingNews,
 }) => {
+  console.log();
+  
   const [isBookmarked, setIsBookmarked] = useState(new Set());
   const { user } = useContext(AuthContext);
   // Load all bookmarked IDs once on mount
@@ -66,7 +68,7 @@ export const NewsMainContent = ({
                         index === 0 ? 'h-80 md:h-auto' : 'h-48 md:col-span-2'
                       } overflow-hidden`}>
                       <img
-                        src={article.image}
+                        src={article.img}
                         alt={article.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
@@ -110,7 +112,7 @@ export const NewsMainContent = ({
                         {article.title}
                       </h3>
 
-                      <p className="text-gray-600 mb-4 line-clamp-3">{article.excerpt}</p>
+                      {/* <p className="text-gray-600 mb-4 line-clamp-3">{article.excerpt}</p> */}
 
                       <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
                         <span className="flex items-center gap-1">
