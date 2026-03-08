@@ -20,25 +20,18 @@ import { useNavigate } from 'react-router-dom';
 export const RenderCard = ({
   item,
   type,
-  FaExternalLinkAlt,
   setWishlistIds = null,
   setTabs = null,
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { user } = useContext(AuthContext);
   const {
-    available_seats,
     class_imgUrl,
     class_name,
-    author,
-    category,
-    content,
-    date,
-    excerpt,
-    id,
+     id,
     image,
     img,
-    readTime,
+
     title,
     class_description,
     created_at,
