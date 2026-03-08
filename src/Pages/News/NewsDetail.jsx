@@ -208,7 +208,7 @@ const { img, title, tags,trending, views,slug,details,comments,excerpt, content,
           {/* Article Content */}
           <article className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-16">
             <div className="prose prose-lg max-w-none">
-              {content}
+          
               {content?.split('\n\n').map((paragraph, index) => {
                 if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
                   return (

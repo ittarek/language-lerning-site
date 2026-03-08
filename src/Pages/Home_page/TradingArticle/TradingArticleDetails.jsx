@@ -16,8 +16,9 @@ import {
   FaGlobe,
   FaSearch,
 } from 'react-icons/fa';
-import { news } from './news';
+
 import { SocialButton } from '../../../Components/ui/Button';
+import { newsArticles } from '../../News/newsArticles';
 
 const TradingArticleDetails = () => {
   const { slug } = useParams();
@@ -30,7 +31,7 @@ const TradingArticleDetails = () => {
   /* 🔍 article find */
   useEffect(() => {
     if (!article) {
-      const found = news.find(item => item.slug === slug);
+      const found = newsArticles.find(item => item.slug === slug);
       if (found) setArticle(found);
       else navigate('/'); // fallback
     }
@@ -69,7 +70,7 @@ const TradingArticleDetails = () => {
   }
 
   /* 🧩 destructuring */
-  const { title, date, details, img, category, tags, views, comments } = article;
+  const { title, date, details, img, category, tags, views, comments, content } = article;
 
   const categoryIcons = {
     'Language Learning': <FaLightbulb />,
@@ -145,8 +146,26 @@ const TradingArticleDetails = () => {
       {/* content */}
       <div className="max-w-4xl mx-auto px-4 py-20">
         <article className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-          <p className="text-gray-700 text-lg leading-relaxed mb-8">{details}</p>
-
+     
+          <div className="prose prose-lg max-w-none">
+            {content?.split('\n\n').map((paragraph, index) => {
+              if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+                return (
+                  <h2
+                    key={index}
+                    className="text-2xl font-bold text-gray-800 mt-8 mb-4 flex items-center gap-3">
+                    <div className="w-1 h-8 bg-gradient-to-b from-red-600 to-orange-600 rounded-full"></div>
+                    {paragraph.replace(/\*\*/g, '')}
+                  </h2>
+                );
+              }
+              return (
+                <p key={index} className="text-gray-700 leading-relaxed mb-6 text-lg">
+                  {paragraph}
+                </p>
+              );
+            })}
+          </div>
           {/* tags */}
           <div className="flex flex-wrap gap-3">
             {tags.map(tag => (

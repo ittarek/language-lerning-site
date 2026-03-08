@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Container from '../../../Components/Container';
 import { TradingArticleCard } from './TradingArticleCard';
-import { news } from './news';
+
 import { TradingArticleHeader } from './TradingArticleHeader';
 import NewsletterCTA from './NewsletterCTA';
+import { newsArticles } from '../../News/newsArticles';
 
 const TradingArticle = () => {
   const [showAll, setShowAll] = useState(false);
@@ -16,7 +17,7 @@ const TradingArticle = () => {
         {/* Articles Grid */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {(showAll ? news : news.slice(0, 4)).map((article, index) => (
+            {(showAll ? newsArticles : newsArticles.slice(0, 4)).map((article, index) => (
               <TradingArticleCard key={index} article={article} />
             ))}
           </div>
