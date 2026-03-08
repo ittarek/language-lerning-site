@@ -26,7 +26,6 @@ export const RenderCard = ({
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
   const {
     available_seats,
     class_imgUrl,
@@ -60,13 +59,14 @@ export const RenderCard = ({
     contact,
     social_links,
   } = item;
-
+log
   // wishlist
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem('classData')) || {};
     const classId = wishlist.classes || [];
     const blogsId = wishlist.blogs || [];
-    const idSet = new Set([...classId, ...blogsId]); // because we will store only IDs
+    const newsId = wishlist.news || [];
+    const idSet = new Set([...classId, ...blogsId, ...newsId]); // because we will store only IDs
     setIsBookmarked(idSet.has(_id || id));
   }, [_id, id]);
   const handleShare = () => {
@@ -171,7 +171,7 @@ export const RenderCard = ({
           </div>
         )}
 
-        {type === 'articles' && (
+        {type === 'news' && (
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-gray-600 flex items-center gap-2">

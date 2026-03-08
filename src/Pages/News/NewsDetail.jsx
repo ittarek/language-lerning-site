@@ -18,143 +18,18 @@ import {
 } from 'react-icons/fa';
 import OptimizedImage from '../../Components/Shared/OptimizedImage';
 import { SocialButton, SubmitButton } from '../../Components/ui/Button';
+import { newsArticles } from './newsArticles';
 
 const NewsDetail = () => {
     const { id } = useParams();
-    const location = useLocation();
+  const location = useLocation();
+
+  
     const navigate = useNavigate();
     const [scrollProgress, setScrollProgress] = useState(0);
 
-    // News articles data (same as News component)
-    const newsArticles = [
-        {
-            id: 1,
-            title: "Duolingo Reaches 500 Million Users Worldwide, Revolutionizing Language Learning",
-            excerpt: "The popular language learning app celebrates a major milestone, with users across 195 countries learning over 40 languages through gamified lessons.",
-            content: `In a groundbreaking achievement for digital education, Duolingo has announced that it has surpassed 500 million registered users worldwide, cementing its position as the world's most popular language-learning platform. The milestone comes just 12 years after the app's launch, representing unprecedented growth in the EdTech sector.
-
-**Unprecedented Growth and Global Reach**
-
-According to CEO Luis von Ahn, the platform now offers courses in over 40 languages, from Spanish and French to endangered languages like Hawaiian and Navajo. The company reports that users spend an average of 34 minutes per day on the app, with daily active users exceeding 30 million.
-
-**The Power of Gamification**
-
-The success is attributed to Duolingo's innovative gamification approach, which transforms language learning into an engaging, game-like experience with streaks, leaderboards, and rewards. The platform's AI-powered personalization adapts to individual learning styles, while its bite-sized lessons fit into busy schedules.
-
-**Cutting-Edge Features**
-
-Recent features include conversation practice with AI characters, enhanced pronunciation feedback using speech recognition technology, and personalized learning paths that adapt to user progress in real-time. The app's mascot, Duo the owl, has become a cultural icon, with millions of social media followers.
-
-**Impact Beyond Commercial Success**
-
-Duolingo's impact extends beyond commercial success. The company has partnered with educational institutions worldwide to provide free language education to underserved communities. Studies show that 34 hours of Duolingo equals one university semester of language learning, making quality education accessible to millions who couldn't otherwise afford it.
-
-**Educational Validation**
-
-Research conducted by independent educational institutions validates Duolingo's effectiveness. A study by City University of New York found that learners using Duolingo for 34 hours achieved the same reading and listening comprehension as students completing a first-semester university Spanish course.
-
-**Global Accessibility**
-
-The platform's free model has democratized language education. In developing countries where traditional language schools are expensive or unavailable, Duolingo provides a viable alternative. The app works offline, making it accessible even in areas with limited internet connectivity.
-
-**Future Innovations**
-
-Looking ahead, Duolingo plans to expand into more languages, including additional indigenous and endangered languages. The company is investing heavily in AI technology to create more sophisticated conversation partners and provide even more personalized learning experiences.
-
-As the platform continues to grow, it's reshaping how the world approaches language education, making it more accessible, affordable, and enjoyable than ever before. The milestone represents not just a business achievement, but a significant step toward breaking down language barriers globally.`,
-            date: "December 26, 2024",
-            readTime: "5 min read",
-            category: "Industry News",
-            image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
-            trending: true,
-            breaking: true
-        },
-        {
-            id: 2,
-            title: "New Study Reveals Learning Multiple Languages Delays Alzheimer's by 5 Years",
-            excerpt: "Groundbreaking research from Cambridge University shows bilingualism provides significant cognitive protection against dementia and age-related cognitive decline.",
-            content: `A comprehensive study published in the Journal of Neuroscience has provided compelling evidence that speaking multiple languages significantly delays the onset of Alzheimer's disease and other forms of dementia.
-
-**Groundbreaking Research Methodology**
-
-The research, conducted by Cambridge University over 15 years with 10,000 participants, found that bilingual individuals develop dementia an average of 5 years later than monolingual peers. The study tracked cognitive function in adults aged 55-85, comparing bilingual and multilingual speakers with monolinguals.
-
-**Understanding Cognitive Reserve**
-
-Results showed that the constant mental exercise of managing multiple languages strengthens cognitive reserve - the brain's resilience against damage. Dr. Sarah Mitchell, lead researcher, explains: "When you speak multiple languages, your brain continuously switches between linguistic systems, strengthening executive function and mental flexibility."
-
-**Comprehensive Cognitive Benefits**
-
-The cognitive benefits extend beyond dementia prevention. Bilingual individuals showed superior multitasking abilities, enhanced problem-solving skills, and better attention control. Brain scans revealed increased gray matter density in areas responsible for language processing and executive function.
-
-**Age and Learning Impact**
-
-The protective effect was strongest in individuals who learned a second language before age 18, but significant benefits were observed even in late learners. This finding offers hope for adults considering language learning, demonstrating that it's never too late to start.
-
-**Controlling for Variables**
-
-Researchers emphasize the study's rigor in controlling for factors like education level, socioeconomic status, and overall health, confirming that language learning itself provides the cognitive benefits, not merely correlation with other protective factors.
-
-**Biological Mechanisms**
-
-The study identified specific biological mechanisms through brain imaging. Multilingual speakers showed enhanced connectivity between brain regions, increased neural density in language centers, and more efficient neural pathways for information processing.
-
-**Long-term Health Implications**
-
-These findings have significant implications for public health policy and education systems worldwide, suggesting that promoting multilingualism could be an effective strategy for preventing age-related cognitive decline and reducing the societal burden of dementia.
-
-**Recommendations for Policy Makers**
-
-Researchers recommend that governments invest in language education programs, particularly for children, as a long-term public health strategy. They also suggest that language learning programs be made available to seniors as a form of cognitive exercise.
-
-The study represents a major advance in understanding how language learning impacts brain health and provides strong evidence for the cognitive benefits of multilingualism throughout the lifespan.`,
-            date: "December 25, 2024",
-            readTime: "6 min read",
-            category: "Research",
-            image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&q=80",
-            trending: true
-        },
-        {
-            id: 3,
-            title: "AI Language Tutors Now Match Human Teachers in Effectiveness, Study Shows",
-            excerpt: "Advanced AI-powered language learning tools demonstrate comparable results to traditional human instruction.",
-            content: `A landmark study from MIT's Computer Science and Artificial Intelligence Laboratory has found that advanced AI language tutors are now as effective as human teachers for language instruction, potentially transforming how millions learn languages.
-
-**Revolutionary Research Findings**
-
-The year-long study compared 2,000 students learning Spanish through three methods: traditional classroom instruction, AI-powered tutoring systems, and a hybrid approach. Surprisingly, students using AI tutors achieved proficiency levels statistically equivalent to those taught by human instructors.
-
-**AI Capabilities and Advantages**
-
-The AI systems, powered by large language models like GPT-4 and Claude, provide personalized instruction, instant feedback, and unlimited conversation practice. Key advantages include 24/7 availability, infinite patience, and ability to adapt to individual learning speeds.
-
-Modern AI tutors can engage in natural conversations, correct pronunciation with sophisticated speech recognition, explain complex grammar concepts, and even provide cultural context. They analyze speech patterns to identify specific pronunciation issues and adjust difficulty levels in real-time based on student performance.
-
-**Important Limitations**
-
-However, researchers note important caveats. AI excels at structured learning and practice but cannot fully replicate human emotional connection and cultural nuance. The study found that a hybrid model - combining AI practice with periodic human instruction - produced the best results, with students advancing 30% faster than either method alone.
-
-**Democratizing Language Education**
-
-Dr. Robert Chen, lead researcher, states: "AI democratizes language education, providing high-quality instruction to anyone with internet access." This is particularly impactful in areas lacking qualified language teachers or where private tutoring is prohibitively expensive.
-
-**Industry Response and Integration**
-
-Companies like Babbel, Rosetta Stone, and Duolingo are rapidly integrating these AI capabilities. New features include AI conversation partners that adapt to user proficiency, personalized curriculum generation based on learning patterns, and real-time error correction with contextual explanations.
-
-**Future of Language Education**
-
-As technology improves, the line between human and AI instruction continues to blur, promising a future where quality language education is accessible to anyone, anywhere, at any time. The study suggests we're entering an era where cost and access are no longer barriers to language learning.`,
-            date: "December 24, 2024",
-            readTime: "7 min read",
-            category: "Technology",
-            image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
-            trending: true
-        }
-    ];
-
     // Get article from location state or find in array
-    const [article, setArticle] = useState(location.state?.article || null);
+    const [article, setArticle] = useState(location.state?.article || location.state?.article.articles?.[0] || null);
 
     useEffect(() => {
         if (!article) {
@@ -333,7 +208,7 @@ As technology improves, the line between human and AI instruction continues to b
             {/* Article Content */}
             <article className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-16">
               <div className="prose prose-lg max-w-none">
-                {article.content.split('\n\n').map((paragraph, index) => {
+                {article?.content?.split('\n\n').map((paragraph, index) => {
                   if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
                     return (
                       <h2
