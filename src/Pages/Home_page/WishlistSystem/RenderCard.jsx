@@ -34,23 +34,9 @@ export const RenderCard = ({
 
     title,
     class_description,
-    created_at,
-    description,
-    enrolled_students,
-    experience,
-    instructor_description,
-    instructor_designation,
-    instructor_email,
-    instructor_img,
     instructor_name,
     instructor_rating,
-    instructor_students_count,
-    price,
-    status,
-    updated_at,
     _id,
-    contact,
-    social_links,
   } = item;
 
 
