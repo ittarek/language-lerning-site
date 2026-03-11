@@ -330,7 +330,7 @@ export const router = createBrowserRouter([
             </Suspense>
           </PrivetRoute>
         ),
-        loader: ({ params }) => fetch(`${API_URL}/getSelectedClass/${params.id}`),
+        loader: ({ params }) => fetch(`${API_URL}/getSelectedClass/${params?.id}`),
       },
       {
         path: 'paymentHistory',
