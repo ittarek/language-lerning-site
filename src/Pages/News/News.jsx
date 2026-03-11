@@ -31,8 +31,8 @@ const News = () => {
 
   const filteredNews = newsArticles.filter(article => {
     const matchesSearch =
-      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+      article?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article?.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory =
       selectedCategory === 'All' || article.category === selectedCategory;
     return matchesSearch && matchesCategory;

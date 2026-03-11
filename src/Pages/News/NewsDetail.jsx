@@ -31,7 +31,6 @@ const NewsDetail = () => {
   const [article, setArticle] = useState(
     location.state?.article || location.state?.article.articles?.[0] || null
   );
-  console.log(article);
 const { img, title, tags,trending, views,slug,details,comments,excerpt, content, date, category } = article || {};
   useEffect(() => {
     if (!article) {
